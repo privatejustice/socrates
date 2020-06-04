@@ -1,0 +1,48 @@
+{
+    "name": "privatejustice/socrates",
+    "description": "Socrates para ajudar no desenvolvimento da justiça privada",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ricardo Rebello Sierra",
+            "email": "ricardo@sierratecnologia.com.br"
+        }
+    ],
+    "require": {
+        "php": ">=7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~5.7.14|~6.1|~7.0|~8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Socrates\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [],
+        "post-update-cmd": [],
+        "post-create-project-cmd": []
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../**",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Socrates\\SocratesProvider"
+            ],
+            "dont-discover": [
+                "scaffold-interface"
+            ]
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
