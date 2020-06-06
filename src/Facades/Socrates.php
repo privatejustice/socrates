@@ -1,0 +1,18 @@
+<?php
+
+namespace Socrates\Facades;
+
+use Illuminate\Support\Facades\Facade;
+
+class Socrates extends Facade
+{
+    /**
+     * Get the registered name of the component.
+     *
+     * @return string
+     */
+    protected static function getFacadeAccessor()
+    {
+        return 'socrates';
+    }
+}

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+<table>
+  <base>Socrates/Chat</base>
+  <class>ChatUser</class>
+  <name>civicrm_chat_user</name>
+  <comment>Connects chat service user accounts to contacts</comment>
+  <log>true</log>
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique ID</comment>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+  <field>
+    <name>contact_id</name>
+    <type>int unsigned</type>
+    <comment>FK to Contact</comment>
+    <required>true</required>
+  </field>
+  <foreignKey>
+    <name>contact_id</name>
+    <table>civicrm_contact</table>
+    <key>id</key>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+  <field>
+    <name>service</name>
+    <type>varchar</type>
+    <length>255</length>
+    <comment>Service that the user account belongs to</comment>
+    <required>true</required>
+  </field>
+  <index>
+    <name>index_service</name>
+    <fieldName>service</fieldName>
+  </index>
+  <field>
+    <name>user_id</name>
+    <type>varchar</type>
+    <comment>User identifier</comment>
+    <length>255</length>
+    <required>true</required>
+  </field>
+  <index>
+    <name>index_user_id</name>
+    <fieldName>user_id</fieldName>
+  </index>
+</table>

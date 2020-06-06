@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<table>
+  <base>Socrates/Chat</base>
+  <class>ChatAction</class>
+  <name>civicrm_chat_action</name>
+  <comment>FIXME</comment>
+  <log>true</log>
+
+  <field>
+    <name>id</name>
+    <type>int unsigned</type>
+    <required>true</required>
+    <comment>Unique ChatAction ID</comment>
+  </field>
+  <primaryKey>
+    <name>id</name>
+    <autoincrement>true</autoincrement>
+  </primaryKey>
+
+  <field>
+    <name>question_id</name>
+    <type>int unsigned</type>
+    <comment>FK to ChatQuestion</comment>
+  </field>
+  <foreignKey>
+    <name>question_id</name>
+    <table>civicrm_chat_question</table>
+    <key>id</key>
+    <onDelete>CASCADE</onDelete>
+  </foreignKey>
+
+  <field>
+    <name>type</name>
+    <type>varchar</type>
+    <length>255</length>
+    <required>true</required>
+  </field>
+  <index>
+    <name>index_type</name>
+    <fieldName>type</fieldName>
+  </index>
+
+  <field>
+    <name>check_object</name>
+    <type>text</type>
+    <required>true</required>
+    <comment>Serialized representation of check object</comment>
+  </field>
+
+  <field>
+    <name>action_data</name>
+    <type>text</type>
+    <required>true</required>
+  </field>
+
+  <field>
+    <name>weight</name>
+    <type>int unsigned</type>
+    <required>false</required>
+    <default>0</default>
+    <comment>Weight (useful for questions)</comment>
+  </field>
+
+
+</table>

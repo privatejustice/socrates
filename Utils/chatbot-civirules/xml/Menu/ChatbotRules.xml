@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>socrates/civirule/form/action/conversation/start</path>
+    <page_callback>CRM_Chatbot_Rules_Actions_Form_StartConversation</page_callback>
+    <access_arguments>access Socrates</access_arguments>
+    <access_arguments>administer Socrates</access_arguments>
+  </item>
+</menu>

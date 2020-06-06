@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: Socrates
+        psr4_prefix: Socrates
+        src_path: app

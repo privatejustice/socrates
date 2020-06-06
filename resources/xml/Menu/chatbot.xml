@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<menu>
+  <item>
+    <path>socrates/chat</path>
+    <page_callback>Socrates\Chat\Page_Dashboard</page_callback>
+    <title>Chatbot dashboard</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/admin/chat</path>
+    <page_callback>Socrates\Chat\Form_Admin</page_callback>
+    <title>Chatbot settings</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/admin/chat/facebook</path>
+    <page_callback>Socrates\Chat\Form_Admin_Facebook</page_callback>
+    <title>Chatbot Facebook settings</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/webhook/facebook</path>
+    <page_callback>Socrates\Chat\Webhook::facebook</page_callback>
+    <access_callback>1</access_callback>
+  </item>
+  <item>
+    <path>socrates/chat/webhook/devchat</path>
+    <page_callback>Socrates\Chat\Webhook::devchat</page_callback>
+    <access_callback>1</access_callback>
+  </item>
+  <item>
+    <path>socrates/chat/webhook/civisms</path>
+    <page_callback>Socrates\Chat\Webhook::civisms</page_callback>
+    <access_callback>1</access_callback>
+  </item>
+  <item>
+    <path>socrates/chat/conversationType</path>
+    <page_callback>Socrates\Chat\Page_ConversationType</page_callback>
+    <title>Conversation types</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/conversationType/view</path>
+    <page_callback>Socrates\Chat\Page_ConversationType_View</page_callback>
+    <title>Conversation type</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/conversationType/add</path>
+    <page_callback>Socrates\Chat\Form_ConversationType_Add</page_callback>
+    <title>Add conversation type</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/conversationType/edit</path>
+    <page_callback>Socrates\Chat\Form_ConversationType_Edit</page_callback>
+    <title>Edit conversation type</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/conversationType/delete</path>
+    <page_callback>Socrates\Chat\Form_ConversationType_Delete</page_callback>
+    <title>Edit conversation type</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/question/add</path>
+    <page_callback>Socrates\Chat\Form_Question_Add</page_callback>
+    <title>Add question</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/question/edit</path>
+    <page_callback>Socrates\Chat\Form_Question_Edit</page_callback>
+    <title>Edit question</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/question/delete</path>
+    <page_callback>Socrates\Chat\Form_Question_Delete</page_callback>
+    <title>Edit question</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/action/add</path>
+    <page_callback>Socrates\Chat\Form_Action_Add</page_callback>
+    <title>Add action</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/action/edit</path>
+    <page_callback>Socrates\Chat\Form_Action_Edit</page_callback>
+    <title>Edit action</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/action/delete</path>
+    <page_callback>Socrates\Chat\Form_Action_Delete</page_callback>
+    <title>Edit action</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/start</path>
+    <page_callback>Socrates\Chat\Form_Start</page_callback>
+    <title>Edit action</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/chat/conversation/view</path>
+    <page_callback>Socrates\Chat\Page_Conversation_View</page_callback>
+    <title>Edit action</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/contact/view/chat</path>
+    <page_callback>Socrates\Chat\Page_Contact_Tab</page_callback>
+    <title>Edit action</title>
+    <access_arguments>access chatbot</access_arguments>
+  </item>
+  <item>
+    <path>socrates/ajax/chat/list</path>
+    <page_callback>Socrates\Chat\Page_AJAX::getContactConversations</page_callback>
+    <access_arguments>access Socrates</access_arguments>
+  </item>
+
+</menu>
+<!--
+
+Notes
+=====
+
+Nav structure for a typical entity:
+
+* socrates/chat/entity (list)
+* socrates/chat/entity/add (add)
+* socrates/chat/entity/edit (edit)
+* socrates/chat/entity/view (view)
+* socrates/chat/entity/delete (delete)
+
+-->
