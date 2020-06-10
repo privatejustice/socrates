@@ -5,6 +5,8 @@ namespace Socrates;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Route;
 // use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Blade;
@@ -14,7 +16,6 @@ use Cerebro\CerebroProvider;
 use Tramite\TramiteProvider;
 use BotMan\Studio\Providers\DriverServiceProvider as ServiceProvider;
 use BotMan\Tinker\TinkerServiceProvider;
-use Socrates\Providers\BotMan\DriverServiceProvider;
 use BotMan\BotMan\BotManServiceProvider;
 use BotMan\Studio\Providers\StudioServiceProvider;
 use Socrates\Services\Socrates;
@@ -50,7 +51,7 @@ class SocratesProvider extends ServiceProvider
         Route::group([
             'namespace' => '\Socrates\Http\Controllers',
         ], function (/**$router**/) {
-            require __DIR__.'../routes/web.php';
+            require __DIR__.'/../routes/web.php';
         });
 
 
@@ -77,10 +78,11 @@ class SocratesProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
         // View namespace
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'socrates');
+        $viewsPath = __DIR__.'/../resources/views';
+        $this->loadViewsFrom($viewsPath, 'socrates');
         $this->publishes(
             [
-            $viewsPath => base_path('resources/views/vendor/socrates'),
+                $viewsPath => base_path('resources/views/vendor/socrates'),
             ], 'views'
         );
 
@@ -194,5 +196,10 @@ class SocratesProvider extends ServiceProvider
             ], ['config',  'socrates', 'socrates-config']
         );
 
+    }
+
+    protected function getPublishesPath($path)
+    {
+        return __DIR__.'/../publishes/'.$path;
     }
 }
