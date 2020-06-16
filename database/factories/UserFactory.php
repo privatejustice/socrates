@@ -11,6 +11,6 @@ $factory->define(Socrates\Models\User::class, function (Faker $faker) {
         'telegram_id' => $faker->creditCardNumber,
         'username' => $faker->userName,
         'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+        'remember_token' => \Illuminate\Support\Str::random(10),
     ];
 });
