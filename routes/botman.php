@@ -8,7 +8,7 @@ $botman = resolve('botman');
 // });
 // $botman->hears('Start conversation', BotManController::class.'@startConversation');
 
-$botman->middleware->received(new \Socrates\Http\Middleware\Botman\LoadUserMiddleware());
+$botman->middleware->received(new \Socrates\Http\Middleware\LoadUserMiddleware());
 
 $botman->hears('/help|^ajuda$|(?:no se )?(?:que fer|com (?:funciona|va))', 'Socrates\Http\Controllers\HelpController@index');
 

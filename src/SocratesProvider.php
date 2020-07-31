@@ -45,6 +45,10 @@ class SocratesProvider extends ServiceProvider
     {
         parent::boot();
 
+        foreach ($this->drivers as $driver) {
+            DriverManager::loadDriver($driver);
+        }
+
         /**
          * Socrates Routes
          */
@@ -54,10 +58,8 @@ class SocratesProvider extends ServiceProvider
             require __DIR__.'/../routes/web.php';
         });
 
+        $this->mapBotManCommands();
 
-        foreach ($this->drivers as $driver) {
-            DriverManager::loadDriver($driver);
-        }
 
         $this->registerViewComposers();
         
@@ -65,6 +67,16 @@ class SocratesProvider extends ServiceProvider
         $this->publishConfigs();
         $this->publishAssets();
         $this->publishMigrations();
+    }
+
+    /**
+     * Defines the BotMan "hears" commands.
+     *
+     * @return void
+     */
+    protected function mapBotManCommands()
+    {
+        require __DIR__.'/../routes/botman.php';
     }
 
     /**

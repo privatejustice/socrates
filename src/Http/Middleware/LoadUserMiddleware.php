@@ -2,12 +2,13 @@
 
 namespace Socrates\Http\Middleware;
 
-use Socrates\Models\User;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\Interfaces\Middleware\Received;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use Illuminate\Support\Facades\Hash;
 use Socrates\Services\UserService;
+use Socrates\Models\User;
+use Socrates\Models\Group;
 
 class LoadUserMiddleware implements Received
 {

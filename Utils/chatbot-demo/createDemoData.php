@@ -114,67 +114,67 @@ $entities['ChatAction'] = [
   'haveDog' => [
     'question_id' => '{{ChatQuestion.dogorcat}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'dog'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'dog'])),
     'action_data' => '{{ChatQuestion.haveDog}}'
   ],
   'dogNewsletter' => [
     'question_id' => '{{ChatQuestion.haveDog}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => '{{ChatQuestion.dogNewsletter}}'
   ],
   'dogNewsletterSignup' => [
     'question_id' => '{{ChatQuestion.dogNewsletter}}',
     'type' => 'group',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => '{{Group.dogNewsletter}}'
   ],
   'dogNewsletterSignupConfirmYes' => [
     'question_id' => '{{ChatQuestion.dogNewsletter}}',
     'type' => 'say',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => "OK - we'll sign you up to the Dog newsletter!"
   ],
   'dogNewsletterSignupConfirmNo' => [
     'question_id' => '{{ChatQuestion.dogNewsletter}}',
     'type' => 'say',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'no'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'no'])),
     'action_data' => "Understood - we won't add you to our Dog newsletter"
   ],
   'haveCat' => [
     'question_id' => '{{ChatQuestion.dogorcat}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'cat'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'cat'])),
     'action_data' => '{{ChatQuestion.haveCat}}'
   ],
   'catsName' => [
     'question_id' => '{{ChatQuestion.haveCat}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => '{{ChatQuestion.catsName}}'
   ],
   'catsNameAddField' => [
     'question_id' => '{{ChatQuestion.catsName}}',
     'type' => 'field',
-    'check_object' => serialize(new Socrates\Chat\Check_Anything()),
+    'check_object' => serialize(new Socrates\Check_Anything()),
     'action_data' => 'placeholder'
   ],
   'movie' => [
     'question_id' => '{{ChatQuestion.movie}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Chat\Check_Anything()),
+    'check_object' => serialize(new Socrates\Check_Anything()),
     'action_data' => '{{ChatQuestion.movieTimes}}',
   ],
   // 'askAboutPetSurvey' => [
   //   'question_id' => '{{ChatQuestion.movie}}',
   //   'type' => 'next',
-  //   'check_object' => serialize(new Socrates\Chat\Check_Anything()),
+  //   'check_object' => serialize(new Socrates\Check_Anything()),
   //   'action_data' => '{{ChatQuestion.petSurvey}}'
   // ],
   // 'startPetSurvey' => [
   //   'question_id' => '{{ChatQuestion.petSurvey}}',
   //   'type' => 'conversation',
-  //   'check_object' => serialize(new Socrates\Chat\Check_Contains(['contains' => 'yes'])),
+  //   'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
   //   'action_data' => '{{ChatConversationType.pets}}'
   // ]
 ];

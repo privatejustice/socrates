@@ -40,9 +40,9 @@ CRM.$(function($) {
 
     val = $("[name=ChatAction\\:match]").val()
 
-    if(val === 'Socrates\Chat\Check_Contains'){
+    if(val === 'Socrates\Check_Contains'){
       $("form[class^='Socrates\Chat\Form_Action_'] .ChatAction\\:match_contains").show()
-    }else if(val === 'Socrates\Chat\Check_Equals'){
+    }else if(val === 'Socrates\Check_Equals'){
       $("form[class^='Socrates\Chat\Form_Action_'] .ChatAction\\:match_equals").show()
     }
   }

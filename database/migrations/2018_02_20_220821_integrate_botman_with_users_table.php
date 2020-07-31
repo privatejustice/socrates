@@ -14,8 +14,8 @@ class IntegrateBotManWithUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->nullable()->after('id');
-            $table->text('token')->nullable();
+            // $table->string('username')->nullable()->after('id');
+            // $table->text('token')->nullable();
             $table->text('webhook')->nullable();
             $table->string('surname')->nullable()->after('name');
             $table->string('telegram_id')->nullable()->after('password');

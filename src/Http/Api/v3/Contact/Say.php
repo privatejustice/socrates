@@ -1,7 +1,7 @@
 <?php
 use Socrates\Chat\ExtensionUtil as E;
 
-function socrates_api3_contact_say($params) {
+function Socrates\Api\V3\contact_say($params) {
 
   $required = [
     'id',
@@ -31,5 +31,5 @@ function socrates_api3_contact_say($params) {
 
   $botman->say($params['text'], $user['user_id'], Socrates\Chat\Botman::getDriver($params['service']), ['contact_id' => $params['id']]);
 
-  return socrates_api3_create_success();
+  return Socrates\Api\V3\create_success();
 }

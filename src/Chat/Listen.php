@@ -20,7 +20,7 @@ class Listen {
 
       $botman->hears('(.*)', function ($bot, $hears) {
 
-        $hear = new Socrates\Chat\Bao\ChatHear;
+        $hear = new Socrates\Bao\ChatHear;
         $hear->text = $hears;
         if($hear->find() == 1){
           $hear->fetch();
@@ -28,7 +28,7 @@ class Listen {
             'id' => $bot->getMessage()->getExtras('contact_id'),
             'source_contact_id' => $bot->getMessage()->getExtras('contact_id'),
             'service' => Socrates\Chat\Driver::getServiceName($bot->getDriver()),
-            'conversation_type_id' => Socrates\Chat\Bao\ChatConversationType::findById($hear->chat_conversation_type_id)->id
+            'conversation_type_id' => Socrates\Bao\ChatConversationType::findById($hear->chat_conversation_type_id)->id
           ]);
         }
       });

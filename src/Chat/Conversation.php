@@ -26,7 +26,7 @@ class Conversation extends ConversationBase {
 
   protected function askQuestion($questionId) {
 
-    $question = Socrates\Chat\Bao\ChatQuestion::findById($questionId);
+    $question = Socrates\Bao\ChatQuestion::findById($questionId);
 
     $text = $this->tokenReplacement($question->text, $this->contactId);// TODO contact token replacement
 
@@ -63,7 +63,7 @@ class Conversation extends ConversationBase {
 
         // 'conversation' => function($conversationTypeId){
         //
-        //   $conversationType = Socrates\Chat\Bao\ChatConversationType::findById($conversationTypeId);
+        //   $conversationType = Socrates\Bao\ChatConversationType::findById($conversationTypeId);
         //   $this->end = false;
         //   $this->bot->startConversation(new Socrates\Chat\Conversation($conversationType));
         //
@@ -71,7 +71,7 @@ class Conversation extends ConversationBase {
 
         'next' => function($questionId){
 
-          $question = Socrates\Chat\Bao\ChatQuestion::findById($questionId);
+          $question = Socrates\Bao\ChatQuestion::findById($questionId);
           $this->end = false;
           $this->askQuestion($questionId);
 
@@ -93,7 +93,7 @@ class Conversation extends ConversationBase {
 
   protected function processAction($type, $text, $questionId, $closure) {
 
-    $action = Socrates\Chat\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);
+    $action = Socrates\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);
 
     while($action->fetch()){
       $check = unserialize($action->check_object);

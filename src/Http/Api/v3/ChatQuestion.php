@@ -1,6 +1,11 @@
 <?php
+namespace Socrates\Api\V3;
+
 use Socrates\Chat\ExtensionUtil as E;
 
+class ChatQuestion
+{
+  
 /**
  * ChatQuestion.create API specification (optional)
  * This is used for documentation and validation.
@@ -9,9 +14,9 @@ use Socrates\Chat\ExtensionUtil as E;
  * @return void
  * @see http://wiki.socrates.org/confluence/display/CRMDOC/API+Architecture+Standards
  */
-function _socrates_api3_chat_question_create_spec(&$spec) {
-  // $spec['some_parameter']['api.required'] = 1;
-}
+  static function create_spec(&$spec) {
+    // $spec['some_parameter']['api.required'] = 1;
+  }
 
 /**
  * ChatQuestion.create API
@@ -20,8 +25,8 @@ function _socrates_api3_chat_question_create_spec(&$spec) {
  * @return array API result descriptor
  * @throws API_Exception
  */
-function socrates_api3_chat_question_create($params) {
-  return _socrates_api3_basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params);
+  static function create($params) {
+  return _Socrates\Api\V3\basic_create(_civicrm_api3_get_BAO(__FUNCTION__), $params);
 }
 
 /**
@@ -31,8 +36,8 @@ function socrates_api3_chat_question_create($params) {
  * @return array API result descriptor
  * @throws API_Exception
  */
-function socrates_api3_chat_question_delete($params) {
-  return _socrates_api3_basic_delete(_civicrm_api3_get_BAO(__FUNCTION__), $params);
+  static function delete($params) {
+  return _Socrates\Api\V3\basic_delete(_civicrm_api3_get_BAO(__FUNCTION__), $params);
 }
 
 /**
@@ -42,6 +47,7 @@ function socrates_api3_chat_question_delete($params) {
  * @return array API result descriptor
  * @throws API_Exception
  */
-function socrates_api3_chat_question_get($params) {
-  return _socrates_api3_basic_get(_civicrm_api3_get_BAO(__FUNCTION__), $params);
+  static function get($params) {
+  return _Socrates\Api\V3\basic_get(_civicrm_api3_get_BAO(__FUNCTION__), $params);
+}
 }

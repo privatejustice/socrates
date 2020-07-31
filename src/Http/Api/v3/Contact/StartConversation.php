@@ -1,7 +1,7 @@
 <?php
 use Socrates\Chat\ExtensionUtil as E;
 
-function socrates_api3_contact_start_conversation($params) {
+function Socrates\Api\V3\contact_start_conversation($params) {
 
   // require fields
   $required = [
@@ -26,7 +26,7 @@ function socrates_api3_contact_start_conversation($params) {
     throw new API_Exception("Could not find {$params['service']} user for contact_id {$params['id']}");
   }
 
-  $conversationType = Socrates\Chat\Bao\ChatConversationType::findById($params['conversation_type_id']);
+  $conversationType = Socrates\Bao\ChatConversationType::findById($params['conversation_type_id']);
 
   $conversationActivityParams = [
     'target_contact_id' => $params['id'],
@@ -49,7 +49,7 @@ function socrates_api3_contact_start_conversation($params) {
   if($ongoingConversationCount){
     $conversationActivityParams['activity_status_id'] = 'Scheduled';
     $conversation = socrates_api3('activity', 'create', $conversationActivityParams);
-    return socrates_api3_create_success();
+    return Socrates\Api\V3\create_success();
   }else{
     $conversation = socrates_api3('activity', 'create', $conversationActivityParams);
 
@@ -65,6 +65,6 @@ function socrates_api3_contact_start_conversation($params) {
       Socrates\Chat\Botman::getDriver($params['service'])
     );
 
-    return socrates_api3_create_success();
+    return Socrates\Api\V3\create_success();
   }
 }

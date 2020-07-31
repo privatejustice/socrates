@@ -7,7 +7,7 @@ class Cache implements CacheInterface
   {
 
     public function has($key){
-      $entry = new Socrates\Chat\Bao\ChatCache;
+      $entry = new Socrates\Bao\ChatCache;
       $entry->identifier = $key;
       return (bool) $entry->find();
     }
@@ -21,7 +21,7 @@ class Cache implements CacheInterface
      */
     public function get($key, $default = null){
       $this->prune();
-      $entry = new Socrates\Chat\Bao\ChatCache;
+      $entry = new Socrates\Bao\ChatCache;
       $entry->identifier = $key;
       if($entry->find()){
         $entry->fetch();
@@ -39,7 +39,7 @@ class Cache implements CacheInterface
      */
     public function pull($key, $default = null){
       $this->prune();
-      $entry = new Socrates\Chat\Bao\ChatCache;
+      $entry = new Socrates\Bao\ChatCache;
       $entry->identifier = $key;
       if($entry->find()){
         $entry->fetch();
@@ -63,7 +63,7 @@ class Cache implements CacheInterface
       if(!(is_integer($minutes) || $minutes < 1)){
         return;
       }
-      $entry = new Socrates\Chat\Bao\ChatCache;
+      $entry = new Socrates\Bao\ChatCache;
       $entry->identifier = $key;
       if($entry->find()){
         $entry->fetch();
@@ -78,7 +78,7 @@ class Cache implements CacheInterface
     }
 
     public function prune(){
-      $expired = new Socrates\Chat\Bao\ChatCache;
+      $expired = new Socrates\Bao\ChatCache;
       $expired->whereAdd('expires < NOW()');
       $expired->delete(DB_DATAOBJECT_WHEREADD_ONLY);
     }
