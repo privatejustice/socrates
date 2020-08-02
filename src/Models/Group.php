@@ -3,7 +3,6 @@
 namespace Socrates\Models;
 
 use Socrates\Traits\HasCurrency;
-use Illuminate\Database\Eloquent\Model;
 
 class Group extends Model
 {

@@ -450,41 +450,41 @@ function _chatbot_civix_socrates_alterSettingsFolders(&$metaDataFolders = NULL) 
 
 function _chatbot_civix_socrates_entityTypes(&$entityTypes) {
   $entityTypes = array_merge($entityTypes, array (
-    'Socrates\Chat\DAO_ChatAction' =>
+    'Socrates\Models\ChatAction' =>
     array (
       'name' => 'ChatAction',
-      'class' => 'Socrates\Chat\DAO_ChatAction',
-      'table' => 'socrates_chat_action',
+      'class' => 'Socrates\Models\ChatAction',
+      'table' => 'chat_actions',
     ),
-    'Socrates\Chat\DAO_ChatCache' =>
+    'Socrates\Models\ChatCache' =>
     array (
       'name' => 'ChatCache',
-      'class' => 'Socrates\Chat\DAO_ChatCache',
-      'table' => 'socrates_chat_cache',
+      'class' => 'Socrates\Models\ChatCache',
+      'table' => 'chat_caches',
     ),
-    'Socrates\Chat\DAO_ChatConversationType' =>
+    'Socrates\Models\ChatConversationType' =>
     array (
       'name' => 'ChatConversationType',
-      'class' => 'Socrates\Chat\DAO_ChatConversationType',
-      'table' => 'socrates_chat_conversation_type',
+      'class' => 'Socrates\Models\ChatConversationType',
+      'table' => 'chat_conversation_types',
     ),
-    'Socrates\Chat\DAO_ChatHear' =>
+    'Socrates\Models\ChatHear' =>
     array (
       'name' => 'ChatHear',
-      'class' => 'Socrates\Chat\DAO_ChatHear',
-      'table' => 'socrates_chat_hear',
+      'class' => 'Socrates\Models\ChatHear',
+      'table' => 'chat_hears',
     ),
-    'Socrates\Chat\DAO_ChatQuestion' =>
+    'Socrates\Models\ChatQuestion' =>
     array (
       'name' => 'ChatQuestion',
-      'class' => 'Socrates\Chat\DAO_ChatQuestion',
-      'table' => 'socrates_chat_question',
+      'class' => 'Socrates\Models\ChatQuestion',
+      'table' => 'chat_questions',
     ),
-    'Socrates\Chat\DAO_ChatUser' =>
+    'Socrates\Models\ChatUser' =>
     array (
       'name' => 'ChatUser',
-      'class' => 'Socrates\Chat\DAO_ChatUser',
-      'table' => 'socrates_chatuser',
+      'class' => 'Socrates\Models\ChatUser',
+      'table' => 'chatuser',
     ),
   ));
 }

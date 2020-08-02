@@ -2,6 +2,7 @@
 require_once __DIR__ . '/vendor/autoload.php';
 require_once 'chatbot.civix.php';
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 /**
  * Implements hook_socrates_config().
@@ -19,13 +20,13 @@ function chatbot_socrates_config(&$config) {
 
 function chatbot_post_sms($event){
   if($event->entity=='Activity' && $event->object->activity_type_id == CRM_Core_PseudoConstant::getKey('CRM_Activity_Bao\Activity', 'activity_type_id', 'Inbound SMS')) {
-    $activity = socrates_api3('Activity', 'getsingle', ['id' => $event->id]);
+    $activity = Api::render('Activity', 'getsingle', ['id' => $event->id]);
     $client = new GuzzleHttp\Client();
     try {
 
       $response = $client->request('POST', CRM_Utils_System::url('socrates/chat/webhook/civisms', null, true), [
         'body' => json_encode([
-          'authentication_token' => socrates_api3('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token']),
+          'authentication_token' => Api::render('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token']),
           'text' => $activity['details'],
           'contact_id' => $activity['source_contact_id']
         ])
@@ -67,7 +68,7 @@ function chatbot_socrates_postInstall() {
   _chatbot_civix_socrates_postInstall();
   // Necessary since we are communicating with ourselves via public post requests
   // (since that is what Botman wants us to do)
-  socrates_api3('setting', 'create', ['chatbot_civisms_authentication_token' => Socrates\Chat\Utils::generateToken()]);
+  Api::render('setting', 'create', ['chatbot_civisms_authentication_token' => \Socrates\Chat\Utils::generateToken()]);
 }
 
 /**
@@ -191,7 +192,7 @@ function chatbot_socrates_permission(&$permissions){
 function chatbot_socrates_summaryActions(&$actions, $contactId){
 
   // If the contact has a mobile phone, start a conversation with them
-  $count = socrates_api3('ChatUser', 'getcount', ['contact_id' => $contactId]);
+  $count = Api::render('ChatUser', 'getcount', ['contact_id' => $contactId]);
   if($count){
       $actions['chatbot'] = [
       'title' => 'Chat - start a conversation',
@@ -219,6 +220,6 @@ function chatbot_socrates_tabs ( &$tabs, $contactId ) {
     'class' => 'livePage',
     'url'    => CRM_Utils_System::url('socrates/contact/view/chat', "reset=1&cid={$contactId}"),
     'weight' => 50,
-    'count'  => Socrates\Chat\Utils::getChatCount($contactId)
+    'count'  => \Socrates\Chat\Utils::getChatCount($contactId)
   );
 }

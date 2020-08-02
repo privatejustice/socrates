@@ -18,6 +18,7 @@ class UserService
      */
     public function findOrCreate(UserInterface $botUser)
     {
+        // dd($botUser);
         return User::firstOrCreate(
             [
                 'telegram_id' => $botUser->getId()

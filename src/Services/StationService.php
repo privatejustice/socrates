@@ -3,6 +3,7 @@
 namespace Socrates\Services;
 
 use Socrates\Conversations\Girocleta\Station;
+use Socrates\Models\Alias;
 
 class StationService
 {
@@ -117,11 +118,12 @@ class StationService
         if ($station) {
             return $station->foundByText();
         }
+        if (auth()->user()) {
+            $alias = Alias::where('user_id', auth()->user()->id)->where('alias', 'like', "%{$text}%")->first();
 
-        $alias = auth()->user()->aliases()->where('alias', 'like', "%{$text}%")->first();
-
-        if ($alias && $station = $this->find($alias->station_id)) {
-            return $station->foundByAlias();
+            if ($alias && $station = $this->find($alias->station_id)) {
+                return $station->foundByAlias();
+            }
         }
 
         if (! str_contains($text, 'girona')) {

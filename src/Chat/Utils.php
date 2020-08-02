@@ -4,6 +4,7 @@ namespace Socrates\Chat;
 use BotMan\BotMan\BotMan;
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
+use Api;
 /**
  * "Wraps" botman
  */
@@ -29,7 +30,7 @@ class Utils {
 
   static function getOngoingConversation($contactId) {
     try {
-      $conversation = socrates_api3('activity', 'getsingle', [
+      $conversation = Api::render('activity', 'getsingle', [
         'target_contact_id' => $contactId,
         'activity_type_id' => 'Conversation',
         'activity_status_id' => 'Ongoing'
@@ -41,7 +42,7 @@ class Utils {
   }
 
   static function getChatCount($contactId) {
-    return socrates_api3('Activity', 'getcount', [
+    return Api::render('Activity', 'getcount', [
         'contact_id' => $contactId,
         'activity_type_id' => 'Conversation'
       ])

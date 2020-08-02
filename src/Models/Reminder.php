@@ -4,7 +4,6 @@ namespace Socrates\Models;
 
 use Socrates\Services\StationService;
 use BotMan\BotMan\Messages\Outgoing\Actions\Button;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 class Reminder extends Model

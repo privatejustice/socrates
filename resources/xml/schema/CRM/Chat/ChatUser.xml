@@ -2,7 +2,7 @@
 <table>
   <base>Socrates/Chat</base>
   <class>ChatUser</class>
-  <name>civicrm_chat_user</name>
+  <name>civicrm_chat_users</name>
   <comment>Connects chat service user accounts to contacts</comment>
   <log>true</log>
   <field>

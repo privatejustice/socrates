@@ -2,6 +2,7 @@
 namespace Socrates\Chat\Form\Action;
 
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 /**
  * Form controller class
@@ -46,7 +47,7 @@ class Delete extends \Socrates\Chat\Form\Good_Delete {
 
     switch ($this->entities['ChatAction']['before']['type']) {
       case 'next':
-        $question = socrates_api3('ChatQuestion', 'getsingle', ['id' => $this->entities['ChatAction']['before']['action_data']]);
+        $question = Api::render('ChatQuestion', 'getsingle', ['id' => $this->entities['ChatAction']['before']['action_data']]);
         $description .= "go to question '{$question['text']}'";
         break;
 
@@ -55,12 +56,12 @@ class Delete extends \Socrates\Chat\Form\Good_Delete {
         break;
 
       case 'conversation':
-        $conversationType = socrates_api3('ChatConversationType', 'getsingle', ['id' => $this->entities['ChatAction']['before']['action_data']]);
+        $conversationType = Api::render('ChatConversationType', 'getsingle', ['id' => $this->entities['ChatAction']['before']['action_data']]);
         $description .= "start conversation '{$conversationType['name']}'";
         break;
 
       case 'group':
-        $group = socrates_api3('Group', 'getsingle', ['id' => $this->entities['ChatAction']['before']['action_data']]);
+        $group = Api::render('Group', 'getsingle', ['id' => $this->entities['ChatAction']['before']['action_data']]);
         $description .= "add to group '{$group['title']}'";
         break;
 

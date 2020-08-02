@@ -2,6 +2,7 @@
 namespace Socrates\Chat\Page\ConversationType;
 
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 class View extends Socrates\Core_Page {
 
@@ -9,15 +10,15 @@ class View extends Socrates\Core_Page {
 
     // TODO Implement paging so we can display more that 25 conversation types :)
 
-    $id = Socrates\Utils_Request::retrieve('id', 'Positive', $this);
+    $id = \Socrates\Utils_Request::retrieve('id', 'Positive', $this);
 
-    $conversationType = socrates_api3('ChatConversationType', 'getsingle', ['id' => $id]);
+    $conversationType = Api::render('ChatConversationType', 'getsingle', ['id' => $id]);
 
     Socrates\Utils_System::setTitle(E::ts('Conversation type: %1', [$conversationType['name']]));
 
     $this->assign('conversationType', $conversationType);
 
-    $questions = socrates_api3('ChatQuestion', 'get', [
+    $questions = Api::render('ChatQuestion', 'get', [
       'conversation_type_id' => $id,
     ])['values'];
     $this->assign('questions', $questions);
@@ -30,11 +31,11 @@ class View extends Socrates\Core_Page {
       ];
 
       // Group actions by question, order by type, then weight (for those where weight is significant)
-      $groupActions = socrates_api3('ChatAction', 'get', array_merge($actionParams, ['type' => 'group']))['values'];
-      $fieldActions = socrates_api3('ChatAction', 'get', array_merge($actionParams, ['type' => 'field']))['values'];
-      $sayActions = socrates_api3('ChatAction', 'get', array_merge($actionParams, ['type' => 'say']))['values'];
-      $conversationActions = socrates_api3('ChatAction', 'get', array_merge($actionParams, ['type' => 'conversation']))['values'];
-      $nextActions = socrates_api3('ChatAction', 'get', array_merge($actionParams, ['type' => 'next']))['values'];
+      $groupActions = Api::render('ChatAction', 'get', array_merge($actionParams, ['type' => 'group']))['values'];
+      $fieldActions = Api::render('ChatAction', 'get', array_merge($actionParams, ['type' => 'field']))['values'];
+      $sayActions = Api::render('ChatAction', 'get', array_merge($actionParams, ['type' => 'say']))['values'];
+      $conversationActions = Api::render('ChatAction', 'get', array_merge($actionParams, ['type' => 'conversation']))['values'];
+      $nextActions = Api::render('ChatAction', 'get', array_merge($actionParams, ['type' => 'next']))['values'];
 
       foreach($nextActions as $key => $nextAction) {
         if(!in_array($nextAction['action_data'], array_keys($questions))){
@@ -73,10 +74,10 @@ class View extends Socrates\Core_Page {
       $this->assign('orderedQuestions', $orderedQuestions);
 
       if($conversationActions){
-        $this->assign('conversations', socrates_api3('ChatConversationType', 'get', ['id' => ['IN' => array_column($conversationActions, 'action_data')]])['values']);
+        $this->assign('conversations', Api::render('ChatConversationType', 'get', ['id' => ['IN' => array_column($conversationActions, 'action_data')]])['values']);
       }
       if($groupActions){
-        $this->assign('groups', socrates_api3('Group', 'get', ['id' => ['IN' => array_column($groupActions, 'action_data')]])['values']);
+        $this->assign('groups', Api::render('Group', 'get', ['id' => ['IN' => array_column($groupActions, 'action_data')]])['values']);
       }
 
 

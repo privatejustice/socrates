@@ -1,6 +1,8 @@
 <?php
 namespace Socrates\Chat\Form;
 
+use Api;
+
 class Start extends Good{
 
   function getDestination() {
@@ -27,7 +29,7 @@ class Start extends Good{
 
   function initFields(){
 
-    $users = socrates_api3('ChatUser', 'get', ['contact_id' => $this->entities['Contact']['before']['id']])['values'];
+    $users = Api::render('ChatUser', 'get', ['contact_id' => $this->entities['Contact']['before']['id']])['values'];
 
     $this->fields = [
       'Conversation:conversationTypeId' => [
@@ -54,14 +56,14 @@ class Start extends Good{
 
     $values = $this->exportValues();
 
-    $session = Socrates\Core_Session::singleton();
+    $session = \Socrates\Core_Session::singleton();
 
     $params = [
       'id' => $this->entities['Contact']['before']['id'],
       'service' => $values['Conversation:ChatService'],
       'conversation_type_id' => $values['Conversation:conversationTypeId']
     ];
-    $result = socrates_api3('Contact', 'start_conversation', $params);
+    $result = Api::render('Contact', 'start_conversation', $params);
     Socrates\Core_Session::setStatus(ts('Chat started with %1', [1 => $this->entities['Contact']['before']['display_name']]));
     parent::postProcess();
   }

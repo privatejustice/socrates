@@ -2,6 +2,7 @@
 namespace Socrates\Chat\Form;
 
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 /**
  * Form controller class
@@ -60,15 +61,15 @@ abstract class Good extends Socrates\Core_Form {
     $this->initEntities();
 
     foreach($this->entities as &$entity) {
-      $entity['fields'] = socrates_api3($entity['type'], 'getfields', ['action' => 'create'])['values'];
+      $entity['fields'] = Api::render($entity['type'], 'getfields', ['action' => 'create'])['values'];
       if(isset($entity['param'])){
-        $entityId = Socrates\Utils_Request::retrieve($entity['param'], 'String', $this);
-        $entity['before'] = socrates_api3($entity['type'], 'getsingle', ['id' => $entityId]);
+        $entityId = \Socrates\Utils_Request::retrieve($entity['param'], 'String', $this);
+        $entity['before'] = Api::render($entity['type'], 'getsingle', ['id' => $entityId]);
       }
       if(isset($entity['references'])){
         foreach($entity['references'] as $field => $reference){
           if(isset($entity['before'][$field])){
-            $this->entities[$reference['entity']]['before'] = socrates_api3($reference['entity'], 'getsingle', [$reference['field'] => $entity['before'][$field]]);
+            $this->entities[$reference['entity']]['before'] = Api::render($reference['entity'], 'getsingle', [$reference['field'] => $entity['before'][$field]]);
           }
         }
       }
@@ -101,7 +102,7 @@ abstract class Good extends Socrates\Core_Form {
     $this->assign('delete', $this->getDelete());
     $this->addButtons($this->getButtons());
 
-    $session = Socrates\Core_Session::singleton();
+    $session = \Socrates\Core_Session::singleton();
     $session->pushUserContext($this->getGoodContext());
 
   }
@@ -236,7 +237,7 @@ abstract class Good extends Socrates\Core_Form {
         }
       }
 
-      $result = socrates_api3($entity['type'], 'create', $params);
+      $result = Api::render($entity['type'], 'create', $params);
       $entity['after'] = $result['values'][$result['id']];
 
     }

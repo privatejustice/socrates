@@ -1,5 +1,7 @@
 <?php
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
+
 
 function Socrates\Api\V3\contact_start_conversation($params) {
 
@@ -18,7 +20,7 @@ function Socrates\Api\V3\contact_start_conversation($params) {
 
   // Check user has account with service
   try {
-    $user = socrates_api3('ChatUser', 'getsingle', [
+    $user = Api::render('ChatUser', 'getsingle', [
       'service' => $params['service'],
       'contact_id' => $params['id']
     ]);
@@ -26,7 +28,7 @@ function Socrates\Api\V3\contact_start_conversation($params) {
     throw new API_Exception("Could not find {$params['service']} user for contact_id {$params['id']}");
   }
 
-  $conversationType = Socrates\Bao\ChatConversationType::findById($params['conversation_type_id']);
+  $conversationType = \Socrates\Bao\ChatConversationType::findById($params['conversation_type_id']);
 
   $conversationActivityParams = [
     'target_contact_id' => $params['id'],
@@ -44,20 +46,20 @@ function Socrates\Api\V3\contact_start_conversation($params) {
     $conversationActivityParams['source_contact_id'] = $params['source_contact_id'];
   }
 
-  $ongoingConversationCount = socrates_api3('activity', 'getcount', $conversationActivityParams);
+  $ongoingConversationCount = Api::render('activity', 'getcount', $conversationActivityParams);
 
   if($ongoingConversationCount){
     $conversationActivityParams['activity_status_id'] = 'Scheduled';
-    $conversation = socrates_api3('activity', 'create', $conversationActivityParams);
+    $conversation = Api::render('activity', 'create', $conversationActivityParams);
     return Socrates\Api\V3\create_success();
   }else{
-    $conversation = socrates_api3('activity', 'create', $conversationActivityParams);
+    $conversation = Api::render('activity', 'create', $conversationActivityParams);
 
-    $botman = Socrates\Chat\Botman::get($params['service']);
-    $botman->middleware->sending(new Socrates\Chat\Middleware_Identify());
-    $botman->middleware->sending(new Socrates\Chat\Middleware_RecordOutgoing());
+    $botman = \Socrates\Chat\Botman::get($params['service']);
+    $botman->middleware->sending(new \Socrates\Http\Middleware\Identify());
+    $botman->middleware->sending(new \Socrates\Http\Middleware\RecordOutgoing());
     $botman->startConversation(
-      new Socrates\Chat\Conversation(
+      new \Socrates\Chat\Conversation(
         $conversationType,
         $params['id']
       ),

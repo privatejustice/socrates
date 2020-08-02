@@ -2,6 +2,7 @@
 namespace Socrates\Chat\Form\ConversationType;
 
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 /**
  * Form controller class
@@ -83,7 +84,7 @@ class Add extends \Socrates\Chat\Form\Good {
       'first_question_id' => $this->entities['ChatQuestion']['after']['id']
     ];
 
-    $result = socrates_api3('ChatConversationType', 'create', $params);
+    $result = Api::render('ChatConversationType', 'create', $params);
 
   }
 

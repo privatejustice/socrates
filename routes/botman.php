@@ -8,7 +8,13 @@ $botman = resolve('botman');
 // });
 // $botman->hears('Start conversation', BotManController::class.'@startConversation');
 
-$botman->middleware->received(new \Socrates\Http\Middleware\LoadUserMiddleware());
+$botman->middleware->received(new \Socrates\Http\Middleware\Identify());
+$botman->middleware->received(new \Socrates\Http\Middleware\RecordIncoming());
+$botman->middleware->sending(new \Socrates\Http\Middleware\RecordOutgoing());
+
+$botman->hears('hello|/hi|Hola|Oi|olá|👋', function ($bot) {
+    $bot->reply('Hola! 👋');
+});
 
 $botman->hears('/help|^ajuda$|(?:no se )?(?:que fer|com (?:funciona|va))', 'Socrates\Http\Controllers\HelpController@index');
 
@@ -50,9 +56,6 @@ $botman->hears('/webhook (.*)', \Socrates\Http\Controllers\Webhook\StoreControll
  * Payments
  */
 
-$botman->hears('hello|/hi|Hola|👋', function ($bot) {
-    $bot->reply('Hola! 👋');
-});
 
 $botman->hears(
     '(?|'.implode('|', [

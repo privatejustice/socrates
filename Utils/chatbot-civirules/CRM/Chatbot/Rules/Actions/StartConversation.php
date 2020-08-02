@@ -3,6 +3,7 @@
  * @author Jaap Jansma (CiviCooP) <jaap.jansma@civicoop.org>
  * @license http://www.gnu.org/licenses/agpl-3.0.html
  */
+use Api;
 
 class CRM_Chatbot_Rules_Actions_StartConversation extends CRM_CivirulesActions_Generic_Api {
 
@@ -38,7 +39,7 @@ class CRM_Chatbot_Rules_Actions_StartConversation extends CRM_CivirulesActions_G
     $activityData = $triggerData->getEntityData('Activity');
     $acParams['activity_id'] = $activityData['id'];
     $acParams['record_type_id'] = 3;
-    $this->ac = socrates_api3('ActivityContact', 'getsingle', $acParams);
+    $this->ac = Api::render('ActivityContact', 'getsingle', $acParams);
     $parameters['id'] = $this->ac['contact_id'];
     $parameters['source_contact_id'] = $this->ac['contact_id'];
     return $parameters;
@@ -67,7 +68,7 @@ class CRM_Chatbot_Rules_Actions_StartConversation extends CRM_CivirulesActions_G
   public function userFriendlyConditionParams() {
     $return = '';
     $params = $this->getActionParameters();
-    $conversation = socrates_api3('ChatConversationType', 'Getsingle', ['id' => $params['conversation_type_id']]);
+    $conversation = Api::render('ChatConversationType', 'Getsingle', ['id' => $params['conversation_type_id']]);
     $return .= ts("Conversation '%1' via '%2'", array(1 => $conversation['name'], 2 => $params['service']));
 
     return $return;

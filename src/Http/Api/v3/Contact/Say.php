@@ -1,6 +1,8 @@
 <?php
 use Socrates\Chat\ExtensionUtil as E;
 
+use Api;
+
 function Socrates\Api\V3\contact_say($params) {
 
   $required = [
@@ -16,7 +18,7 @@ function Socrates\Api\V3\contact_say($params) {
   }
 
   try {
-    $user = socrates_api3('ChatUser', 'getsingle', [
+    $user = Api::render('ChatUser', 'getsingle', [
       'service' => $params['service'],
       'contact_id' => $params['id']
     ]);
@@ -24,10 +26,10 @@ function Socrates\Api\V3\contact_say($params) {
     throw new API_Exception("Could not find {$params['service']} user for contact_id {$params['id']}");
   }
 
-  $botman = Socrates\Chat\Botman::get($params['service']);
+  $botman = \Socrates\Chat\Botman::get($params['service']);
 
-  $botman->middleware->sending(new Socrates\Chat\Middleware_Identify());
-  $botman->middleware->sending(new Socrates\Chat\Middleware_RecordOutgoing());
+  $botman->middleware->sending(new \Socrates\Http\Middleware\Identify());
+  $botman->middleware->sending(new \Socrates\Http\Middleware\RecordOutgoing());
 
   $botman->say($params['text'], $user['user_id'], Socrates\Chat\Botman::getDriver($params['service']), ['contact_id' => $params['id']]);
 

@@ -33,12 +33,12 @@
 
 SET FOREIGN_KEY_CHECKS=0;
 
-DROP TABLE IF EXISTS `civicrm_chat_action`;
-DROP TABLE IF EXISTS `civicrm_chat_user`;
-DROP TABLE IF EXISTS `civicrm_chat_question`;
-DROP TABLE IF EXISTS `civicrm_chat_hear`;
-DROP TABLE IF EXISTS `civicrm_chat_conversation_type`;
-DROP TABLE IF EXISTS `civicrm_chat_cache`;
+DROP TABLE IF EXISTS `civicrm_chat_actions`;
+DROP TABLE IF EXISTS `civicrm_chat_users`;
+DROP TABLE IF EXISTS `civicrm_chat_questions`;
+DROP TABLE IF EXISTS `civicrm_chat_hears`;
+DROP TABLE IF EXISTS `civicrm_chat_conversation_types`;
+DROP TABLE IF EXISTS `civicrm_chat_caches`;
 
 SET FOREIGN_KEY_CHECKS=1;
 --
@@ -57,12 +57,12 @@ SET FOREIGN_KEY_CHECKS=0;
 
 -- /*******************************************************
 -- *
--- * civicrm_chat_cache
+-- * civicrm_chat_caches
 -- *
 -- * FIXME
 -- *
 -- *******************************************************/
-CREATE TABLE `civicrm_chat_cache` (
+CREATE TABLE `civicrm_chat_caches` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  COMMENT 'Unique ChatCache ID',
@@ -84,10 +84,10 @@ CREATE TABLE `civicrm_chat_cache` (
 
 -- /*******************************************************
 -- *
--- * civicrm_chat_conversation_type
+-- * civicrm_chat_conversation_types
 -- *
 -- *******************************************************/
-CREATE TABLE `civicrm_chat_conversation_type` (
+CREATE TABLE `civicrm_chat_conversation_types` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  ,
@@ -103,12 +103,12 @@ CREATE TABLE `civicrm_chat_conversation_type` (
 
 -- /*******************************************************
 -- *
--- * civicrm_chat_hear
+-- * civicrm_chat_hears
 -- *
 -- * FIXME
 -- *
 -- *******************************************************/
-CREATE TABLE `civicrm_chat_hear` (
+CREATE TABLE `civicrm_chat_hears` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  COMMENT 'Unique ChatHear ID',
@@ -118,15 +118,15 @@ CREATE TABLE `civicrm_chat_hear` (
         PRIMARY KEY (`id`)
  
  
-,          CONSTRAINT FK_civicrm_chat_hear_chat_conversation_type_id FOREIGN KEY (`chat_conversation_type_id`) REFERENCES `civicrm_chat_conversation_type`(`id`) ON DELETE CASCADE  
+,          CONSTRAINT FK_civicrm_chat_hear_chat_conversation_type_id FOREIGN KEY (`chat_conversation_type_id`) REFERENCES `civicrm_chat_conversation_types`(`id`) ON DELETE CASCADE  
 )    ;
 
 -- /*******************************************************
 -- *
--- * civicrm_chat_question
+-- * civicrm_chat_questions
 -- *
 -- *******************************************************/
-CREATE TABLE `civicrm_chat_question` (
+CREATE TABLE `civicrm_chat_questions` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  COMMENT 'Unique ChatQuestion ID',
@@ -136,17 +136,17 @@ CREATE TABLE `civicrm_chat_question` (
         PRIMARY KEY (`id`)
  
  
-,          CONSTRAINT FK_civicrm_chat_question_conversation_type_id FOREIGN KEY (`conversation_type_id`) REFERENCES `civicrm_chat_conversation_type`(`id`) ON DELETE CASCADE  
+,          CONSTRAINT FK_civicrm_chat_questions_conversation_type_id FOREIGN KEY (`conversation_type_id`) REFERENCES `civicrm_chat_conversation_types`(`id`) ON DELETE CASCADE  
 )    ;
 
 -- /*******************************************************
 -- *
--- * civicrm_chat_user
+-- * civicrm_chat_users
 -- *
 -- * Connects chat service user accounts to contacts
 -- *
 -- *******************************************************/
-CREATE TABLE `civicrm_chat_user` (
+CREATE TABLE `civicrm_chat_users` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  COMMENT 'Unique ID',
@@ -168,12 +168,12 @@ CREATE TABLE `civicrm_chat_user` (
 
 -- /*******************************************************
 -- *
--- * civicrm_chat_action
+-- * civicrm_chat_actions
 -- *
 -- * FIXME
 -- *
 -- *******************************************************/
-CREATE TABLE `civicrm_chat_action` (
+CREATE TABLE `civicrm_chat_actions` (
 
 
      `id` int unsigned NOT NULL AUTO_INCREMENT  COMMENT 'Unique ChatAction ID',
@@ -189,7 +189,7 @@ CREATE TABLE `civicrm_chat_action` (
         type
   )
   
-,          CONSTRAINT FK_civicrm_chat_action_question_id FOREIGN KEY (`question_id`) REFERENCES `civicrm_chat_question`(`id`) ON DELETE CASCADE  
+,          CONSTRAINT FK_civicrm_chat_actions_question_id FOREIGN KEY (`question_id`) REFERENCES `civicrm_chat_questions`(`id`) ON DELETE CASCADE  
 )    ;
 
  

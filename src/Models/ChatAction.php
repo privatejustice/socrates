@@ -13,14 +13,14 @@ namespace Socrates\Models;
 /**
  * Database access object for the ChatAction entity.
  */
-class ChatAction extends Socrates\Core_DAO {
+class ChatAction extends Model {
 
   /**
    * Static instance to hold the table name.
    *
    * @var string
    */
-  static $_tableName = 'socrates_chat_action';
+  protected $table = 'chat_actions';
 
   /**
    * Should Socrates log any modifications to this table in the socrates_log table.
@@ -67,13 +67,6 @@ class ChatAction extends Socrates\Core_DAO {
    */
   public $weight;
 
-  /**
-   * Class constructor.
-   */
-  public function __construct() {
-    $this->__table = 'socrates_chat_action';
-    parent::__construct();
-  }
 
   /**
    * Returns foreign keys and entity references.
@@ -84,7 +77,7 @@ class ChatAction extends Socrates\Core_DAO {
   public static function getReferenceColumns() {
     if (!isset(Civi::$statics[__CLASS__]['links'])) {
       Civi::$statics[__CLASS__]['links'] = static ::createReferenceColumns(__CLASS__);
-      Civi::$statics[__CLASS__]['links'][] = new Socrates\Core_Reference_Basic(self::getTableName(), 'question_id', 'socrates_chat_question', 'id');
+      Civi::$statics[__CLASS__]['links'][] = new \Socrates\Core_Reference_Basic(self::getTableName(), 'question_id', 'chat_questions', 'id');
       Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'links_callback', Civi::$statics[__CLASS__]['links']);
     }
     return Civi::$statics[__CLASS__]['links'];
@@ -100,19 +93,19 @@ class ChatAction extends Socrates\Core_DAO {
       Civi::$statics[__CLASS__]['fields'] = [
         'id' => [
           'name' => 'id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'description' => 'Unique ChatAction ID',
           'required' => TRUE,
-          'table_name' => 'socrates_chat_action',
+          'table_name' => 'chat_actions',
           'entity' => 'ChatAction',
           'bao' => 'Socrates\Models\ChatAction',
           'localizable' => 0,
         ],
         'question_id' => [
           'name' => 'question_id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'description' => 'FK to ChatQuestion',
-          'table_name' => 'socrates_chat_action',
+          'table_name' => 'chat_actions',
           'entity' => 'ChatAction',
           'bao' => 'Socrates\Models\ChatAction',
           'localizable' => 0,
@@ -120,44 +113,44 @@ class ChatAction extends Socrates\Core_DAO {
         ],
         'type' => [
           'name' => 'type',
-          'type' => Socrates\Utils_Type::T_STRING,
+          'type' => \Socrates\Utils_Type::T_STRING,
           'title' => ts('Type'),
           'required' => TRUE,
           'maxlength' => 255,
-          'size' => Socrates\Utils_Type::HUGE,
-          'table_name' => 'socrates_chat_action',
+          'size' => \Socrates\Utils_Type::HUGE,
+          'table_name' => 'chat_actions',
           'entity' => 'ChatAction',
           'bao' => 'Socrates\Models\ChatAction',
           'localizable' => 0,
         ],
         'check_object' => [
           'name' => 'check_object',
-          'type' => Socrates\Utils_Type::T_TEXT,
+          'type' => \Socrates\Utils_Type::T_TEXT,
           'title' => ts('Check Object'),
           'description' => 'Serialized representation of check object',
           'required' => TRUE,
-          'table_name' => 'socrates_chat_action',
+          'table_name' => 'chat_actions',
           'entity' => 'ChatAction',
           'bao' => 'Socrates\Models\ChatAction',
           'localizable' => 0,
         ],
         'action_data' => [
           'name' => 'action_data',
-          'type' => Socrates\Utils_Type::T_TEXT,
+          'type' => \Socrates\Utils_Type::T_TEXT,
           'title' => ts('Action Data'),
           'required' => TRUE,
-          'table_name' => 'socrates_chat_action',
+          'table_name' => 'chat_actions',
           'entity' => 'ChatAction',
           'bao' => 'Socrates\Models\ChatAction',
           'localizable' => 0,
         ],
         'weight' => [
           'name' => 'weight',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'title' => ts('Weight'),
           'description' => 'Weight (useful for questions)',
           'required' => FALSE,
-          'table_name' => 'socrates_chat_action',
+          'table_name' => 'chat_actions',
           'entity' => 'ChatAction',
           'bao' => 'Socrates\Models\ChatAction',
           'localizable' => 0,
@@ -207,7 +200,7 @@ class ChatAction extends Socrates\Core_DAO {
    * @return array
    */
   public static function &import($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_action', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_actions', $prefix, []);
     return $r;
   }
 
@@ -219,7 +212,7 @@ class ChatAction extends Socrates\Core_DAO {
    * @return array
    */
   public static function &export($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_action', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_actions', $prefix, []);
     return $r;
   }
 
@@ -238,7 +231,7 @@ class ChatAction extends Socrates\Core_DAO {
           0 => 'type',
         ],
         'localizable' => FALSE,
-        'sig' => 'socrates_chat_action::0::type',
+        'sig' => 'chat_actions::0::type',
       ],
     ];
     return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;

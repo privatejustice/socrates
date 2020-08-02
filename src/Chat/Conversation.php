@@ -3,6 +3,7 @@ namespace Socrates\Chat;
 
 use BotMan\BotMan\Messages\Conversations\Conversation as ConversationBase;
 use BotMan\BotMan\Messages\Incoming\Answer;
+use Api;
 
 class Conversation extends ConversationBase {
 
@@ -26,7 +27,7 @@ class Conversation extends ConversationBase {
 
   protected function askQuestion($questionId) {
 
-    $question = Socrates\Bao\ChatQuestion::findById($questionId);
+    $question = \Socrates\Bao\ChatQuestion::findById($questionId);
 
     $text = $this->tokenReplacement($question->text, $this->contactId);// TODO contact token replacement
 
@@ -42,7 +43,7 @@ class Conversation extends ConversationBase {
       $actions = [
         'group' => function($groupId){
 
-          socrates_api3('GroupContact', 'create', [
+          Api::render('GroupContact', 'create', [
             'contact_id' => $this->contactId,
             'group_id' => $groupId
           ]);
@@ -51,7 +52,7 @@ class Conversation extends ConversationBase {
 
         'field' => function($field, $value){
 
-          socrates_api3('Contact', 'create', ['id' => $this->contactId, $field => $value]);
+          Api::render('Contact', 'create', ['id' => $this->contactId, $field => $value]);
 
         },
 
@@ -63,15 +64,15 @@ class Conversation extends ConversationBase {
 
         // 'conversation' => function($conversationTypeId){
         //
-        //   $conversationType = Socrates\Bao\ChatConversationType::findById($conversationTypeId);
+        //   $conversationType = \Socrates\Bao\ChatConversationType::findById($conversationTypeId);
         //   $this->end = false;
-        //   $this->bot->startConversation(new Socrates\Chat\Conversation($conversationType));
+        //   $this->bot->startConversation(new \Socrates\Chat\Conversation($conversationType));
         //
         // },
 
         'next' => function($questionId){
 
-          $question = Socrates\Bao\ChatQuestion::findById($questionId);
+          $question = \Socrates\Bao\ChatQuestion::findById($questionId);
           $this->end = false;
           $this->askQuestion($questionId);
 
@@ -83,8 +84,8 @@ class Conversation extends ConversationBase {
       }
       if($this->end){
 
-        socrates_api3('Activity', 'create', [
-          'id' => Socrates\Chat\Utils::getOngoingConversation($this->contactId)['id'],
+        Api::render('Activity', 'create', [
+          'id' => \Socrates\Chat\Utils::getOngoingConversation($this->contactId)['id'],
           'activity_status_id' => 'Completed'
         ]);
       }
@@ -93,7 +94,7 @@ class Conversation extends ConversationBase {
 
   protected function processAction($type, $text, $questionId, $closure) {
 
-    $action = Socrates\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);
+    $action = \Socrates\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);
 
     while($action->fetch()){
       $check = unserialize($action->check_object);

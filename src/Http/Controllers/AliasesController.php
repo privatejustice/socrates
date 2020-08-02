@@ -21,7 +21,11 @@ class AliasesController extends Controller
 
     public function index(BotMan $bot)
     {
-        $aliases = auth()->user()->aliases;
+        if (!auth()->user()) {
+            return $bot->reply('Alises Controller deveria estar logado'); // @todo
+        }
+
+        $aliases = Alias::where('user_id', auth()->user()->id)->get();
 
         if (! $aliases->count()) {
             return $bot->reply('Encara no tens cap alias, pots afegir-ne un amb /alias');

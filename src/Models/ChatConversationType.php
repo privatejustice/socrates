@@ -14,14 +14,14 @@ namespace Socrates\Models;
 /**
  * Database access object for the ChatConversationType entity.
  */
-class ChatConversationType extends Socrates\Core_DAO {
+class ChatConversationType extends Model {
 
   /**
    * Static instance to hold the table name.
    *
    * @var string
    */
-  static $_tableName = 'socrates_chat_conversation_type';
+  protected $table = 'chat_conversation_types';
 
   /**
    * Should Socrates log any modifications to this table in the socrates_log table.
@@ -54,13 +54,11 @@ class ChatConversationType extends Socrates\Core_DAO {
    */
   public $first_question_id;
 
-  /**
-   * Class constructor.
-   */
-  public function __construct() {
-    $this->__table = 'socrates_chat_conversation_type';
-    parent::__construct();
-  }
+  protected $fillable = [
+    'name', 
+    'timeout', 
+    'first_question_id', 
+   ];
 
   /**
    * Returns all the column names of this table
@@ -72,40 +70,40 @@ class ChatConversationType extends Socrates\Core_DAO {
       Civi::$statics[__CLASS__]['fields'] = [
         'id' => [
           'name' => 'id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'required' => TRUE,
-          'table_name' => 'socrates_chat_conversation_type',
+          'table_name' => 'chat_conversation_types',
           'entity' => 'ChatConversationType',
           'bao' => 'Socrates\Models\ChatConversationType',
           'localizable' => 0,
         ],
         'name' => [
           'name' => 'name',
-          'type' => Socrates\Utils_Type::T_STRING,
+          'type' => \Socrates\Utils_Type::T_STRING,
           'title' => ts('Name'),
           'required' => TRUE,
           'maxlength' => 255,
-          'size' => Socrates\Utils_Type::HUGE,
-          'table_name' => 'socrates_chat_conversation_type',
+          'size' => \Socrates\Utils_Type::HUGE,
+          'table_name' => 'chat_conversation_types',
           'entity' => 'ChatConversationType',
           'bao' => 'Socrates\Models\ChatConversationType',
           'localizable' => 0,
         ],
         'timeout' => [
           'name' => 'timeout',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'title' => ts('Timeout'),
           'description' => 'Timeout in minutes for this conversation type',
-          'table_name' => 'socrates_chat_conversation_type',
+          'table_name' => 'chat_conversation_types',
           'entity' => 'ChatConversationType',
           'bao' => 'Socrates\Models\ChatConversationType',
           'localizable' => 0,
         ],
         'first_question_id' => [
           'name' => 'first_question_id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'description' => 'FK to question',
-          'table_name' => 'socrates_chat_conversation_type',
+          'table_name' => 'chat_conversation_types',
           'entity' => 'ChatConversationType',
           'bao' => 'Socrates\Models\ChatConversationType',
           'localizable' => 0,
@@ -158,7 +156,7 @@ class ChatConversationType extends Socrates\Core_DAO {
    * @return array
    */
   public static function &import($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_conversation_type', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_conversation_types', $prefix, []);
     return $r;
   }
 
@@ -170,7 +168,7 @@ class ChatConversationType extends Socrates\Core_DAO {
    * @return array
    */
   public static function &export($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_conversation_type', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_conversation_types', $prefix, []);
     return $r;
   }
 

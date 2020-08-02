@@ -13,14 +13,14 @@ namespace Socrates\Models;
 /**
  * Database access object for the ChatCache entity.
  */
-class ChatCache extends Socrates\Core_DAO {
+class ChatCache extends Model {
 
   /**
    * Static instance to hold the table name.
    *
    * @var string
    */
-  static $_tableName = 'socrates_chat_cache';
+  protected $table = 'chat_caches';
 
   /**
    * Should Socrates log any modifications to this table in the socrates_log table.
@@ -51,13 +51,6 @@ class ChatCache extends Socrates\Core_DAO {
    */
   public $expires;
 
-  /**
-   * Class constructor.
-   */
-  public function __construct() {
-    $this->__table = 'socrates_chat_cache';
-    parent::__construct();
-  }
 
   /**
    * Returns all the column names of this table
@@ -69,42 +62,42 @@ class ChatCache extends Socrates\Core_DAO {
       Civi::$statics[__CLASS__]['fields'] = [
         'id' => [
           'name' => 'id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'description' => 'Unique ChatCache ID',
           'required' => TRUE,
-          'table_name' => 'socrates_chat_cache',
+          'table_name' => 'chat_caches',
           'entity' => 'ChatCache',
           'bao' => 'Socrates\Models\ChatCache',
           'localizable' => 0,
         ],
         'identifier' => [
           'name' => 'identifier',
-          'type' => Socrates\Utils_Type::T_STRING,
+          'type' => \Socrates\Utils_Type::T_STRING,
           'title' => ts('Identifier'),
           'required' => TRUE,
           'maxlength' => 255,
-          'size' => Socrates\Utils_Type::HUGE,
-          'table_name' => 'socrates_chat_cache',
+          'size' => \Socrates\Utils_Type::HUGE,
+          'table_name' => 'chat_caches',
           'entity' => 'ChatCache',
           'bao' => 'Socrates\Models\ChatCache',
           'localizable' => 0,
         ],
         'value' => [
           'name' => 'value',
-          'type' => Socrates\Utils_Type::T_TEXT,
+          'type' => \Socrates\Utils_Type::T_TEXT,
           'title' => ts('Value'),
           'required' => TRUE,
-          'table_name' => 'socrates_chat_cache',
+          'table_name' => 'chat_caches',
           'entity' => 'ChatCache',
           'bao' => 'Socrates\Models\ChatCache',
           'localizable' => 0,
         ],
         'expires' => [
           'name' => 'expires',
-          'type' => Socrates\Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
+          'type' => \Socrates\Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
           'title' => ts('Expires'),
           'required' => TRUE,
-          'table_name' => 'socrates_chat_cache',
+          'table_name' => 'chat_caches',
           'entity' => 'ChatCache',
           'bao' => 'Socrates\Models\ChatCache',
           'localizable' => 0,
@@ -154,7 +147,7 @@ class ChatCache extends Socrates\Core_DAO {
    * @return array
    */
   public static function &import($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_cache', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_caches', $prefix, []);
     return $r;
   }
 
@@ -166,7 +159,7 @@ class ChatCache extends Socrates\Core_DAO {
    * @return array
    */
   public static function &export($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_cache', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_caches', $prefix, []);
     return $r;
   }
 
@@ -186,7 +179,7 @@ class ChatCache extends Socrates\Core_DAO {
         ],
         'localizable' => FALSE,
         'unique' => TRUE,
-        'sig' => 'socrates_chat_cache::1::identifier',
+        'sig' => 'chat_caches::1::identifier',
       ],
       'expires_key' => [
         'name' => 'expires_key',
@@ -194,7 +187,7 @@ class ChatCache extends Socrates\Core_DAO {
           0 => 'expires',
         ],
         'localizable' => FALSE,
-        'sig' => 'socrates_chat_cache::0::expires',
+        'sig' => 'chat_caches::0::expires',
       ],
     ];
     return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;

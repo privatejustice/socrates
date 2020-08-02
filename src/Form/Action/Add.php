@@ -1,6 +1,8 @@
 <?php
 namespace Socrates\Chat\Form\Action;
 
+use Api;
+
 /**
  * Form controller class
  *
@@ -13,7 +15,7 @@ class Add extends \Socrates\Chat\Form\Good {
 
   function initFields(){
 
-    $matches = socrates_api3('OptionValue', 'get', ['option_group_id' => 'chat_check_type']);
+    $matches = Api::render('OptionValue', 'get', ['option_group_id' => 'chat_check_type']);
 
     $this->fields = [
       'ChatAction:match' => [
@@ -125,7 +127,7 @@ class Add extends \Socrates\Chat\Form\Good {
   }
 
   function preProcessMassage(){
-    $conversationType = socrates_api3('ChatConversationType', 'getsingle', ['id' => $this->entities['ChatQuestion']['before']['conversation_type_id']]);
+    $conversationType = Api::render('ChatConversationType', 'getsingle', ['id' => $this->entities['ChatQuestion']['before']['conversation_type_id']]);
     $this->entities['ChatConversationType'] = [
       'before' => $conversationType,
       'process' => false
@@ -138,7 +140,7 @@ class Add extends \Socrates\Chat\Form\Good {
         'conversation_type_id' => $this->entities['ChatConversationType']['before']['id']
       ]
     ];
-    $contactFields = array_column(socrates_api3('Contact', 'getfields', ['action' => 'get'])['values'], 'title', 'name');
+    $contactFields = array_column(Api::render('Contact', 'getfields', ['action' => 'get'])['values'], 'title', 'name');
     unset($contactFields['id']);
     unset($contactFields['contact_type']);
     unset($contactFields['contact_sub_type']);
@@ -170,15 +172,15 @@ class Add extends \Socrates\Chat\Form\Good {
     // Create serialized match object
     switch ($submitted['ChatAction:match']) {
       case 'Socrates\Check_Anything':
-        $check = new Socrates\Check_Anything();
+        $check = new \Socrates\Check_Anything();
         break;
 
       case 'Socrates\Check_Contains':
-        $check = new Socrates\Check_Contains(['contains' => $submitted['ChatAction:match_contains']]);
+        $check = new \Socrates\Check_Contains(['contains' => $submitted['ChatAction:match_contains']]);
         break;
 
       case 'Socrates\Check_Equals':
-        $check = new Socrates\Check_Equals(['equals'  => $submitted['ChatAction:match_equals']]);
+        $check = new \Socrates\Check_Equals(['equals'  => $submitted['ChatAction:match_equals']]);
         break;
     }
 

@@ -14,14 +14,14 @@ namespace Socrates\Models;
 /**
  * Database access object for the ChatHear entity.
  */
-class ChatHear extends Socrates\Core_DAO {
+class ChatHear extends Model {
 
   /**
    * Static instance to hold the table name.
    *
    * @var string
    */
-  static $_tableName = 'socrates_chat_hear';
+  protected $table = 'chat_hears';
 
   /**
    * Should Socrates log any modifications to this table in the socrates_log table.
@@ -49,14 +49,10 @@ class ChatHear extends Socrates\Core_DAO {
    */
   public $text;
 
-  /**
-   * Class constructor.
-   */
-  public function __construct() {
-    $this->__table = 'socrates_chat_hear';
-    parent::__construct();
-  }
-
+  protected $fillable = [
+    'text', 
+    'chat_conversation_type_id', 
+   ];
   /**
    * Returns foreign keys and entity references.
    *
@@ -66,7 +62,7 @@ class ChatHear extends Socrates\Core_DAO {
   public static function getReferenceColumns() {
     if (!isset(Civi::$statics[__CLASS__]['links'])) {
       Civi::$statics[__CLASS__]['links'] = static ::createReferenceColumns(__CLASS__);
-      Civi::$statics[__CLASS__]['links'][] = new Socrates\Core_Reference_Basic(self::getTableName(), 'chat_conversation_type_id', 'socrates_chat_conversation_type', 'id');
+      Civi::$statics[__CLASS__]['links'][] = new \Socrates\Core_Reference_Basic(self::getTableName(), 'chat_conversation_type_id', 'chat_conversation_types', 'id');
       Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'links_callback', Civi::$statics[__CLASS__]['links']);
     }
     return Civi::$statics[__CLASS__]['links'];
@@ -82,19 +78,19 @@ class ChatHear extends Socrates\Core_DAO {
       Civi::$statics[__CLASS__]['fields'] = [
         'id' => [
           'name' => 'id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'description' => 'Unique ChatHear ID',
           'required' => TRUE,
-          'table_name' => 'socrates_chat_hear',
+          'table_name' => 'chat_hears',
           'entity' => 'ChatHear',
           'bao' => 'Socrates\Models\ChatHear',
           'localizable' => 0,
         ],
         'chat_conversation_type_id' => [
           'name' => 'chat_conversation_type_id',
-          'type' => Socrates\Utils_Type::T_INT,
+          'type' => \Socrates\Utils_Type::T_INT,
           'description' => 'FK to Contact',
-          'table_name' => 'socrates_chat_hear',
+          'table_name' => 'chat_hears',
           'entity' => 'ChatHear',
           'bao' => 'Socrates\Models\ChatHear',
           'localizable' => 0,
@@ -102,12 +98,12 @@ class ChatHear extends Socrates\Core_DAO {
         ],
         'text' => [
           'name' => 'text',
-          'type' => Socrates\Utils_Type::T_STRING,
+          'type' => \Socrates\Utils_Type::T_STRING,
           'title' => ts('Text'),
           'required' => TRUE,
           'maxlength' => 255,
-          'size' => Socrates\Utils_Type::HUGE,
-          'table_name' => 'socrates_chat_hear',
+          'size' => \Socrates\Utils_Type::HUGE,
+          'table_name' => 'chat_hears',
           'entity' => 'ChatHear',
           'bao' => 'Socrates\Models\ChatHear',
           'localizable' => 0,
@@ -157,7 +153,7 @@ class ChatHear extends Socrates\Core_DAO {
    * @return array
    */
   public static function &import($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_hear', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_hears', $prefix, []);
     return $r;
   }
 
@@ -169,7 +165,7 @@ class ChatHear extends Socrates\Core_DAO {
    * @return array
    */
   public static function &export($prefix = FALSE) {
-    $r = Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_hear', $prefix, []);
+    $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_hears', $prefix, []);
     return $r;
   }
 

@@ -2,6 +2,7 @@
 namespace Socrates\Chat\Form\Admin;
 
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 /**
  * Form controller class
@@ -42,9 +43,9 @@ class Facebook extends \Socrates\Chat\Form\Good {
     ];
 
     if($this->entities['Setting']['before']['chatbot_facebook_verify_token'] == ''){
-      $token = Socrates\Chat\Utils::generateToken();
+      $token = \Socrates\Chat\Utils::generateToken();
       $this->entities['Setting']['before']['chatbot_facebook_verify_token'] = $token;
-      socrates_api3('setting', 'create', ['chatbot_facebook_verify_token' => $token]);
+      Api::render('setting', 'create', ['chatbot_facebook_verify_token' => $token]);
     }
 
 

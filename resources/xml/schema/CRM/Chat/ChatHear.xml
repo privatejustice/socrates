@@ -2,7 +2,7 @@
 <table>
   <base>Socrates/Chat</base>
   <class>ChatHear</class>
-  <name>civicrm_chat_hear</name>
+  <name>civicrm_chat_hears</name>
   <comment>FIXME</comment>
   <log>true</log>
   <field>
@@ -22,7 +22,7 @@
   </field>
   <foreignKey>
     <name>chat_conversation_type_id</name>
-    <table>civicrm_chat_conversation_type</table>
+    <table>civicrm_chat_conversation_types</table>
     <key>id</key>
     <onDelete>CASCADE</onDelete>
   </foreignKey>

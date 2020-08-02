@@ -2,6 +2,7 @@
 namespace Socrates\Chat\Form\Good;
 
 use Socrates\Chat\ExtensionUtil as E;
+use Api;
 
 /**
  * Form controller class
@@ -34,7 +35,7 @@ abstract class Delete extends \Socrates\Chat\Form\Good {
         continue;
       }
 
-      $result = socrates_api3($entity['type'], 'delete', ['id' => $entity['before']['id']]);
+      $result = Api::render($entity['type'], 'delete', ['id' => $entity['before']['id']]);
     }
 
     $this->controller->_destination = $this->getDestination();

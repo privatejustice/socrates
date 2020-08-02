@@ -3,7 +3,7 @@
 <table>
   <base>Socrates/Chat</base>
   <class>ChatQuestion</class>
-  <name>civicrm_chat_question</name>
+  <name>civicrm_chat_questions</name>
   <log>true</log>
 
   <field>
@@ -31,7 +31,7 @@
   </field>
   <foreignKey>
     <name>conversation_type_id</name>
-    <table>civicrm_chat_conversation_type</table>
+    <table>civicrm_chat_conversation_types</table>
     <key>id</key>
     <onDelete>CASCADE</onDelete>
   </foreignKey>

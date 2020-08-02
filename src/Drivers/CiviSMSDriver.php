@@ -8,6 +8,7 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 use Symfony\Component\HttpFoundation\Request;
 use BotMan\BotMan\Messages\Incoming\IncomingMessage;
 use Symfony\Component\HttpFoundation\ParameterBag;
+use Api;
 
 /**
  * Chat service for developers
@@ -35,7 +36,7 @@ class CiviSMSDriver extends HttpDriver {
   */
   public function matchesRequest() {
 
-    return $this->payload->get('authentication_token') == socrates_api3('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token']);
+    return $this->payload->get('authentication_token') == Api::render('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token']);
 
   }
 
@@ -109,7 +110,7 @@ class CiviSMSDriver extends HttpDriver {
       }
 
       // use the default SMS provider
-      $providers = Socrates\SMS_Bao\Provider::getProviders(NULL, array('is_default' => 1));
+      $providers = \Socrates\SMS_Bao\Provider::getProviders(NULL, array('is_default' => 1));
       $provider = current($providers);
       $provider['provider_id'] = $provider['id'];
 
@@ -118,7 +119,7 @@ class CiviSMSDriver extends HttpDriver {
 
       $userId = 1;
 
-      $sms = Socrates\Activity_Bao\Activity::sendSMS($contactDetails, $activityParams, $provider, $contactIds, $userId);
+      $sms = \Socrates\Activity_Bao\Activity::sendSMS($contactDetails, $activityParams, $provider, $contactIds, $userId);
   }
 
   /**

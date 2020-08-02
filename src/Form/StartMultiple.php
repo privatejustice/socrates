@@ -1,6 +1,8 @@
 <?php
 namespace Socrates\Chat\Form;
 
+use Api;
+
 class StartMultiple extends Socrates\Contact_Form_Task{
 
   function preProcess() {
@@ -8,9 +10,9 @@ class StartMultiple extends Socrates\Contact_Form_Task{
     Socrates\Utils_System::setTitle(ts('Start a conversation'));
 
     $userParams = ['contact_id' => ["IN" => $this->_contactIds]];
-    $countUsers = socrates_api3('ChatUser', 'getcount', $userParams);
+    $countUsers = Api::render('ChatUser', 'getcount', $userParams);
     $userParams['option.limit'] = $countUsers;
-    $users = socrates_api3('ChatUser', 'get', $userParams)['values'];
+    $users = Api::render('ChatUser', 'get', $userParams)['values'];
 
     foreach($users as $user){
       $this->serviceUsers[$user['service']][] = $user['contact_id'];
@@ -46,7 +48,7 @@ class StartMultiple extends Socrates\Contact_Form_Task{
   public function postProcess() {
 
     $values = $this->exportValues();
-    $session = Socrates\Core_Session::singleton();
+    $session = \Socrates\Core_Session::singleton();
 
     foreach($this->serviceUsers[$values['service']] as $contactId){
       $params = [
@@ -54,7 +56,7 @@ class StartMultiple extends Socrates\Contact_Form_Task{
         'service' => $values['service'],
         'conversation_type_id' => $values['conversation_type_id']
       ];
-      $result = socrates_api3('Contact', 'start_conversation', $params);
+      $result = Api::render('Contact', 'start_conversation', $params);
     }
     Socrates\Core_Session::setStatus(ts('Chat started with %1 contacts', [1 => count($this->serviceUsers[$values['service']])]));
     parent::postProcess();

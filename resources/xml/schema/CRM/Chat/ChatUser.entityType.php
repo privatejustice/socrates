@@ -5,7 +5,7 @@ return array (
   0 => 
   array (
     'name' => 'ChatUser',
-    'class' => 'Socrates\Chat\DAO_ChatUser',
+    'class' => 'Socrates\Models\ChatUser',
     'table' => 'civicrm_chatuser',
   ),
 );

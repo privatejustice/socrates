@@ -47,7 +47,7 @@ class Base {
   static public function instance() {
     if (!self::$instance) {
       // FIXME auto-generate
-      self::$instance = new Socrates\Chat\Upgrader(
+      self::$instance = new \Socrates\Chat\Upgrader(
         'socrates-chatbot',
         realpath(__DIR__ . '/../../../')
       );
@@ -100,7 +100,7 @@ class Base {
    * @return bool
    */
   protected static function executeCustomDataFileByAbsPath($xml_file) {
-    $import = new Socrates\Utils_Migrate_Import();
+    $import = new \Socrates\Utils_Migrate_Import();
     $import->run($xml_file);
     return TRUE;
   }
@@ -128,10 +128,10 @@ class Base {
    */
   public function executeSqlTemplate($tplFile) {
     // Assign multilingual variable to Smarty.
-    $upgrade = new Socrates\Upgrade_Form();
+    $upgrade = new \Socrates\Upgrade_Form();
 
-    $tplFile = Socrates\Utils_File::isAbsolute($tplFile) ? $tplFile : $this->extensionDir . DIRECTORY_SEPARATOR . $tplFile;
-    $smarty = Socrates\Core_Smarty::singleton();
+    $tplFile = \Socrates\Utils_File::isAbsolute($tplFile) ? $tplFile : $this->extensionDir . DIRECTORY_SEPARATOR . $tplFile;
+    $smarty = \Socrates\Core_Smarty::singleton();
     $smarty->assign('domainID', Socrates\Core_Config::domainID());
     Socrates\Utils_File::sourceSQLFile(
       CIVISocrates\DSN, $smarty->fetch($tplFile), NULL, TRUE
@@ -164,7 +164,7 @@ class Base {
   public function addTask($title) {
     $args = func_get_args();
     $title = array_shift($args);
-    $task = new Socrates\Queue_Task(
+    $task = new \Socrates\Queue_Task(
       array(get_class($this), '_queueAdapter'),
       $args,
       $title
@@ -209,14 +209,14 @@ class Base {
 
         // note: don't use addTask() because it sets weight=-1
 
-        $task = new Socrates\Queue_Task(
+        $task = new \Socrates\Queue_Task(
           array(get_class($this), '_queueAdapter'),
           array('upgrade_' . $revision),
           $title
         );
         $this->queue->createItem($task);
 
-        $task = new Socrates\Queue_Task(
+        $task = new \Socrates\Queue_Task(
           array(get_class($this), '_queueAdapter'),
           array('setCurrentRevision', $revision),
           $title
@@ -249,7 +249,7 @@ class Base {
   }
 
   public function getCurrentRevision() {
-    $revision = Socrates\Core_Bao\Extension::getSchemaVersion($this->extensionName);
+    $revision = \Socrates\Core_Bao\Extension::getSchemaVersion($this->extensionName);
     if (!$revision) {
       $revision = $this->getCurrentRevisionDeprecated();
     }
@@ -258,7 +258,7 @@ class Base {
 
   private function getCurrentRevisionDeprecated() {
     $key = $this->extensionName . ':version';
-    if ($revision = Socrates\Core_Bao\Setting::getItem('Extension', $key)) {
+    if ($revision = \Socrates\Core_Bao\Setting::getItem('Extension', $key)) {
       $this->revisionStorageIsDeprecated = TRUE;
     }
     return $revision;
@@ -273,7 +273,7 @@ class Base {
 
   private function deleteDeprecatedRevision() {
     if ($this->revisionStorageIsDeprecated) {
-      $setting = new Socrates\Core_Bao\Setting();
+      $setting = new \Socrates\Core_Bao\Setting();
       $setting->name = $this->extensionName . ':version';
       $setting->delete();
       Socrates\Core_Error::debug_log_message("Migrated extension schema revision ID for {$this->extensionName} from socrates_setting (deprecated) to civicrm_extension.\n");

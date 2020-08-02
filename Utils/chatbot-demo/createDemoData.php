@@ -1,4 +1,5 @@
 <?php
+use Api;
 $tableTranslation = [];
 function getTableName($entityName){
   global $tableTranslation;
@@ -17,12 +18,12 @@ function getEntityName($tableName){
 }
 
 try {
-  $batchId = socrates_api3('Batch', 'getvalue', [
+  $batchId = Api::render('Batch', 'getvalue', [
     'return' => 'id',
     'name' => 'chatbotDemoData'
   ]);
 } catch (\Exception $e) {
-  $batch = socrates_api3('Batch', 'create', [
+  $batch = Api::render('Batch', 'create', [
     'title' => 'chatbotDemoData',
     'status_id' => 'Open'
   ]);
@@ -30,30 +31,30 @@ try {
 }
 
 //Clear conversation 'state' and chat users
-$entity = new Socrates\Chat\DAO_ChatCache;
+$entity = new \Socrates\Models\ChatCache;
 $entity->whereAdd('id > 0');
 $entity->delete(DB_DATAOBJECT_WHEREADD_ONLY);
 
-$entity = new Socrates\Chat\DAO_ChatUser;
+$entity = new \Socrates\Models\ChatUser;
 $entity->whereAdd('id > 0');
 $entity->delete(DB_DATAOBJECT_WHEREADD_ONLY);
 
-$entityCount =  socrates_api3('EntityBatch', 'getcount', [
+$entityCount =  Api::render('EntityBatch', 'getcount', [
   'batch_id' => $batchId
 ]
 );
 
-$entitiesToDelete = socrates_api3('EntityBatch', 'get', [
+$entitiesToDelete = Api::render('EntityBatch', 'get', [
   'batch_id' => $batchId,
   'options.limit' => $entityCount
 ]);
 
 foreach($entitiesToDelete['values'] as $d){
   try {
-    socrates_api3(getEntityName($d['entity_table']), 'delete', ['id' => $d['entity_id']]);
+    Api::render(getEntityName($d['entity_table']), 'delete', ['id' => $d['entity_id']]);
   } catch (\Exception $e) {}
   try {
-    socrates_api3('EntityBatch', 'delete', ['id' => $d['id']]);
+    Api::render('EntityBatch', 'delete', ['id' => $d['id']]);
   } catch (\Exception $e) {}
 }
 
@@ -114,67 +115,67 @@ $entities['ChatAction'] = [
   'haveDog' => [
     'question_id' => '{{ChatQuestion.dogorcat}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'dog'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'dog'])),
     'action_data' => '{{ChatQuestion.haveDog}}'
   ],
   'dogNewsletter' => [
     'question_id' => '{{ChatQuestion.haveDog}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => '{{ChatQuestion.dogNewsletter}}'
   ],
   'dogNewsletterSignup' => [
     'question_id' => '{{ChatQuestion.dogNewsletter}}',
     'type' => 'group',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => '{{Group.dogNewsletter}}'
   ],
   'dogNewsletterSignupConfirmYes' => [
     'question_id' => '{{ChatQuestion.dogNewsletter}}',
     'type' => 'say',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => "OK - we'll sign you up to the Dog newsletter!"
   ],
   'dogNewsletterSignupConfirmNo' => [
     'question_id' => '{{ChatQuestion.dogNewsletter}}',
     'type' => 'say',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'no'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'no'])),
     'action_data' => "Understood - we won't add you to our Dog newsletter"
   ],
   'haveCat' => [
     'question_id' => '{{ChatQuestion.dogorcat}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'cat'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'cat'])),
     'action_data' => '{{ChatQuestion.haveCat}}'
   ],
   'catsName' => [
     'question_id' => '{{ChatQuestion.haveCat}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
+    'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'yes'])),
     'action_data' => '{{ChatQuestion.catsName}}'
   ],
   'catsNameAddField' => [
     'question_id' => '{{ChatQuestion.catsName}}',
     'type' => 'field',
-    'check_object' => serialize(new Socrates\Check_Anything()),
+    'check_object' => serialize(new \Socrates\Check_Anything()),
     'action_data' => 'placeholder'
   ],
   'movie' => [
     'question_id' => '{{ChatQuestion.movie}}',
     'type' => 'next',
-    'check_object' => serialize(new Socrates\Check_Anything()),
+    'check_object' => serialize(new \Socrates\Check_Anything()),
     'action_data' => '{{ChatQuestion.movieTimes}}',
   ],
   // 'askAboutPetSurvey' => [
   //   'question_id' => '{{ChatQuestion.movie}}',
   //   'type' => 'next',
-  //   'check_object' => serialize(new Socrates\Check_Anything()),
+  //   'check_object' => serialize(new \Socrates\Check_Anything()),
   //   'action_data' => '{{ChatQuestion.petSurvey}}'
   // ],
   // 'startPetSurvey' => [
   //   'question_id' => '{{ChatQuestion.petSurvey}}',
   //   'type' => 'conversation',
-  //   'check_object' => serialize(new Socrates\Check_Contains(['contains' => 'yes'])),
+  //   'check_object' => serialize(new \Socrates\Check_Contains(['contains' => 'yes'])),
   //   'action_data' => '{{ChatConversationType.pets}}'
   // ]
 ];
@@ -234,7 +235,7 @@ function createEntities(&$entities, &$created, $batchId){
       if(substitute($params, $created)){
         echo "Processing $type.$tag...\r";
         try {
-          $entityResult = socrates_api3($type, 'create', $params);
+          $entityResult = Api::render($type, 'create', $params);
         } catch (\Exception $e) {
           var_dump($params);
           exit;
@@ -244,7 +245,7 @@ function createEntities(&$entities, &$created, $batchId){
           echo "Updated $type.$tag({$entityResult['id']})\n";
         }else{
           echo "Created $type.$tag({$entityResult['id']})\n";
-          $batchResult = socrates_api3('EntityBatch', 'create', [
+          $batchResult = Api::render('EntityBatch', 'create', [
             'entity_table' => getTableName($type),
             'entity_id' => $entityResult['id'],
             'batch_id' => $batchId

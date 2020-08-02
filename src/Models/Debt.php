@@ -2,7 +2,6 @@
 
 namespace Socrates\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Socrates\Traits\HasCurrency;
 
 class Debt extends Model

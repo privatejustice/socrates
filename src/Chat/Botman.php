@@ -5,6 +5,7 @@ use BotMan\BotMan\BotMan as BotManBase;
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Facebook\FacebookDriver;
+use Api;
 
 class Botman {
 
@@ -27,7 +28,7 @@ class Botman {
 
 
     DriverManager::loadDriver($driver);
-    $botman = BotManFactory::create($config, new Socrates\Chat\Cache);
+    $botman = BotManFactory::create($config, new \Socrates\Chat\Cache);
 
     return $botman;
 
@@ -60,21 +61,21 @@ class Botman {
       case 'Facebook':
         return [
           'facebook' => [
-            'token' => socrates_api3('setting', 'getvalue', ['name' => 'chatbot_facebook_page_access_token']),
-            'app_secret' => socrates_api3('setting', 'getvalue', ['name' => 'chatbot_facebook_app_secret']),
-            'verification' => socrates_api3('setting', 'getvalue', ['name' => 'chatbot_facebook_verify_token'])
+            'token' => Api::render('setting', 'getvalue', ['name' => 'chatbot_facebook_page_access_token']),
+            'app_secret' => Api::render('setting', 'getvalue', ['name' => 'chatbot_facebook_app_secret']),
+            'verification' => Api::render('setting', 'getvalue', ['name' => 'chatbot_facebook_verify_token'])
           ]
         ];
 
       case 'DevChat':
         return [
-          'endpoint' => socrates_api3('setting', 'getvalue', ['name' => 'chatbot_devchat_endpoint'])
+          'endpoint' => Api::render('setting', 'getvalue', ['name' => 'chatbot_devchat_endpoint'])
         ];
 
       case 'CiviSMS':
 
         return [
-          'authentication_token' => socrates_api3('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token'])
+          'authentication_token' => Api::render('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token'])
         ];
 
     }

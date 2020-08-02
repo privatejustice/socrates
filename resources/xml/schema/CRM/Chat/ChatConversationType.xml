@@ -2,7 +2,7 @@
 <table>
   <base>Socrates/Chat</base>
   <class>ChatConversationType</class>
-  <name>civicrm_chat_conversation_type</name>
+  <name>civicrm_chat_conversation_types</name>
   <log>true</log>
   <field>
     <name>id</name>

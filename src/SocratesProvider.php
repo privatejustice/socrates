@@ -14,17 +14,20 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Str;
 use Cerebro\CerebroProvider;
 use Tramite\TramiteProvider;
-use BotMan\Studio\Providers\DriverServiceProvider as ServiceProvider;
 use BotMan\Tinker\TinkerServiceProvider;
 use BotMan\BotMan\BotManServiceProvider;
 use BotMan\Studio\Providers\StudioServiceProvider;
-use Socrates\Services\Socrates;
 use Socrates\Services\SocratesService;
+use Socrates\Facades\Socrates as SocratesFacade;
+use Socrates\Services\ApiService;
+use Socrates\Facades\Api as ApiFacade;
 
+use BotMan\Studio\Providers\DriverServiceProvider as ServiceProvider;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Facebook\FacebookDriver;
 use BotMan\Drivers\Slack\SlackDriver;
 use BotMan\Drivers\Telegram\TelegramDriver;
+use BotMan\Drivers\Web\WebDriver;
 
 class SocratesProvider extends ServiceProvider
 {
@@ -35,7 +38,8 @@ class SocratesProvider extends ServiceProvider
      * @var array
      */
     protected $drivers = [
-        SlackDriver::class
+        SlackDriver::class,
+        WebDriver::class
     ];
 
     /**
@@ -76,7 +80,11 @@ class SocratesProvider extends ServiceProvider
      */
     protected function mapBotManCommands()
     {
-        require __DIR__.'/../routes/botman.php';
+        Route::group([
+            'namespace' => '\Socrates\Http\Controllers',
+        ], function (/**$router**/) {
+            require __DIR__.'/../routes/botman.php';
+        });
     }
 
     /**
@@ -99,26 +107,18 @@ class SocratesProvider extends ServiceProvider
         );
 
         $loader = AliasLoader::getInstance();
+        
         $loader->alias('Socrates', SocratesFacade::class);
-
         $this->app->singleton(
             'socrates', function () {
-                return new Socrates();
+                return new SocratesService();
             }
         );
-
-        /**
-         * Singleton Socrates
-         */
+        
+        $loader->alias('Api', ApiFacade::class);
         $this->app->singleton(
-            SocratesService::class, function ($app) {
-                Log::debug('Singleton Socrates');
-                // try {
-                //     throw new \Exception();
-                // } catch (\Exception $e) {
-                //     dd($e);
-                // }
-                return new SocratesService(\Illuminate\Support\Facades\Config::get('generators.loader.models'));
+            'api', function () {
+                return new ApiService();
             }
         );
     }
