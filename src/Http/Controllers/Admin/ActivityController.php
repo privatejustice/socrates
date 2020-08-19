@@ -28,7 +28,7 @@ class ActivityController extends Base
         
 
         return view(
-            'facilitador::components.repositories.index',
+            'support::components.repositories.index',
             compact('service', 'registros')
         );
 
