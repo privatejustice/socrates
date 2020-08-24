@@ -12,7 +12,7 @@
         "socrates",
         "laravel"
     ],
-    "license": "ANCAP",
+    "license": "MIT",
     "homepage": "https://privatejustice.com/packages/core",
     "support": {
         "email": "help@privatejustice.com.br",
