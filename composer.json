@@ -28,7 +28,7 @@
         }
     ],
     "require": {
-        "php": ">=7.0",
+        "php": "^7.4",
         "privatejustice/tramite": "dev-master",
         "privatejustice/cerebro": "dev-master",
         "vanderlee/php-sentence":       ">=1.0",
