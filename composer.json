@@ -34,26 +34,26 @@
         "vanderlee/php-sentence":       ">=1.0",
         "patrickschur/language-detection": "^4.0",
         "fzaninotto/faker":             "*",
-        "botman/botman": "~2.6",
-        "botman/driver-web": "~1.5",
+        "botman/botman": "^2.6",
+        "guzzlehttp/guzzle": "^7.0",
+        "botman/driver-web": "^1.5",
         "sierratecnologia/crypto":          "dev-master",
         "sierratecnologia/operador": "dev-master",
         "sierratecnologia/telefonica":      "dev-master",
-        "botman/driver-slack": "~2.2",
-        "ricardosierra/driver-discord": ">=1.0.7",
-        "botman/driver-twitter": "~1.0",
+        "botman/driver-twitter": "^1.0",
         "botman/driver-telegram": "^1.5",
-        "botman/driver-facebook": "~1.10",
-        "botman/studio-addons": "dev-master",
-        "sierratecnologia/transmissor": ">=1.0.7",
-        "fideloper/proxy": "~4.3",
+        "botman/driver-facebook": "^1.10",
+        "botman/studio-addons": "^1.6",
+        "fideloper/proxy": "^4.3",
         "laravel/framework": "^7.0|^8.0",
-        "laravel/tinker": "~2.4",
-        "clue/stdio-react": "~2.3",
-        "mpociot/slack-client": "~1.2"
+        "laravel/tinker": "^2.4",
+        "clue/stdio-react": "^2.3"
     },
     "suggest": {
-        "botman/tinker": "~1.2"
+        "ricardosierra/driver-discord": ">=1.0.8",
+        "botman/driver-slack": "^2.2",
+        "botman/tinker": "~1.2",
+        "mpociot/slack-client": "~1.2"
     },
     "autoload": {
         "psr-4": {
@@ -72,10 +72,6 @@
             "options": {
                 "symlink": true
             }
-        },
-        {
-            "type": "vcs",
-            "url":  "git@github.com:botman/studio-addons.git"
         }
     ],
     "minimum-stability": "dev",
