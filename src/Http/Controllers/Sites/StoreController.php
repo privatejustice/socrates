@@ -10,7 +10,9 @@ use BotMan\BotMan\BotMan;
 class StoreController extends Controller
 {
 
-    /** @var \Socrates\Services\Socrates\Services\Socrates */
+    /**
+     * @var \Socrates\Services\Socrates\Services\Socrates 
+     */
     protected $dear;
 
     public function __construct(Socrates $dear)
@@ -22,7 +24,7 @@ class StoreController extends Controller
      * Handle the incoming request.
      *
      * @param \BotMan\BotMan\BotMan $bot
-     * @param string $url
+     * @param string                $url
      *
      * @return void
      */

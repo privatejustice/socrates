@@ -4,16 +4,18 @@ namespace Socrates\Chat\Page;
 use Socrates\Chat\ExtensionUtil as E;
 use Api;
 
-class ConversationType extends Socrates\Core_Page {
+class ConversationType extends Socrates\Core_Page
+{
 
-  public function run() {
+    public function run()
+    {
 
-    // TODO Implement paging so we can display more that 25 conversation types :)
+        // TODO Implement paging so we can display more that 25 conversation types :)
 
-  $this->assign('conversationTypes', Api::render('ChatConversationType', 'get')['values']);
+        $this->assign('conversationTypes', Api::render('ChatConversationType', 'get')['values']);
 
-  parent::run();
+        parent::run();
 
-  }
+    }
 
 }

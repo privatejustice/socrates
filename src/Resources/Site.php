@@ -36,9 +36,11 @@ class Site extends ApiResource
     {
         parent::__construct($attributes, $socrates);
 
-        $this->checks = array_map(function (array $checkAttributes) use ($socrates) {
-            return new Check($checkAttributes, $socrates);
-        }, $this->checks);
+        $this->checks = array_map(
+            function (array $checkAttributes) use ($socrates) {
+                return new Check($checkAttributes, $socrates);
+            }, $this->checks
+        );
     }
 
     /**
@@ -84,9 +86,9 @@ class Site extends ApiResource
     /**
      * Get the uptime percentages for a site.
      *
-     * @param string $startedAt  Must be in format Ymdhis
-     * @param string $endedAt  Must be in format Ymdhis
-     * @param string $split  Use hour, day or month
+     * @param string $startedAt Must be in format Ymdhis
+     * @param string $endedAt   Must be in format Ymdhis
+     * @param string $split     Use hour, day or month
      *
      * @return array
      */
@@ -98,8 +100,8 @@ class Site extends ApiResource
     /**
      * Get the downtime periods for a site.
      *
-     * @param string $startedAt  Must be in format Ymdhis
-     * @param string $endedAt  Must be in format Ymdhis
+     * @param string $startedAt Must be in format Ymdhis
+     * @param string $endedAt   Must be in format Ymdhis
      *
      * @return array
      */

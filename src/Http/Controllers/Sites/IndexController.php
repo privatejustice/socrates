@@ -12,7 +12,9 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 class IndexController extends Controller
 {
 
-    /** @var \Socrates\Services\Socrates\Services\Socrates */
+    /**
+     * @var \Socrates\Services\Socrates\Services\Socrates 
+     */
     protected $dear;
 
     public function __construct(Socrates $dear)
@@ -39,9 +41,11 @@ class IndexController extends Controller
             return;
         }
 
-        $buttons = $sites->map(function (Site $site) {
-            return Button::create($site->getResume())->value("/site {$site->id}");
-        })->toArray();
+        $buttons = $sites->map(
+            function (Site $site) {
+                return Button::create($site->getResume())->value("/site {$site->id}");
+            }
+        )->toArray();
 
         $message = (new Question(trans('socrates.sites.list_message')))->addButtons($buttons);
 

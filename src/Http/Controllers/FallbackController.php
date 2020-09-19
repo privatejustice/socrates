@@ -7,7 +7,9 @@ use BotMan\BotMan\BotMan;
 
 class FallbackController extends Controller
 {
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
     const FALLBACK_REPLIES = [

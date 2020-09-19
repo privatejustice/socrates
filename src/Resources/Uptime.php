@@ -4,9 +4,13 @@ namespace Socrates\Resources;
 
 class Uptime extends ApiResource
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $datetime;
 
-    /** @var float */
+    /**
+     * @var float 
+     */
     public $uptimePercentage;
 }

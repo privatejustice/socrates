@@ -23,8 +23,10 @@ class ShowController extends Controller
 
         $bot->typesAndWaits(1);
 
-        $bot->reply(file_get_contents(resource_path('markdown/help.md')), [
+        $bot->reply(
+            file_get_contents(resource_path('markdown/help.md')), [
             'parse_mode' => 'Markdown'
-        ]);
+            ]
+        );
     }
 }

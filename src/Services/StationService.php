@@ -20,9 +20,11 @@ class StationService
     public function all()
     {
         if (! $this->stations) {
-            $this->stations = collect($this->getStations())->map(function ($station) {
-                return Station::createFromPayload($station);
-            });
+            $this->stations = collect($this->getStations())->map(
+                function ($station) {
+                    return Station::createFromPayload($station);
+                }
+            );
         }
 
         return $this->stations;
@@ -37,27 +39,33 @@ class StationService
     {
         preg_match_all(self::REGEX, $this->query(), $matches);
 
-        return array_map(function ($index) use ($matches) {
+        return array_map(
+            function ($index) use ($matches) {
 
-            return [
+                return [
                 'id' => $matches['id'][$index],
                 'name' => $matches['name'][$index],
                 'parkings' => $matches['parkings'][$index],
                 'bikes' => $matches['bikes'][$index],
                 'latitude' => $matches['latitude'][$index],
                 'longitude' => $matches['longitude'][$index],
-            ];
-        }, array_keys($matches[0]));
+                ];
+            }, array_keys($matches[0])
+        );
     }
 
     private function query()
     {
-        return file_get_contents('https://www.girocleta.cat', false, stream_context_create([
-            'ssl' => [
+        return file_get_contents(
+            'https://www.girocleta.cat', false, stream_context_create(
+                [
+                'ssl' => [
                 'verify_peer' => false,
                 'verify_peer_name' => false,
-            ],
-        ]));
+                ],
+                ]
+            )
+        );
     }
 
     /**
@@ -87,7 +95,7 @@ class StationService
      *
      * @param float $latitude
      * @param float $longitude
-     * @param int $limit
+     * @param int   $limit
      *
      * @return \Illuminate\Support\Collection
      */
@@ -105,15 +113,19 @@ class StationService
      */
     public function findByText($text)
     {
-        /** @var Station $station */
-        $station = $this->all()->filter(function (Station $station) use ($text) {
-            similar_text(strtolower($station->name), strtolower($text), $percentage);
+        /**
+ * @var Station $station 
+*/
+        $station = $this->all()->filter(
+            function (Station $station) use ($text) {
+                similar_text(strtolower($station->name), strtolower($text), $percentage);
 
-            $station->percentage = $percentage;
+                $station->percentage = $percentage;
 
-            return $percentage >= 60;
+                return $percentage >= 60;
 
-        })->sortByDesc('percentage')->first();
+            }
+        )->sortByDesc('percentage')->first();
 
         if ($station) {
             return $station->foundByText();

@@ -11,7 +11,9 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 class DeleteReminderConversation extends Conversation
 {
 
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
     public function __construct()
@@ -35,39 +37,45 @@ class DeleteReminderConversation extends Conversation
         $question = Question::create('Quin recordatori vols esborrar?')
             ->addButtons($reminders->map->asButton()->toArray());
 
-        return $this->ask($question, function (Answer $answer) {
+        return $this->ask(
+            $question, function (Answer $answer) {
 
-            $this->reminder = auth()->user()->reminders()->find($answer->getValue());
+                $this->reminder = auth()->user()->reminders()->find($answer->getValue());
 
-            if (! $this->reminder) {
-                return $this->say('No he trobat el recordatori.');
+                if (! $this->reminder) {
+                    return $this->say('No he trobat el recordatori.');
+                }
+
+                return $this->askConfirmation();
             }
-
-            return $this->askConfirmation();
-        });
+        );
     }
 
     public function askConfirmation()
     {
 
         $question = Question::create('⚠️ Estàs segur que vols esborrar aquest recordatori? Aquesta acció no es pot desfer ⚠️')
-                ->addButtons([
+            ->addButtons(
+                [
                     Button::create('Si')->value('si'),
                     Button::create('No')->value('no'),
-                ]);
+                    ]
+            );
 
-        return $this->ask($question, function (Answer $answer) {
+        return $this->ask(
+            $question, function (Answer $answer) {
 
-            $answerValue = $answer->isInteractiveMessageReply() ? $answer->getValue() : $answer->getText();
+                $answerValue = $answer->isInteractiveMessageReply() ? $answer->getValue() : $answer->getText();
 
-            if (strtolower($answerValue) == 'si') {
+                if (strtolower($answerValue) == 'si') {
 
-                $this->reminder->delete();
+                    $this->reminder->delete();
 
-                return $this->say("He esborrat el recordatori");
+                    return $this->say("He esborrat el recordatori");
+                }
+
+                return $this->say("El recordatori continuarà actiu una mica més 🙂");
             }
-
-            return $this->say("El recordatori continuarà actiu una mica més 🙂");
-        });
+        );
     }
 }

@@ -4,9 +4,13 @@ namespace Socrates\Resources;
 
 class Downtime extends ApiResource
 {
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $startedAt;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $endedAt;
 }

@@ -35,9 +35,11 @@ class ReminderService
 
     public function asButtons()
     {
-        return collect($this->all())->map(function ($text, $reminder) {
-            return Button::create($text)->value($reminder);
-        })->values()->toArray();
+        return collect($this->all())->map(
+            function ($text, $reminder) {
+                return Button::create($text)->value($reminder);
+            }
+        )->values()->toArray();
     }
 
     public function find($reminder)
@@ -51,9 +53,11 @@ class ReminderService
 
     public function possibleDaysButtons()
     {
-        return collect(self::DAYS_OPTIONS)->map(function ($text, $value) {
-            return Button::create($text)->value($value);
-        })->toArray();
+        return collect(self::DAYS_OPTIONS)->map(
+            function ($text, $value) {
+                return Button::create($text)->value($value);
+            }
+        )->toArray();
     }
 
     public function parseHoursFromInput($input)
@@ -63,7 +67,8 @@ class ReminderService
         foreach (self::POSSIBLE_TIME_FORMATS as $format) {
             try {
                 return Carbon::createFromFormat($format, $input)->format('H:i');
-            } catch(\Exception $e) {}
+            } catch(\Exception $e) {
+            }
         }
 
         return null;
@@ -85,11 +90,13 @@ class ReminderService
             return $days->except('saturday', 'sunday');
         }
 
-        return $days->filter(function ($day) use ($input) {
+        return $days->filter(
+            function ($day) use ($input) {
 
-            return str_contains(strtolower($input), strtolower($day));
+                return str_contains(strtolower($input), strtolower($day));
 
-        });
+            }
+        );
     }
 
 }

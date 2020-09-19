@@ -9,9 +9,10 @@ use Socrates\Chat\ExtensionUtil as E;
  * @see https://wiki.socrates.org/confluence/display/CRMDOC/QuickForm+Reference
  */
 
-class Edit extends \Socrates\Chat\Form\Good {
+class Edit extends \Socrates\Chat\Form\Good
+{
 
-  var $fields = [
+    var $fields = [
     1 => [
       'entity' => 'ChatQuestion',
       'field' => 'text',
@@ -19,34 +20,38 @@ class Edit extends \Socrates\Chat\Form\Good {
       'required' => true,
       'help' => 'The text of the question',
     ]
-  ];
+    ];
 
-  var $entities = [
+    var $entities = [
     'ChatQuestion' => [
       'type' => 'ChatQuestion',
       'param' => 'id',
     ]
-  ];
-
-  var $submitText = 'Save';
-
-  function getDelete() {
-    return [
-      'path' => 'socrates/chat/question/delete',
-      'query' => 'id='.$this->entities['ChatQuestion']['before']['id']
     ];
-  }
 
-  function getGoodTitle(){
-    return E::ts('Edit question: ').$this->entities['ChatQuestion']['before']['text'];
-  }
+    var $submitText = 'Save';
 
-  function getDestination() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatQuestion']['before']['conversation_type_id']);
-  }
+    function getDelete()
+    {
+        return [
+        'path' => 'socrates/chat/question/delete',
+        'query' => 'id='.$this->entities['ChatQuestion']['before']['id']
+        ];
+    }
 
-  function getGoodContext() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatQuestion']['before']['conversation_type_id']);
-  }
+    function getGoodTitle()
+    {
+        return E::ts('Edit question: ').$this->entities['ChatQuestion']['before']['text'];
+    }
+
+    function getDestination()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatQuestion']['before']['conversation_type_id']);
+    }
+
+    function getGoodContext()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatQuestion']['before']['conversation_type_id']);
+    }
 
 }

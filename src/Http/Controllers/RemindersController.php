@@ -11,7 +11,9 @@ use BotMan\BotMan\BotMan;
 class RemindersController extends Controller
 {
 
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
     public function __construct()
@@ -29,13 +31,15 @@ class RemindersController extends Controller
 
         $bot->reply('Aquests són els teus recordatoris');
 
-        $reminders->each(function (Reminder $reminder) use ($bot) {
-            $bot->reply(
-                "Recorda'm {$reminder->type_str_lower} a {$this->stationService->find($reminder->station_id)->name}" . PHP_EOL .
-                "{$reminder->getDaysList()}" . PHP_EOL .
-                "a les {$reminder->time}"
-            );
-        });
+        $reminders->each(
+            function (Reminder $reminder) use ($bot) {
+                $bot->reply(
+                    "Recorda'm {$reminder->type_str_lower} a {$this->stationService->find($reminder->station_id)->name}" . PHP_EOL .
+                    "{$reminder->getDaysList()}" . PHP_EOL .
+                    "a les {$reminder->time}"
+                );
+            }
+        );
 
     }
 

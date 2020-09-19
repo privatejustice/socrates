@@ -9,22 +9,34 @@ use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 class Station
 {
 
-    /** @var int */
+    /**
+     * @var int 
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $name;
 
-    /** @var \Socrates\Conversations\Interactions\Location */
+    /**
+     * @var \Socrates\Conversations\Interactions\Location 
+     */
     public $location;
 
-    /** @var int */
+    /**
+     * @var int 
+     */
     public $parkings;
 
-    /** @var int */
+    /**
+     * @var int 
+     */
     public $bikes;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $foundBy;
 
     public static function createFromPayload($payload)

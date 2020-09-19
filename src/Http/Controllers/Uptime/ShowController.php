@@ -10,7 +10,9 @@ use BotMan\BotMan\BotMan;
 class ShowController extends Controller
 {
 
-    /** @var \Socrates\Services\Socrates\Services\Socrates */
+    /**
+     * @var \Socrates\Services\Socrates\Services\Socrates 
+     */
     protected $dear;
 
     public function __construct(Socrates $dear)
@@ -22,7 +24,7 @@ class ShowController extends Controller
      * Handle the incoming request.
      *
      * @param \BotMan\BotMan\BotMan $bot
-     * @param string $url
+     * @param string                $url
      *
      * @return void
      * @throws \Socrates\Exceptions\SiteNotFoundException
@@ -35,25 +37,37 @@ class ShowController extends Controller
 
         $uptime = $this->dear->getSiteUptime($site->id);
 
-        $daysWithDowntime = $uptime->filter(function (Uptime $uptime) {
-            return $uptime->uptimePercentage !== 100;
+        $daysWithDowntime = $uptime->filter(
+            function (Uptime $uptime) {
+                return $uptime->uptimePercentage !== 100;
 
-        })->each(function (Uptime $uptime) use ($bot) {
+            }
+        )->each(
+            function (Uptime $uptime) use ($bot) {
 
-            $bot->reply(trans('socrates.uptime.result', [
-                'percentage' => $uptime->uptimePercentage,
-                'date' => $uptime->datetime,
-                'emoji' => $uptime->getPercentageEmoji()
-                ]));
+                $bot->reply(
+                    trans(
+                        'socrates.uptime.result', [
+                        'percentage' => $uptime->uptimePercentage,
+                        'date' => $uptime->datetime,
+                        'emoji' => $uptime->getPercentageEmoji()
+                        ]
+                    )
+                );
 
-        });
+            }
+        );
 
         if ($daysWithDowntime->isEmpty()) {
             $firstDay = $uptime->reverse()->first();
             $lastDay = $uptime->first();
-            $bot->reply(trans('socrates.uptime.perfect', [
-                'begin' => $firstDay->datetime, 'end' => $lastDay->datetime
-            ]));
+            $bot->reply(
+                trans(
+                    'socrates.uptime.perfect', [
+                    'begin' => $firstDay->datetime, 'end' => $lastDay->datetime
+                    ]
+                )
+            );
         }
 
         $bot->reply($site->getKeyboard());

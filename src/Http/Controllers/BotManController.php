@@ -28,7 +28,8 @@ class BotManController extends Controller
 
     /**
      * Loaded through routes/botman.php
-     * @param  BotMan $bot
+     *
+     * @param BotMan $bot
      */
     public function startConversation(BotMan $bot)
     {

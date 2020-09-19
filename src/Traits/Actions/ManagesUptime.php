@@ -7,10 +7,10 @@ use Socrates\Resources\Uptime;
 trait ManagesUptime
 {
     /**
-     * @param int $siteId
-     * @param string $startedAt  Must be in format Ymdhis
-     * @param string $endedAt  Must be in format Ymdhis
-     * @param string $split  Use hour, day or month
+     * @param int    $siteId
+     * @param string $startedAt Must be in format Ymdhis
+     * @param string $endedAt   Must be in format Ymdhis
+     * @param string $split     Use hour, day or month
      *
      * @return array
      */

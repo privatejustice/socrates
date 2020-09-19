@@ -14,10 +14,14 @@ class RegisterGroupConversation extends Conversation
 
     use HasCurrency;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $language;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $currency;
 
     /**
@@ -36,48 +40,54 @@ class RegisterGroupConversation extends Conversation
 
         $this->say(trans('groups.new_group_greetings'));
 
-        return $this->ask($this->getQuestionLanguage(), function (Answer $answer) {
-            if (! $answer->isInteractiveMessageReply()) {
-                return;
+        return $this->ask(
+            $this->getQuestionLanguage(), function (Answer $answer) {
+                if (! $answer->isInteractiveMessageReply()) {
+                    return;
+                }
+
+                $this->language = $answer->getValue();
+
+                return $this->askCurrency();
             }
-
-            $this->language = $answer->getValue();
-
-            return $this->askCurrency();
-        });
+        );
     }
 
     public function askCurrency()
     {
         app()->setLocale($this->language);
 
-        return $this->ask($this->getQuestionCurrency(), function (Answer $answer) {
-            if (! $answer->isInteractiveMessageReply()) {
-                return;
+        return $this->ask(
+            $this->getQuestionCurrency(), function (Answer $answer) {
+                if (! $answer->isInteractiveMessageReply()) {
+                    return;
+                }
+
+                app()->setLocale($this->language);
+
+                $this->currency = $answer->getValue();
+
+                $this->say(trans('groups.new_group_created'));
+
+                $group = Group::updateOrCreateFromChat(
+                    collect($this->bot->getMessage()->getPayload())->get('chat'),
+                    $this->language,
+                    $this->currency
+                );
             }
-
-            app()->setLocale($this->language);
-
-            $this->currency = $answer->getValue();
-
-            $this->say(trans('groups.new_group_created'));
-
-            $group = Group::updateOrCreateFromChat(
-                collect($this->bot->getMessage()->getPayload())->get('chat'),
-                $this->language,
-                $this->currency
-            );
-        });
+        );
     }
 
     protected function getQuestionLanguage()
     {
         return Question::create(trans('groups.ask_language'))
-            ->addButtons([
+            ->addButtons(
+                [
                 Button::create('Català')->value('ca'),
                 Button::create('Castellano')->value('es'),
                 Button::create('English')->value('en'),
-            ]);
+                ]
+            );
     }
 
     protected function getQuestionCurrency()
@@ -88,8 +98,10 @@ class RegisterGroupConversation extends Conversation
 
     protected function getCurrenciesAsButtons()
     {
-        return array_map(function ($symbol, $currency) {
-            return Button::create($symbol)->value($currency);
-        }, $this->currency_symbols, array_keys($this->currency_symbols));
+        return array_map(
+            function ($symbol, $currency) {
+                return Button::create($symbol)->value($currency);
+            }, $this->currency_symbols, array_keys($this->currency_symbols)
+        );
     }
 }

@@ -4,27 +4,39 @@ namespace Socrates\Resources;
 
 class User extends ApiResource
 {
-    /** @var int */
+    /**
+     * @var int 
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $email;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $photoUrl;
 
-    /** @var Team[] */
+    /**
+     * @var Team[] 
+     */
     public $teams;
 
     public function __construct(array $attributes, $socrates = null)
     {
         parent::__construct($attributes, $socrates);
 
-        $this->teams = array_map(function (array $teamAttributes) {
-            return new Team($teamAttributes);
-        }, $this->teams);
+        $this->teams = array_map(
+            function (array $teamAttributes) {
+                return new Team($teamAttributes);
+            }, $this->teams
+        );
     }
 }

@@ -7,13 +7,15 @@ namespace Socrates\Chat\Form\ConversationType;
  * @see https://wiki.socrates.org/confluence/display/CRMDOC/QuickForm+Reference
  */
 
-class Edit extends \Socrates\Chat\Form\Good {
+class Edit extends \Socrates\Chat\Form\Good
+{
 
-  function getGoodTitle(){
-    return 'Edit Conversation type';
-  }
+    function getGoodTitle()
+    {
+        return 'Edit Conversation type';
+    }
 
-  var $fields = [
+    var $fields = [
     1 => [
       'entity' => 'ChatConversationType',
       'field' => 'name',
@@ -35,37 +37,40 @@ class Edit extends \Socrates\Chat\Form\Good {
       'title' => 'Timeout',
       'help' => 'Time in minutes, after which this conversation type should be considered complete',
     ],
-  ];
+    ];
 
-  var $entities = [
+    var $entities = [
     'ChatConversationType' => [
       'type' => 'ChatConversationType',
       'param' => 'id',
     ]
-  ];
-
-  var $submitText = 'Save';
-
-  function preProcess(){
-
-    parent::preProcess();
-
-    $this->fields[2]['entityref_api'] = [
-      'label_field' => 'text',
-      'search_field' => 'text',
-      'params' => [
-        'conversation_type_id' => $this->entities['ChatConversationType']['before']['id']
-      ]
     ];
 
-  }
+    var $submitText = 'Save';
 
-  function getDestination() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['before']['id']);
-  }
+    function preProcess()
+    {
 
-  function getGoodContext() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['before']['id']);
-  }
+        parent::preProcess();
+
+        $this->fields[2]['entityref_api'] = [
+        'label_field' => 'text',
+        'search_field' => 'text',
+        'params' => [
+        'conversation_type_id' => $this->entities['ChatConversationType']['before']['id']
+        ]
+        ];
+
+    }
+
+    function getDestination()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['before']['id']);
+    }
+
+    function getGoodContext()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['before']['id']);
+    }
 
 }

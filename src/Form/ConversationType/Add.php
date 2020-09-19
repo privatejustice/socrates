@@ -10,10 +10,11 @@ use Api;
  * @see https://wiki.socrates.org/confluence/display/CRMDOC/QuickForm+Reference
  */
 
-class Add extends \Socrates\Chat\Form\Good {
+class Add extends \Socrates\Chat\Form\Good
+{
 
 
-  var $fields = [
+    var $fields = [
     [
       'entity' => 'ChatConversationType',
       'field' => 'name',
@@ -35,9 +36,9 @@ class Add extends \Socrates\Chat\Form\Good {
       'required' => true,
       'help' => 'Time in minutes, after which this conversation should be considered complete',
     ],
-  ];
+    ];
 
-  var $entities = [
+    var $entities = [
     'ChatConversationType' => [
       'type' => 'ChatConversationType',
     ],
@@ -50,42 +51,47 @@ class Add extends \Socrates\Chat\Form\Good {
           ]
       ]
     ]
-  ];
-
-  var $submitText = 'Add';
-
-
-  function getGoodTitle(){
-    return 'Add Conversation type';
-  }
-
-  function setDefaultValues(){
-
-    $defaults['ChatConversationType:timeout'] = 30;
-    return $defaults;
-
-  }
-
-  function getDestination() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['after']['id']);
-  }
-
-  function getGoodContext() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType');
-  }
-
-
-  function postProcess(){
-
-    parent::postProcess();
-
-    $params = [
-      'id' => $this->entities['ChatConversationType']['after']['id'],
-      'first_question_id' => $this->entities['ChatQuestion']['after']['id']
     ];
 
-    $result = Api::render('ChatConversationType', 'create', $params);
+    var $submitText = 'Add';
 
-  }
+
+    function getGoodTitle()
+    {
+        return 'Add Conversation type';
+    }
+
+    function setDefaultValues()
+    {
+
+        $defaults['ChatConversationType:timeout'] = 30;
+        return $defaults;
+
+    }
+
+    function getDestination()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['after']['id']);
+    }
+
+    function getGoodContext()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType');
+    }
+
+
+    function postProcess()
+    {
+
+        parent::postProcess();
+
+        $params = [
+        'id' => $this->entities['ChatConversationType']['after']['id'],
+        'first_question_id' => $this->entities['ChatQuestion']['after']['id']
+        ];
+
+        $result = Api::render('ChatConversationType', 'create', $params);
+
+    }
 
 }

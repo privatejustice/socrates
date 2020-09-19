@@ -9,6 +9,7 @@ use Socrates\Chat\ExtensionUtil as E;
  *
  * @see https://wiki.socrates.org/confluence/display/CRMDOC/QuickForm+Reference
  */
-class Admin extends Socrates\Core_Form {
+class Admin extends Socrates\Core_Form
+{
 
 }

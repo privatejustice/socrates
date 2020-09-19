@@ -28,17 +28,22 @@ class SocratesNetworking
         ManagesCertificateHealth,
         ManagesStatusPages;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $apiToken;
 
-    /** @var \GuzzleHttp\Client */
+    /**
+     * @var \GuzzleHttp\Client 
+     */
     public $client;
 
     public function __construct(string $apiToken, Client $client = null)
     {
         $this->apiToken = $apiToken;
 
-        $this->client = $client ?: new Client([
+        $this->client = $client ?: new Client(
+            [
             'base_uri' => 'https://socrates.app/api/',
             'http_errors' => false,
             'headers' => [
@@ -46,13 +51,16 @@ class SocratesNetworking
                 'Accept' => 'application/json',
                 'Content-Type' => 'application/json',
             ],
-        ]);
+            ]
+        );
     }
 
     protected function transformCollection(array $collection, string $class): array
     {
-        return array_map(function ($attributes) use ($class) {
-            return new $class($attributes, $this);
-        }, $collection);
+        return array_map(
+            function ($attributes) use ($class) {
+                return new $class($attributes, $this);
+            }, $collection
+        );
     }
 }

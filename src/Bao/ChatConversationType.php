@@ -3,6 +3,7 @@ namespace Socrates\Bao;
 
 use Socrates\Chat\ExtensionUtil as E;
 
-class ChatConversationType extends \Socrates\Models\ChatConversationType {
+class ChatConversationType extends \Socrates\Models\ChatConversationType
+{
 
 }

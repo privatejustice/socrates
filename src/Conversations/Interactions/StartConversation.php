@@ -20,29 +20,33 @@ class StartConversation extends Conversation
 
     public function askToken()
     {
-        $this->ask(trans('boravel.token.question'), function (Answer $answer) {
+        $this->ask(
+            trans('boravel.token.question'), function (Answer $answer) {
 
-            auth()->user()->token = encrypt($answer->getText());
-            auth()->user()->save();
+                auth()->user()->token = encrypt($answer->getText());
+                auth()->user()->save();
 
-            $this->bot->reply(trans('boravel.token.stored'));
+                $this->bot->reply(trans('boravel.token.stored'));
 
-            $this->askWebhook();
-        });
+                $this->askWebhook();
+            }
+        );
     }
 
     public function askWebhook()
     {
-        $this->ask(trans('boravel.webhook.question'), function (Answer $answer) {
+        $this->ask(
+            trans('boravel.webhook.question'), function (Answer $answer) {
 
-            auth()->user()->webhook = encrypt($answer->getText());
-            auth()->user()->save();
+                auth()->user()->webhook = encrypt($answer->getText());
+                auth()->user()->save();
 
-            $this->bot->reply(
-                trans('boravel.webhook.stored', ['url' => auth()->user()->getWebhookUrl()]),
-                ['parse_mode' => 'Markdown']
-            );
-        }, ['parse_mode' => 'Markdown']);
+                $this->bot->reply(
+                    trans('boravel.webhook.stored', ['url' => auth()->user()->getWebhookUrl()]),
+                    ['parse_mode' => 'Markdown']
+                );
+            }, ['parse_mode' => 'Markdown']
+        );
     }
 
 }

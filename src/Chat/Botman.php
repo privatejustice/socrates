@@ -7,79 +7,84 @@ use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Facebook\FacebookDriver;
 use Api;
 
-class Botman {
+class Botman
+{
 
-  // Might want to turn into option groups at some point
-  static function getAllServices(){
-    $services = [
-      'Facebook' => 'Facebook',
-      'CiviSMS' => 'CiviSMS',
-    ];
-    if(Civi::settings()->get('debug_enabled')){
-      $services['DevChat'] = 'DevChat';
+    // Might want to turn into option groups at some point
+    static function getAllServices()
+    {
+        $services = [
+        'Facebook' => 'Facebook',
+        'CiviSMS' => 'CiviSMS',
+        ];
+        if(Civi::settings()->get('debug_enabled')) {
+            $services['DevChat'] = 'DevChat';
+        }
+        return $services;
     }
-    return $services;
-  }
 
-  static function get($service) {
+    static function get($service)
+    {
 
-    $driver = self::getDriver($service);
-    $config = self::getConfig($service);
+        $driver = self::getDriver($service);
+        $config = self::getConfig($service);
 
 
-    DriverManager::loadDriver($driver);
-    $botman = BotManFactory::create($config, new \Socrates\Chat\Cache);
+        DriverManager::loadDriver($driver);
+        $botman = BotManFactory::create($config, new \Socrates\Chat\Cache);
 
-    return $botman;
-
-  }
-
-  static function getDriver($service) {
-
-    switch ($service) {
-
-      case 'Facebook':
-
-        return FacebookDriver::class;
-
-      case 'CiviSMS':
-
-        return Socrates\Chat\Driver_CiviSMSDriver::class;
-
-      case 'DevChat':
-
-        return Socrates\Chat\Driver_DevChatDriver::class;
+        return $botman;
 
     }
 
-  }
+    static function getDriver($service)
+    {
 
-  static function getConfig($service) {
+        switch ($service) {
 
-    switch ($service) {
+        case 'Facebook':
 
-      case 'Facebook':
-        return [
+            return FacebookDriver::class;
+
+        case 'CiviSMS':
+
+            return Socrates\Chat\Driver_CiviSMSDriver::class;
+
+        case 'DevChat':
+
+            return Socrates\Chat\Driver_DevChatDriver::class;
+
+        }
+
+    }
+
+    static function getConfig($service)
+    {
+
+        switch ($service) {
+
+        case 'Facebook':
+            return [
           'facebook' => [
             'token' => Api::render('setting', 'getvalue', ['name' => 'chatbot_facebook_page_access_token']),
             'app_secret' => Api::render('setting', 'getvalue', ['name' => 'chatbot_facebook_app_secret']),
             'verification' => Api::render('setting', 'getvalue', ['name' => 'chatbot_facebook_verify_token'])
           ]
-        ];
+            ];
 
-      case 'DevChat':
-        return [
+        case 'DevChat':
+            return [
           'endpoint' => Api::render('setting', 'getvalue', ['name' => 'chatbot_devchat_endpoint'])
-        ];
+            ];
 
-      case 'CiviSMS':
+        case 'CiviSMS':
 
-        return [
+            return [
           'authentication_token' => Api::render('setting', 'getvalue', ['name' => 'chatbot_civisms_authentication_token'])
-        ];
+            ];
+
+        }
 
     }
-
-  }
 
 }

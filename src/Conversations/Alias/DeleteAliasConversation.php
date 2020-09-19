@@ -11,7 +11,9 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 class DeleteAliasConversation extends Conversation
 {
 
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
     public function __construct()
@@ -35,40 +37,46 @@ class DeleteAliasConversation extends Conversation
         $question = Question::create('Quin alias vols esborrar?')
             ->addButtons($aliases->map->asButton()->toArray());
 
-        return $this->ask($question, function (Answer $answer) {
+        return $this->ask(
+            $question, function (Answer $answer) {
 
-            $this->alias = auth()->user()->aliases()->find($answer->getValue());
+                $this->alias = auth()->user()->aliases()->find($answer->getValue());
 
-            if (! $this->alias) {
-                return $this->say("No he trobat l'alias que busques");
+                if (! $this->alias) {
+                    return $this->say("No he trobat l'alias que busques");
+                }
+
+                return $this->askConfirmation();
             }
-
-            return $this->askConfirmation();
-        });
+        );
     }
 
     public function askConfirmation()
     {
 
         $question = Question::create('⚠️ Estàs segur que vols esborrar aquest alias? Aquesta acció no es pot desfer ⚠️')
-            ->addButtons([
+            ->addButtons(
+                [
                 Button::create('Si')->value('si'),
                 Button::create('No')->value('no'),
-            ]);
+                ]
+            );
 
-        return $this->ask($question, function (Answer $answer) {
+        return $this->ask(
+            $question, function (Answer $answer) {
 
-            $answerValue = $answer->isInteractiveMessageReply() ? $answer->getValue() : $answer->getText();
+                $answerValue = $answer->isInteractiveMessageReply() ? $answer->getValue() : $answer->getText();
 
-            if (strtolower($answerValue) == 'si') {
+                if (strtolower($answerValue) == 'si') {
 
-                $this->alias->delete();
+                    $this->alias->delete();
 
-                return $this->say("He esborrat l'alias");
+                    return $this->say("He esborrat l'alias");
+                }
+
+                return $this->say("Molt bé, no esborro res per ara.");
+
             }
-
-            return $this->say("Molt bé, no esborro res per ara.");
-
-        });
+        );
     }
 }

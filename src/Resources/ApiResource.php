@@ -7,15 +7,19 @@ use ReflectionProperty;
 
 class ApiResource
 {
-    /** @var array */
+    /**
+     * @var array 
+     */
     public $attributes = [];
 
-    /** @var \Socrates\Socrates */
+    /**
+     * @var \Socrates\Socrates 
+     */
     protected $socrates;
 
     /**
-     * @param  array $attributes
-     * @param  \Socrates\Socrates $socrates
+     * @param array              $attributes
+     * @param \Socrates\Socrates $socrates
      */
     public function __construct(array $attributes, $socrates = null)
     {
@@ -52,9 +56,11 @@ class ApiResource
     {
         $publicProperties = (new ReflectionObject($this))->getProperties(ReflectionProperty::IS_PUBLIC);
 
-        $publicPropertyNames = array_map(function (ReflectionProperty $property) {
-            return $property->getName();
-        }, $publicProperties);
+        $publicPropertyNames = array_map(
+            function (ReflectionProperty $property) {
+                return $property->getName();
+            }, $publicProperties
+        );
 
         return array_diff($publicPropertyNames, ['socrates', 'attributes']);
     }

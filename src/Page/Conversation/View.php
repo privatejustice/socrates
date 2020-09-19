@@ -4,54 +4,64 @@ namespace Socrates\Chat\Page\Conversation;
 use Socrates\Chat\ExtensionUtil as E;
 use Api;
 
-class View extends Socrates\Core_Page {
+class View extends Socrates\Core_Page
+{
 
-  public function run() {
+    public function run()
+    {
 
-    $id = \Socrates\Utils_Request::retrieve('id', 'Positive', $this);
+        $id = \Socrates\Utils_Request::retrieve('id', 'Positive', $this);
 
-    $conversation = Api::render('Activity', 'getsingle', ['id' => $id]);
-    $chats = Api::render('Activity', 'get', [
-      'parent_id' => $id,
-      'activity_type_id' => ['IN' => ['Incoming chat', 'Outgoing chat']]
-    ])['values'];
+        $conversation = Api::render('Activity', 'getsingle', ['id' => $id]);
+        $chats = Api::render(
+            'Activity', 'get', [
+            'parent_id' => $id,
+            'activity_type_id' => ['IN' => ['Incoming chat', 'Outgoing chat']]
+            ]
+        )['values'];
 
-    Socrates\Utils_System::setTitle(E::ts('View conversation: ' . $conversation['subject']));
+        Socrates\Utils_System::setTitle(E::ts('View conversation: ' . $conversation['subject']));
 
-    $activityTypes = array_column(Api::render('OptionValue', 'get', [
-      'option_group_id' => 'activity_type',
-      'name' => ['IN' => ['Incoming chat', 'Outgoing chat']]
-    ])['values'], 'label', 'value');
+        $activityTypes = array_column(
+            Api::render(
+                'OptionValue', 'get', [
+                'option_group_id' => 'activity_type',
+                'name' => ['IN' => ['Incoming chat', 'Outgoing chat']]
+                ]
+            )['values'], 'label', 'value'
+        );
 
-    $activityStatuses = array_column(Api::render('OptionValue', 'get', [ 'option_group_id' => 'activity_status', ])['values'], 'label', 'value');
+        $activityStatuses = array_column(Api::render('OptionValue', 'get', [ 'option_group_id' => 'activity_status', ])['values'], 'label', 'value');
 
-    $activityTypeClasses = [
-      'Incoming chat' => 'incoming',
-      'Outgoing chat' => 'outgoing'
-    ];
+        $activityTypeClasses = [
+        'Incoming chat' => 'incoming',
+        'Outgoing chat' => 'outgoing'
+        ];
 
-    foreach($chats as &$chat){
-      $chat['class'] = $activityTypeClasses[$activityTypes[$chat['activity_type_id']]];
+        foreach($chats as &$chat){
+            $chat['class'] = $activityTypeClasses[$activityTypes[$chat['activity_type_id']]];
+        }
+
+        $sourceContact = Api::render(
+            'Contact', 'getsingle', array(
+            'return' => array("display_name"),
+            'id' => $conversation['source_contact_id'],
+            )
+        );
+        $url = \Socrates\Utils_System::url('socrates/contact/view', 'reset=1&cid='.$conversation['source_contact_id']);
+        $conversation['source_contact'] = "<a href='{$url}'>{$sourceContact['display_name']}</a>";
+
+        // Format Date
+        $conversation['date'] = \Socrates\Utils_Date::customFormat($conversation['activity_date_time']);
+        $conversation['status'] = $activityStatuses[$conversation['status_id']];
+
+        $this->assign('conversation', $conversation);
+        $this->assign('chats', $chats);
+
+        Socrates\Core_Resources::singleton()->addStyleFile('chatbot', 'css/chatbot.css');
+
+        parent::run();
+
     }
-
-    $sourceContact = Api::render('Contact', 'getsingle', array(
-      'return' => array("display_name"),
-      'id' => $conversation['source_contact_id'],
-    ));
-    $url = \Socrates\Utils_System::url('socrates/contact/view', 'reset=1&cid='.$conversation['source_contact_id']);
-    $conversation['source_contact'] = "<a href='{$url}'>{$sourceContact['display_name']}</a>";
-
-    // Format Date
-    $conversation['date'] = \Socrates\Utils_Date::customFormat($conversation['activity_date_time']);
-    $conversation['status'] = $activityStatuses[$conversation['status_id']];
-
-    $this->assign('conversation', $conversation);
-    $this->assign('chats', $chats);
-
-    Socrates\Core_Resources::singleton()->addStyleFile('chatbot', 'css/chatbot.css');
-
-    parent::run();
-
-  }
 
 }

@@ -13,19 +13,25 @@ class SelectServiceConversation extends Conversation
     {
         $question = Question::create('What kind of Service you are looking for?')
             ->callbackId('select_service')
-            ->addButtons([
+            ->addButtons(
+                [
                 Button::create('Hair')->value('Hair'),
                 Button::create('Spa')->value('Spa'),
                 Button::create('Beauty')->value('Beauty'),
-            ]);
+                ]
+            );
 
-        $this->ask($question, function(Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                $this->bot->userStorage()->save([
-                    'service' => $answer->getValue(),
-                ]);
+        $this->ask(
+            $question, function (Answer $answer) {
+                if ($answer->isInteractiveMessageReply()) {
+                    $this->bot->userStorage()->save(
+                        [
+                        'service' => $answer->getValue(),
+                        ]
+                    );
+                }
             }
-        });
+        );
     }
 
     public function run()

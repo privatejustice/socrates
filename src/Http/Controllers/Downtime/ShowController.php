@@ -10,7 +10,9 @@ use BotMan\BotMan\BotMan;
 class ShowController extends Controller
 {
 
-    /** @var \Socrates\Services\Socrates\Services\Socrates */
+    /**
+     * @var \Socrates\Services\Socrates\Services\Socrates 
+     */
     protected $dear;
 
     public function __construct(Socrates $dear)
@@ -22,7 +24,7 @@ class ShowController extends Controller
      * Handle the incoming request.
      *
      * @param \BotMan\BotMan\BotMan $bot
-     * @param string $url
+     * @param string                $url
      *
      * @return void
      * @throws \Socrates\Exceptions\SiteNotFoundException
@@ -39,18 +41,28 @@ class ShowController extends Controller
             $bot->reply(trans('socrates.downtime.perfect'));
         } else {
 
-            $bot->reply(trans('socrates.downtime.summary', [
-                'elapsed' => $downtime->first()->elapsed,
-                'emoji' => $downtime->first()->getElapsedEmoji(),
-            ]));
+            $bot->reply(
+                trans(
+                    'socrates.downtime.summary', [
+                    'elapsed' => $downtime->first()->elapsed,
+                    'emoji' => $downtime->first()->getElapsedEmoji(),
+                    ]
+                )
+            );
 
-            $downtime->each(function (Downtime $downtime) use ($bot) {
+            $downtime->each(
+                function (Downtime $downtime) use ($bot) {
 
-                $bot->reply(trans('socrates.downtime.result', [
-                    'downtime' => $downtime->getDowntime(),
-                    'date' => $downtime->startedAt,
-                ]));
-            });
+                    $bot->reply(
+                        trans(
+                            'socrates.downtime.result', [
+                            'downtime' => $downtime->getDowntime(),
+                            'date' => $downtime->startedAt,
+                            ]
+                        )
+                    );
+                }
+            );
         }
 
         $bot->reply($site->getKeyboard());

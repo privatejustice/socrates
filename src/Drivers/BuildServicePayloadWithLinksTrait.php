@@ -12,9 +12,9 @@ trait BuildServicePayloadWithLinksTrait
     /**
      * Expand Telegram Driver behaviour to allow external link buttons on messages
      *
-     * @param string|Question|OutgoingMessage $message
+     * @param string|Question|OutgoingMessage                  $message
      * @param \BotMan\BotMan\Messages\Incoming\IncomingMessage $matchingMessage
-     * @param array $additionalParameters
+     * @param array                                            $additionalParameters
      *
      * @return Response
      */
@@ -23,9 +23,11 @@ trait BuildServicePayloadWithLinksTrait
         $parameters = parent::buildServicePayload($message, $matchingMessage, $additionalParameters);
 
         if ($this->haveCustomLinks($message)) {
-            $parameters['reply_markup'] = json_encode([
+            $parameters['reply_markup'] = json_encode(
+                [
                 'inline_keyboard' => $this->convertLinks($message->getActions()),
-            ], true);
+                ], true
+            );
         }
 
         return $parameters;
@@ -41,8 +43,10 @@ trait BuildServicePayloadWithLinksTrait
 
     private function convertLinks(array $actions)
     {
-        return Collection::make($actions)->map(function ($action) {
-            return [$action];
-        })->toArray();
+        return Collection::make($actions)->map(
+            function ($action) {
+                return [$action];
+            }
+        )->toArray();
     }
 }

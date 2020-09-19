@@ -12,7 +12,9 @@ use BotMan\BotMan\Messages\Attachments\Location;
 class GirocletaController extends Controller
 {
 
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
     public function __construct()
@@ -44,7 +46,7 @@ class GirocletaController extends Controller
     /**
      * Start a conversation to register the user's main station.
      *
-     * @param  BotMan $bot
+     * @param BotMan $bot
      */
     public function registerConversation(BotMan $bot)
     {
@@ -55,8 +57,8 @@ class GirocletaController extends Controller
      * Show information about two stations and their distance.
      *
      * @param \BotMan\BotMan\BotMan $bot
-     * @param string $begin
-     * @param string $end
+     * @param string                $begin
+     * @param string                $end
      *
      * @return mixed
      */
@@ -96,7 +98,7 @@ class GirocletaController extends Controller
     /**
      * Show the nearest locations to the user.
      *
-     * @param \BotMan\BotMan\BotMan $bot
+     * @param \BotMan\BotMan\BotMan                        $bot
      * @param \BotMan\BotMan\Messages\Attachments\Location $location
      */
     public function nearStations(BotMan $bot, Location $location)
@@ -105,10 +107,12 @@ class GirocletaController extends Controller
 
         $bot->reply("Aquestes són les {$nearStations->count()} estacions que tens més a prop");
 
-        $nearStations->each(function (Station $station) use ($bot) {
+        $nearStations->each(
+            function (Station $station) use ($bot) {
 
-            $bot->reply($station->getVenueMessage(), $station->getVenuePayload());
-        });
+                $bot->reply($station->getVenueMessage(), $station->getVenuePayload());
+            }
+        );
     }
 
 }

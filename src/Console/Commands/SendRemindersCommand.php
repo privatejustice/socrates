@@ -14,10 +14,14 @@ class SendRemindersCommand extends Command
 
     protected $description = 'Send the reminders for the current day and time';
 
-    /** @var \Socrates\Services\StationService  */
+    /**
+     * @var \Socrates\Services\StationService  
+     */
     protected $stationService;
 
-    /** @var \BotMan\BotMan\BotMan */
+    /**
+     * @var \BotMan\BotMan\BotMan 
+     */
     protected $botman;
 
     public function __construct(StationService $stationService)
@@ -35,27 +39,29 @@ class SendRemindersCommand extends Command
             return;
         }
 
-        $reminders->each(function (Reminder $reminder) {
+        $reminders->each(
+            function (Reminder $reminder) {
 
-            $user = $reminder->user;
-            $station = $this->stationService->find($reminder->station_id);
+                $user = $reminder->user;
+                $station = $this->stationService->find($reminder->station_id);
 
-            if (! $station || ! $reminder->user) {
-                return; // corrupted reminder, we need to do something about it
+                if (! $station || ! $reminder->user) {
+                    return; // corrupted reminder, we need to do something about it
+                }
+
+                $this->sayTo($this->getGreetings($user->name), $user->telegram_id);
+                $this->sayTo($station->getVenueMessage(), $user->telegram_id, $station->getVenuePayload());
+
+                if ($station->bikes == 0) {
+                    $this->sayTo("Ja pots anar a la següent estació, aquí no hi ha cap bici 🏃", $reminder->user->telegram_id);
+                }
+
+                if ($station->bikes == 1) {
+                    $this->sayTo("Ep! Només en queda una! És possible que estigui defectuosa... 🤔", $reminder->user->telegram_id);
+                }
+
             }
-
-            $this->sayTo($this->getGreetings($user->name), $user->telegram_id);
-            $this->sayTo($station->getVenueMessage(), $user->telegram_id, $station->getVenuePayload());
-
-            if ($station->bikes == 0) {
-                $this->sayTo("Ja pots anar a la següent estació, aquí no hi ha cap bici 🏃", $reminder->user->telegram_id);
-            }
-
-            if ($station->bikes == 1) {
-                $this->sayTo("Ep! Només en queda una! És possible que estigui defectuosa... 🤔", $reminder->user->telegram_id);
-            }
-
-        });
+        );
     }
 
     private function getGreetings($name)
@@ -94,9 +100,11 @@ class SendRemindersCommand extends Command
             ->where(date('l'), true)
             ->where('time', date('H:i'))
             ->where('date_begin', '<=', date('Y-m-d H:i:s'))
-            ->where(function ($dateEnd) {
-                return $dateEnd->whereNull('date_end')
-                    ->orWhere('date_end', '>=', date('Y-m-d H:i:s'));
-            });
+            ->where(
+                function ($dateEnd) {
+                    return $dateEnd->whereNull('date_end')
+                        ->orWhere('date_end', '>=', date('Y-m-d H:i:s'));
+                }
+            );
     }
 }

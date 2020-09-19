@@ -6,9 +6,10 @@ use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
 use BotMan\Drivers\Facebook\FacebookDriver;
 
-class Driver {
+class Driver
+{
 
-  const SHORT_NAMES = [
+    const SHORT_NAMES = [
     'Socrates\Chat\Driver_CiviSMS' => 'CiviSMS',
     'Socrates\Chat\Driver_DevChat' => 'DevChat',
     'Facebook'                     => 'Facebook',
@@ -16,20 +17,21 @@ class Driver {
     'Slack'                        => 'Slack',
     'AmazonAlexa'                  => 'AmazonAlexa',
     'Web'                          => 'Web',
-  ];
+    ];
 
-  static function getServiceName($driver) {
+    static function getServiceName($driver)
+    {
 
 
-    if(!isset(self::SHORT_NAMES[$driver::DRIVER_NAME])) {
-      if (\is_object($driver)) {
-        $driver = get_class($driver);
-      }
-      throw new \Exception('Could not find short name for Socrates chatbot driver: ' . $driver::DRIVER_NAME);
+        if(!isset(self::SHORT_NAMES[$driver::DRIVER_NAME])) {
+            if (\is_object($driver)) {
+                $driver = get_class($driver);
+            }
+            throw new \Exception('Could not find short name for Socrates chatbot driver: ' . $driver::DRIVER_NAME);
+        }
+
+        return self::SHORT_NAMES[$driver::DRIVER_NAME];
+
     }
-
-    return self::SHORT_NAMES[$driver::DRIVER_NAME];
-
-  }
 
 }

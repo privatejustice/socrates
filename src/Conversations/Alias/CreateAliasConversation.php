@@ -11,13 +11,19 @@ use BotMan\BotMan\Messages\Outgoing\Question;
 class CreateAliasConversation extends Conversation
 {
 
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     protected $alias;
 
-    /** @var \Socrates\Conversations\Girocleta\Station */
+    /**
+     * @var \Socrates\Conversations\Girocleta\Station 
+     */
     protected $station;
 
     public function __construct()
@@ -32,15 +38,17 @@ class CreateAliasConversation extends Conversation
      */
     public function run()
     {
-        return $this->ask('Quin alias vols afegir?', function (Answer $answer) {
-            $this->alias = $answer->getText();
+        return $this->ask(
+            'Quin alias vols afegir?', function (Answer $answer) {
+                $this->alias = $answer->getText();
 
-            if ($this->userAlreadyHasTheAlias()) {
-                return $this->say("Ja tens un alias associat a {$this->alias}");
+                if ($this->userAlreadyHasTheAlias()) {
+                    return $this->say("Ja tens un alias associat a {$this->alias}");
+                }
+
+                return $this->askStation();
             }
-
-            return $this->askStation();
-        });
+        );
     }
 
     public function askStation()
@@ -48,18 +56,20 @@ class CreateAliasConversation extends Conversation
         $question = Question::create('Quina estació vols associar a aquest alias?')
             ->addButtons($this->stationService->asButtons());
 
-        return $this->ask($question, function (Answer $answer) {
+        return $this->ask(
+            $question, function (Answer $answer) {
 
-            $this->station = $this->stationService->find($answer->getValue());
+                $this->station = $this->stationService->find($answer->getValue());
 
-            if (! $this->station) {
-                return $this->say('No sé quina estació és. No puc afegir el alias');
+                if (! $this->station) {
+                    return $this->say('No sé quina estació és. No puc afegir el alias');
+                }
+
+                $this->createAlias();
+
+                return $this->say("He afegit el alias {$this->alias} que fa referència a l'estació {$this->station->name}");
             }
-
-            $this->createAlias();
-
-            return $this->say("He afegit el alias {$this->alias} que fa referència a l'estació {$this->station->name}");
-        });
+        );
     }
 
     private function userAlreadyHasTheAlias(): bool

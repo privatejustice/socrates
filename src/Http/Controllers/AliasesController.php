@@ -11,7 +11,9 @@ use BotMan\BotMan\BotMan;
 class AliasesController extends Controller
 {
 
-    /** @var \Socrates\Services\StationService */
+    /**
+     * @var \Socrates\Services\StationService 
+     */
     protected $stationService;
 
     public function __construct()
@@ -33,9 +35,11 @@ class AliasesController extends Controller
 
         $bot->reply('Aquests són els teus alias');
 
-        $aliases->each(function (Alias $alias) use ($bot) {
-            $bot->reply($alias->getInfo());
-        });
+        $aliases->each(
+            function (Alias $alias) use ($bot) {
+                $bot->reply($alias->getInfo());
+            }
+        );
 
     }
 

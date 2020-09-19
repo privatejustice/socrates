@@ -10,7 +10,9 @@ use BotMan\BotMan\BotMan;
 class ShowController extends Controller
 {
 
-    /** @var \Socrates\Services\Socrates\Services\Socrates */
+    /**
+     * @var \Socrates\Services\Socrates\Services\Socrates 
+     */
     protected $dear;
 
     public function __construct(Socrates $dear)
@@ -22,7 +24,7 @@ class ShowController extends Controller
      * Handle the incoming request.
      *
      * @param \BotMan\BotMan\BotMan $bot
-     * @param string $url
+     * @param string                $url
      *
      * @return void
      * @throws \Socrates\Exceptions\SiteNotFoundException
@@ -39,12 +41,18 @@ class ShowController extends Controller
             $bot->reply(trans('socrates.mixedcontent.perfect'));
         } else {
 
-            $mixedContent->each(function (MixedContent $mixed) use ($bot) {
-                $bot->reply(trans('socrates.mixedcontent.result', [
-                    'url' => $mixed->mixedContentUrl,
-                    'origin' => $mixed->foundOnUrl,
-                ]), ['disable_web_page_preview' => true]);
-            });
+            $mixedContent->each(
+                function (MixedContent $mixed) use ($bot) {
+                    $bot->reply(
+                        trans(
+                            'socrates.mixedcontent.result', [
+                            'url' => $mixed->mixedContentUrl,
+                            'origin' => $mixed->foundOnUrl,
+                            ]
+                        ), ['disable_web_page_preview' => true]
+                    );
+                }
+            );
         }
 
         $bot->reply($site->getKeyboard());

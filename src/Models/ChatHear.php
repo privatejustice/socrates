@@ -3,7 +3,7 @@ namespace Socrates\Models;
 
 
 /**
- * @package CRM
+ * @package   CRM
  * @copyright Socrates LLC (c) 2004-2018
  *
  * Generated from /buildkit/build/chatbot/sites/all/modules/socrates/tools/extensions/civicrm-chatbot/xml/schema/CRM/Chat/ChatHear.xml
@@ -14,171 +14,180 @@ namespace Socrates\Models;
 /**
  * Database access object for the ChatHear entity.
  */
-class ChatHear extends Model {
+class ChatHear extends Model
+{
 
-  /**
-   * Static instance to hold the table name.
-   *
-   * @var string
-   */
-  protected $table = 'chat_hears';
+    /**
+     * Static instance to hold the table name.
+     *
+     * @var string
+     */
+    protected $table = 'chat_hears';
 
-  /**
-   * Should Socrates log any modifications to this table in the socrates_log table.
-   *
-   * @var bool
-   */
-  static $_log = TRUE;
+    /**
+     * Should Socrates log any modifications to this table in the socrates_log table.
+     *
+     * @var bool
+     */
+    static $_log = true;
 
-  /**
-   * Unique ChatHear ID
-   *
-   * @var int unsigned
-   */
-  public $id;
+    /**
+     * Unique ChatHear ID
+     *
+     * @var int unsigned
+     */
+    public $id;
 
-  /**
-   * FK to Contact
-   *
-   * @var int unsigned
-   */
-  public $chat_conversation_type_id;
+    /**
+     * FK to Contact
+     *
+     * @var int unsigned
+     */
+    public $chat_conversation_type_id;
 
-  /**
-   * @var string
-   */
-  public $text;
+    /**
+     * @var string
+     */
+    public $text;
 
-  protected $fillable = [
+    protected $fillable = [
     'text', 
     'chat_conversation_type_id', 
-   ];
-  /**
-   * Returns foreign keys and entity references.
-   *
-   * @return array
-   *   [Socrates\Core_Reference_Interface]
-   */
-  public static function getReferenceColumns() {
-    if (!isset(Civi::$statics[__CLASS__]['links'])) {
-      Civi::$statics[__CLASS__]['links'] = static ::createReferenceColumns(__CLASS__);
-      Civi::$statics[__CLASS__]['links'][] = new \Socrates\Core_Reference_Basic(self::getTableName(), 'chat_conversation_type_id', 'chat_conversation_types', 'id');
-      Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'links_callback', Civi::$statics[__CLASS__]['links']);
+    ];
+    /**
+     * Returns foreign keys and entity references.
+     *
+     * @return array
+     *   [Socrates\Core_Reference_Interface]
+     */
+    public static function getReferenceColumns()
+    {
+        if (!isset(Civi::$statics[__CLASS__]['links'])) {
+            Civi::$statics[__CLASS__]['links'] = static ::createReferenceColumns(__CLASS__);
+            Civi::$statics[__CLASS__]['links'][] = new \Socrates\Core_Reference_Basic(self::getTableName(), 'chat_conversation_type_id', 'chat_conversation_types', 'id');
+            Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'links_callback', Civi::$statics[__CLASS__]['links']);
+        }
+        return Civi::$statics[__CLASS__]['links'];
     }
-    return Civi::$statics[__CLASS__]['links'];
-  }
 
-  /**
-   * Returns all the column names of this table
-   *
-   * @return array
-   */
-  public static function &fields() {
-    if (!isset(Civi::$statics[__CLASS__]['fields'])) {
-      Civi::$statics[__CLASS__]['fields'] = [
-        'id' => [
-          'name' => 'id',
-          'type' => \Socrates\Utils_Type::T_INT,
-          'description' => 'Unique ChatHear ID',
-          'required' => TRUE,
-          'table_name' => 'chat_hears',
-          'entity' => 'ChatHear',
-          'bao' => 'Socrates\Models\ChatHear',
-          'localizable' => 0,
-        ],
-        'chat_conversation_type_id' => [
-          'name' => 'chat_conversation_type_id',
-          'type' => \Socrates\Utils_Type::T_INT,
-          'description' => 'FK to Contact',
-          'table_name' => 'chat_hears',
-          'entity' => 'ChatHear',
-          'bao' => 'Socrates\Models\ChatHear',
-          'localizable' => 0,
-          'FKClassName' => 'Socrates\Models\ChatConversationType',
-        ],
-        'text' => [
-          'name' => 'text',
-          'type' => \Socrates\Utils_Type::T_STRING,
-          'title' => ts('Text'),
-          'required' => TRUE,
-          'maxlength' => 255,
-          'size' => \Socrates\Utils_Type::HUGE,
-          'table_name' => 'chat_hears',
-          'entity' => 'ChatHear',
-          'bao' => 'Socrates\Models\ChatHear',
-          'localizable' => 0,
-        ],
-      ];
-      Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);
+    /**
+     * Returns all the column names of this table
+     *
+     * @return array
+     */
+    public static function &fields()
+    {
+        if (!isset(Civi::$statics[__CLASS__]['fields'])) {
+            Civi::$statics[__CLASS__]['fields'] = [
+            'id' => [
+            'name' => 'id',
+            'type' => \Socrates\Utils_Type::T_INT,
+            'description' => 'Unique ChatHear ID',
+            'required' => true,
+            'table_name' => 'chat_hears',
+            'entity' => 'ChatHear',
+            'bao' => 'Socrates\Models\ChatHear',
+            'localizable' => 0,
+            ],
+            'chat_conversation_type_id' => [
+            'name' => 'chat_conversation_type_id',
+            'type' => \Socrates\Utils_Type::T_INT,
+            'description' => 'FK to Contact',
+            'table_name' => 'chat_hears',
+            'entity' => 'ChatHear',
+            'bao' => 'Socrates\Models\ChatHear',
+            'localizable' => 0,
+            'FKClassName' => 'Socrates\Models\ChatConversationType',
+            ],
+            'text' => [
+            'name' => 'text',
+            'type' => \Socrates\Utils_Type::T_STRING,
+            'title' => ts('Text'),
+            'required' => true,
+            'maxlength' => 255,
+            'size' => \Socrates\Utils_Type::HUGE,
+            'table_name' => 'chat_hears',
+            'entity' => 'ChatHear',
+            'bao' => 'Socrates\Models\ChatHear',
+            'localizable' => 0,
+            ],
+            ];
+            Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);
+        }
+        return Civi::$statics[__CLASS__]['fields'];
     }
-    return Civi::$statics[__CLASS__]['fields'];
-  }
 
-  /**
-   * Return a mapping from field-name to the corresponding key (as used in fields()).
-   *
-   * @return array
-   *   Array(string $name => string $uniqueName).
-   */
-  public static function &fieldKeys() {
-    if (!isset(Civi::$statics[__CLASS__]['fieldKeys'])) {
-      Civi::$statics[__CLASS__]['fieldKeys'] = array_flip(Socrates\Utils_Array::collect('name', self::fields()));
+    /**
+     * Return a mapping from field-name to the corresponding key (as used in fields()).
+     *
+     * @return array
+     *   Array(string $name => string $uniqueName).
+     */
+    public static function &fieldKeys()
+    {
+        if (!isset(Civi::$statics[__CLASS__]['fieldKeys'])) {
+            Civi::$statics[__CLASS__]['fieldKeys'] = array_flip(Socrates\Utils_Array::collect('name', self::fields()));
+        }
+        return Civi::$statics[__CLASS__]['fieldKeys'];
     }
-    return Civi::$statics[__CLASS__]['fieldKeys'];
-  }
 
-  /**
-   * Returns the names of this table
-   *
-   * @return string
-   */
-  public static function getTableName() {
-    return self::$_tableName;
-  }
+    /**
+     * Returns the names of this table
+     *
+     * @return string
+     */
+    public static function getTableName()
+    {
+        return self::$_tableName;
+    }
 
-  /**
-   * Returns if this table needs to be logged
-   *
-   * @return bool
-   */
-  public function getLog() {
-    return self::$_log;
-  }
+    /**
+     * Returns if this table needs to be logged
+     *
+     * @return bool
+     */
+    public function getLog()
+    {
+        return self::$_log;
+    }
 
-  /**
-   * Returns the list of fields that can be imported
-   *
-   * @param bool $prefix
-   *
-   * @return array
-   */
-  public static function &import($prefix = FALSE) {
-    $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_hears', $prefix, []);
-    return $r;
-  }
+    /**
+     * Returns the list of fields that can be imported
+     *
+     * @param bool $prefix
+     *
+     * @return array
+     */
+    public static function &import($prefix = false)
+    {
+        $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_hears', $prefix, []);
+        return $r;
+    }
 
-  /**
-   * Returns the list of fields that can be exported
-   *
-   * @param bool $prefix
-   *
-   * @return array
-   */
-  public static function &export($prefix = FALSE) {
-    $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_hears', $prefix, []);
-    return $r;
-  }
+    /**
+     * Returns the list of fields that can be exported
+     *
+     * @param bool $prefix
+     *
+     * @return array
+     */
+    public static function &export($prefix = false)
+    {
+        $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_hears', $prefix, []);
+        return $r;
+    }
 
-  /**
-   * Returns the list of indices
-   *
-   * @param bool $localize
-   *
-   * @return array
-   */
-  public static function indices($localize = TRUE) {
-    $indices = [];
-    return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;
-  }
+    /**
+     * Returns the list of indices
+     *
+     * @param bool $localize
+     *
+     * @return array
+     */
+    public static function indices($localize = true)
+    {
+        $indices = [];
+        return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;
+    }
 
 }

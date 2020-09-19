@@ -8,10 +8,12 @@ class IntroductionConversation extends Conversation
 
     public function askIfNeedHelp()
     {
-        $this->ask('Você está bem? Pre', function (Answer $response) {
-            $this->needHelp = true;
-            $this->say('Cool - you said ' . $response->getText());
-        });
+        $this->ask(
+            'Você está bem? Pre', function (Answer $response) {
+                $this->needHelp = true;
+                $this->say('Cool - you said ' . $response->getText());
+            }
+        );
     }
 
     public function run()

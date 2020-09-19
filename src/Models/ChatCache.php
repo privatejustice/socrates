@@ -2,7 +2,7 @@
 namespace Socrates\Models;
 
 /**
- * @package CRM
+ * @package   CRM
  * @copyright Socrates LLC (c) 2004-2018
  *
  * Generated from /buildkit/build/chatbot/sites/all/modules/socrates/tools/extensions/civicrm-chatbot/xml/schema/CRM/Chat/ChatCache.xml
@@ -13,184 +13,192 @@ namespace Socrates\Models;
 /**
  * Database access object for the ChatCache entity.
  */
-class ChatCache extends Model {
+class ChatCache extends Model
+{
 
-  /**
-   * Static instance to hold the table name.
-   *
-   * @var string
-   */
-  protected $table = 'chat_caches';
+    /**
+     * Static instance to hold the table name.
+     *
+     * @var string
+     */
+    protected $table = 'chat_caches';
 
-  /**
-   * Should Socrates log any modifications to this table in the socrates_log table.
-   *
-   * @var bool
-   */
-  static $_log = TRUE;
+    /**
+     * Should Socrates log any modifications to this table in the socrates_log table.
+     *
+     * @var bool
+     */
+    static $_log = true;
 
-  /**
-   * Unique ChatCache ID
-   *
-   * @var int unsigned
-   */
-  public $id;
+    /**
+     * Unique ChatCache ID
+     *
+     * @var int unsigned
+     */
+    public $id;
 
-  /**
-   * @var string
-   */
-  public $identifier;
+    /**
+     * @var string
+     */
+    public $identifier;
 
-  /**
-   * @var text
-   */
-  public $value;
+    /**
+     * @var text
+     */
+    public $value;
 
-  /**
-   * @var datetime
-   */
-  public $expires;
+    /**
+     * @var datetime
+     */
+    public $expires;
 
 
-  /**
-   * Returns all the column names of this table
-   *
-   * @return array
-   */
-  public static function &fields() {
-    if (!isset(Civi::$statics[__CLASS__]['fields'])) {
-      Civi::$statics[__CLASS__]['fields'] = [
-        'id' => [
-          'name' => 'id',
-          'type' => \Socrates\Utils_Type::T_INT,
-          'description' => 'Unique ChatCache ID',
-          'required' => TRUE,
-          'table_name' => 'chat_caches',
-          'entity' => 'ChatCache',
-          'bao' => 'Socrates\Models\ChatCache',
-          'localizable' => 0,
-        ],
-        'identifier' => [
-          'name' => 'identifier',
-          'type' => \Socrates\Utils_Type::T_STRING,
-          'title' => ts('Identifier'),
-          'required' => TRUE,
-          'maxlength' => 255,
-          'size' => \Socrates\Utils_Type::HUGE,
-          'table_name' => 'chat_caches',
-          'entity' => 'ChatCache',
-          'bao' => 'Socrates\Models\ChatCache',
-          'localizable' => 0,
-        ],
-        'value' => [
-          'name' => 'value',
-          'type' => \Socrates\Utils_Type::T_TEXT,
-          'title' => ts('Value'),
-          'required' => TRUE,
-          'table_name' => 'chat_caches',
-          'entity' => 'ChatCache',
-          'bao' => 'Socrates\Models\ChatCache',
-          'localizable' => 0,
-        ],
-        'expires' => [
-          'name' => 'expires',
-          'type' => \Socrates\Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
-          'title' => ts('Expires'),
-          'required' => TRUE,
-          'table_name' => 'chat_caches',
-          'entity' => 'ChatCache',
-          'bao' => 'Socrates\Models\ChatCache',
-          'localizable' => 0,
-        ],
-      ];
-      Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);
+    /**
+     * Returns all the column names of this table
+     *
+     * @return array
+     */
+    public static function &fields()
+    {
+        if (!isset(Civi::$statics[__CLASS__]['fields'])) {
+            Civi::$statics[__CLASS__]['fields'] = [
+            'id' => [
+            'name' => 'id',
+            'type' => \Socrates\Utils_Type::T_INT,
+            'description' => 'Unique ChatCache ID',
+            'required' => true,
+            'table_name' => 'chat_caches',
+            'entity' => 'ChatCache',
+            'bao' => 'Socrates\Models\ChatCache',
+            'localizable' => 0,
+            ],
+            'identifier' => [
+            'name' => 'identifier',
+            'type' => \Socrates\Utils_Type::T_STRING,
+            'title' => ts('Identifier'),
+            'required' => true,
+            'maxlength' => 255,
+            'size' => \Socrates\Utils_Type::HUGE,
+            'table_name' => 'chat_caches',
+            'entity' => 'ChatCache',
+            'bao' => 'Socrates\Models\ChatCache',
+            'localizable' => 0,
+            ],
+            'value' => [
+            'name' => 'value',
+            'type' => \Socrates\Utils_Type::T_TEXT,
+            'title' => ts('Value'),
+            'required' => true,
+            'table_name' => 'chat_caches',
+            'entity' => 'ChatCache',
+            'bao' => 'Socrates\Models\ChatCache',
+            'localizable' => 0,
+            ],
+            'expires' => [
+            'name' => 'expires',
+            'type' => \Socrates\Utils_Type::T_DATE + CRM_Utils_Type::T_TIME,
+            'title' => ts('Expires'),
+            'required' => true,
+            'table_name' => 'chat_caches',
+            'entity' => 'ChatCache',
+            'bao' => 'Socrates\Models\ChatCache',
+            'localizable' => 0,
+            ],
+            ];
+            Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);
+        }
+        return Civi::$statics[__CLASS__]['fields'];
     }
-    return Civi::$statics[__CLASS__]['fields'];
-  }
 
-  /**
-   * Return a mapping from field-name to the corresponding key (as used in fields()).
-   *
-   * @return array
-   *   Array(string $name => string $uniqueName).
-   */
-  public static function &fieldKeys() {
-    if (!isset(Civi::$statics[__CLASS__]['fieldKeys'])) {
-      Civi::$statics[__CLASS__]['fieldKeys'] = array_flip(Socrates\Utils_Array::collect('name', self::fields()));
+    /**
+     * Return a mapping from field-name to the corresponding key (as used in fields()).
+     *
+     * @return array
+     *   Array(string $name => string $uniqueName).
+     */
+    public static function &fieldKeys()
+    {
+        if (!isset(Civi::$statics[__CLASS__]['fieldKeys'])) {
+            Civi::$statics[__CLASS__]['fieldKeys'] = array_flip(Socrates\Utils_Array::collect('name', self::fields()));
+        }
+        return Civi::$statics[__CLASS__]['fieldKeys'];
     }
-    return Civi::$statics[__CLASS__]['fieldKeys'];
-  }
 
-  /**
-   * Returns the names of this table
-   *
-   * @return string
-   */
-  public static function getTableName() {
-    return self::$_tableName;
-  }
+    /**
+     * Returns the names of this table
+     *
+     * @return string
+     */
+    public static function getTableName()
+    {
+        return self::$_tableName;
+    }
 
-  /**
-   * Returns if this table needs to be logged
-   *
-   * @return bool
-   */
-  public function getLog() {
-    return self::$_log;
-  }
+    /**
+     * Returns if this table needs to be logged
+     *
+     * @return bool
+     */
+    public function getLog()
+    {
+        return self::$_log;
+    }
 
-  /**
-   * Returns the list of fields that can be imported
-   *
-   * @param bool $prefix
-   *
-   * @return array
-   */
-  public static function &import($prefix = FALSE) {
-    $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_caches', $prefix, []);
-    return $r;
-  }
+    /**
+     * Returns the list of fields that can be imported
+     *
+     * @param bool $prefix
+     *
+     * @return array
+     */
+    public static function &import($prefix = false)
+    {
+        $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_caches', $prefix, []);
+        return $r;
+    }
 
-  /**
-   * Returns the list of fields that can be exported
-   *
-   * @param bool $prefix
-   *
-   * @return array
-   */
-  public static function &export($prefix = FALSE) {
-    $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_caches', $prefix, []);
-    return $r;
-  }
+    /**
+     * Returns the list of fields that can be exported
+     *
+     * @param bool $prefix
+     *
+     * @return array
+     */
+    public static function &export($prefix = false)
+    {
+        $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_caches', $prefix, []);
+        return $r;
+    }
 
-  /**
-   * Returns the list of indices
-   *
-   * @param bool $localize
-   *
-   * @return array
-   */
-  public static function indices($localize = TRUE) {
-    $indices = [
-      'index_identifier' => [
+    /**
+     * Returns the list of indices
+     *
+     * @param bool $localize
+     *
+     * @return array
+     */
+    public static function indices($localize = true)
+    {
+        $indices = [
+        'index_identifier' => [
         'name' => 'index_identifier',
         'field' => [
           0 => 'identifier',
         ],
-        'localizable' => FALSE,
-        'unique' => TRUE,
+        'localizable' => false,
+        'unique' => true,
         'sig' => 'chat_caches::1::identifier',
-      ],
-      'expires_key' => [
+        ],
+        'expires_key' => [
         'name' => 'expires_key',
         'field' => [
           0 => 'expires',
         ],
-        'localizable' => FALSE,
+        'localizable' => false,
         'sig' => 'chat_caches::0::expires',
-      ],
-    ];
-    return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;
-  }
+        ],
+        ];
+        return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;
+    }
 
 }

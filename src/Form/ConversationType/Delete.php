@@ -9,27 +9,31 @@ use Socrates\Chat\ExtensionUtil as E;
  * @see https://wiki.socrates.org/confluence/display/CRMDOC/QuickForm+Reference
  */
 
-class Delete extends \Socrates\Chat\Form\Good_Delete {
+class Delete extends \Socrates\Chat\Form\Good_Delete
+{
 
-  var $entities = [
+    var $entities = [
     'ChatConversationType' => [
       'type' => 'ChatConversationType',
       'param' => 'id',
     ]
-  ];
+    ];
 
-  var $deleteEntityText = 'conversation type';
-  var $deleteEntityLabelField = 'name';
+    var $deleteEntityText = 'conversation type';
+    var $deleteEntityLabelField = 'name';
 
-  function getGoodTitle(){
-    return 'Delete conversation type';
-  }
+    function getGoodTitle()
+    {
+        return 'Delete conversation type';
+    }
 
-  function getGoodContext() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['before']['id']);
-  }
+    function getGoodContext()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType/view', 'id='.$this->entities['ChatConversationType']['before']['id']);
+    }
 
-  function getDestination() {
-    return Socrates\Utils_System::url('socrates/chat/conversationType');
-  }
+    function getDestination()
+    {
+        return Socrates\Utils_System::url('socrates/chat/conversationType');
+    }
 }

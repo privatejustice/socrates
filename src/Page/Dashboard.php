@@ -3,14 +3,16 @@ namespace Socrates\Chat\Page;
 
 use Socrates\Chat\ExtensionUtil as E;
 
-class Dashboard extends Socrates\Core_Page {
+class Dashboard extends Socrates\Core_Page
+{
 
-  public function run() {
+    public function run()
+    {
 
-    //TODO Work out what I should include in the chat dasboard
+        //TODO Work out what I should include in the chat dasboard
 
-      parent::run();
+        parent::run();
 
-  }
+    }
 
 }

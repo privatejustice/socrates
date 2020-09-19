@@ -23,9 +23,11 @@ class HelpController extends Controller
     public function index(BotMan $bot)
     {
 
-        return $bot->reply(file_get_contents(resource_path('help.md')), [
+        return $bot->reply(
+            file_get_contents(resource_path('help.md')), [
             'parse_mode' => 'Markdown'
-        ]);
+            ]
+        );
     }
 
 }

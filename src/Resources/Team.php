@@ -4,9 +4,13 @@ namespace Socrates\Resources;
 
 class Team extends ApiResource
 {
-    /** @var int */
+    /**
+     * @var int 
+     */
     public $id;
 
-    /** @var string */
+    /**
+     * @var string 
+     */
     public $name;
 }

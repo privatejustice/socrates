@@ -17,10 +17,14 @@ class BrokenLinksFound implements ShouldQueue
 
     public $payload;
 
-    /** @var \BotMan\BotMan\BotMan */
+    /**
+     * @var \BotMan\BotMan\BotMan 
+     */
     public $botman;
 
-    /** @var \Socrates\Models\User */
+    /**
+     * @var \Socrates\Models\User 
+     */
     public $user;
 
     public function __construct($payload, User $user)
@@ -46,11 +50,14 @@ class BrokenLinksFound implements ShouldQueue
 
     private function reportBrokenLink($link)
     {
-        $this->botman->say(trans('socrates.brokenlinks.result', [
-            'url' => $link->crawled_url,
-            'code' => $link->status_code,
-            'origin' => $link->found_on_url,
-        ]),
+        $this->botman->say(
+            trans(
+                'socrates.brokenlinks.result', [
+                'url' => $link->crawled_url,
+                'code' => $link->status_code,
+                'origin' => $link->found_on_url,
+                ]
+            ),
             $this->user->telegram_id,
             TelegramDriver::class,
             ['disable_web_page_preview' => true]

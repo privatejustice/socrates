@@ -19,7 +19,9 @@ class Socrates
 
     use MakesHttpRequests;
 
-    /** @var \Socrates\SocratesNetworking */
+    /**
+     * @var \Socrates\SocratesNetworking 
+     */
     private $socrates;
 
     public function __construct()
@@ -71,11 +73,13 @@ class Socrates
 
     private function searchSiteByUrl(string $url): Site
     {
-        return $this->sites()->first(function (Site $site) use ($url) {
-            return stripos($site->url, $url) !== false;
-        }, function () {
-            throw new NotFoundException();
-        });
+        return $this->sites()->first(
+            function (Site $site) use ($url) {
+                return stripos($site->url, $url) !== false;
+            }, function () {
+                throw new NotFoundException();
+            }
+        );
     }
 
     /**
@@ -109,14 +113,18 @@ class Socrates
 
     public function getSiteDowntime($siteId)
     {
-        return $this->collect($this->get("sites/{$siteId}/downtime{$this->getDefaultStartedEndedFilter()}")['data'],
-            Downtime::class);
+        return $this->collect(
+            $this->get("sites/{$siteId}/downtime{$this->getDefaultStartedEndedFilter()}")['data'],
+            Downtime::class
+        );
     }
 
     public function getSiteUptime($siteId)
     {
-        return $this->collect($this->get("sites/{$siteId}/uptime{$this->getDefaultStartedEndedFilter()}&split=day"),
-            Uptime::class);
+        return $this->collect(
+            $this->get("sites/{$siteId}/uptime{$this->getDefaultStartedEndedFilter()}&split=day"),
+            Uptime::class
+        );
     }
 
     public function getBrokenLinks($siteId)
@@ -131,9 +139,11 @@ class Socrates
 
     public function collect($collection, $class)
     {
-        return collect($collection)->map(function ($attributes) use ($class) {
-            return new $class($attributes, $this);
-        });
+        return collect($collection)->map(
+            function ($attributes) use ($class) {
+                return new $class($attributes, $this);
+            }
+        );
     }
 
     /**

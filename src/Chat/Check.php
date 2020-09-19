@@ -1,44 +1,49 @@
 <?php
 namespace Socrates\Chat;
 
-abstract class Check{
+abstract class Check
+{
 
-  /**
-  * Check to see if $text is a match
-  * @param  string $text
-  * @return boolean
-  */
-  final function matches($text){
-    $this->text = $text;
-    $this->match = $text;
-    return $this->check();
-  }
+    /**
+    * Check to see if $text is a match
+   *
+    * @param  string $text
+    * @return boolean
+    */
+    final function matches($text)
+    {
+        $this->text = $text;
+        $this->match = $text;
+        return $this->check();
+    }
 
-  /**
-  * Return a textual representation of the match
-  */
-  final function getMatch(){  
-    return $this->match;
-  }
+    /**
+    * Return a textual representation of the match
+    */
+    final function getMatch()
+    {  
+        return $this->match;
+    }
 
-  /**
-  * Check to see if $this->text should be considered a match.
-  *
-  * Optionally alter the return value (e.g. if only part of the string should
-  * be matched)
-  */
-  abstract function check();
-  /**
-  * Return a textual representation of the match
-  */
-  abstract function summarise();
+    /**
+     * Check to see if $this->text should be considered a match.
+     *
+     * Optionally alter the return value (e.g. if only part of the string should
+     * be matched)
+     */
+    abstract function check();
+    /**
+     * Return a textual representation of the match
+     */
+    abstract function summarise();
 
-  /**
-   * get Form elements so they can be used to build the form
-   */
+    /**
+     * get Form elements so they can be used to build the form
+     */
 
-  final function getFormElements(){
-    return $this->formElements;
-  }
+    final function getFormElements()
+    {
+        return $this->formElements;
+    }
 
 }

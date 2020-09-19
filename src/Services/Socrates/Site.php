@@ -12,9 +12,11 @@ class Site extends \Socrates\Resources\Site
     {
         parent::__construct($attributes, $socrates);
 
-        $this->checks = collect($this->checks)->map(function ($check) {
-            return new Check($check->attributes, $this->socrates);
-        });
+        $this->checks = collect($this->checks)->map(
+            function ($check) {
+                return new Check($check->attributes, $this->socrates);
+            }
+        );
     }
 
     public function getResume()
@@ -26,26 +28,30 @@ class Site extends \Socrates\Resources\Site
     {
         return "{$this->getStatusEmoji()} {$this->sortUrl}"
             . PHP_EOL
-            . collect($this->checks)->map(function (Check $check) {
+            . collect($this->checks)->map(
+                function (Check $check) {
 
-                if (! $check->enabled) {
-                    return null;
+                    if (! $check->enabled) {
+                        return null;
+                    }
+
+                    return "{$check->getResultAsIcon()} {$check->getTypeAsTitle()}";
+
                 }
-
-                return "{$check->getResultAsIcon()} {$check->getTypeAsTitle()}";
-
-            })->filter()->implode(PHP_EOL);
+            )->filter()->implode(PHP_EOL);
     }
 
     public function getKeyboard()
     {
         return (new Question(trans('socrates.sites.next_action')))
-            ->addButtons([
+            ->addButtons(
+                [
                 Button::create('Uptime')->value("/uptime {$this->id}"),
                 Button::create('Downtime')->value("/downtime {$this->id}"),
                 Button::create('Broken Links')->value("/brokenlinks {$this->id}"),
                 Button::create('Mixed Content')->value("/mixedcontent {$this->id}"),
-            ]);
+                ]
+            );
     }
 
     public function isUp()

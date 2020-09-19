@@ -19,40 +19,52 @@ class DateTimeConversation extends Conversation
 
         $question = Question::create('Select the date')
             ->callbackId('select_date')
-            ->addButtons([
+            ->addButtons(
+                [
                 Button::create($availableDates[0]->format('M d'))->value($availableDates[0]->format('Y-m-d')),
                 Button::create($availableDates[1]->format('M d'))->value($availableDates[1]->format('Y-m-d')),
                 Button::create($availableDates[2]->format('M d'))->value($availableDates[2]->format('Y-m-d')),
-            ]);
+                ]
+            );
 
-        $this->ask($question, function(Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                $this->bot->userStorage()->save([
-                    'date' => $answer->getValue(),
-                ]);
+        $this->ask(
+            $question, function (Answer $answer) {
+                if ($answer->isInteractiveMessageReply()) {
+                    $this->bot->userStorage()->save(
+                        [
+                        'date' => $answer->getValue(),
+                        ]
+                    );
 
-                $this->askTime();
+                    $this->askTime();
+                }
             }
-        });
+        );
     }
 
     public function askTime()
     {
         $question = Question::create('Select a time slot')
             ->callbackId('select_time')
-            ->addButtons([
+            ->addButtons(
+                [
                 Button::create('9 AM')->value('9 AM'),
                 Button::create('1 PM')->value('1 PM'),
                 Button::create('3 PM')->value('3 PM'),
-            ]);
+                ]
+            );
 
-        $this->ask($question, function(Answer $answer) {
-            if ($answer->isInteractiveMessageReply()) {
-                $this->bot->userStorage()->save([
-                    'timeSlot' => $answer->getValue(),
-                ]);
+        $this->ask(
+            $question, function (Answer $answer) {
+                if ($answer->isInteractiveMessageReply()) {
+                    $this->bot->userStorage()->save(
+                        [
+                        'timeSlot' => $answer->getValue(),
+                        ]
+                    );
+                }
             }
-        });
+        );
     }
 
     public function run()

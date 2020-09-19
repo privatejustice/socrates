@@ -5,120 +5,131 @@ use BotMan\BotMan\Messages\Conversations\Conversation as ConversationBase;
 use BotMan\BotMan\Messages\Incoming\Answer;
 use Api;
 
-class Conversation extends ConversationBase {
+class Conversation extends ConversationBase
+{
 
-  public $contactId;
+    public $contactId;
 
-  public function __construct($conversationType, $contactId = null) {
+    public function __construct($conversationType, $contactId = null)
+    {
 
-    $this->conversationType = $conversationType;
-    $this->contactId = $contactId;
+        $this->conversationType = $conversationType;
+        $this->contactId = $contactId;
 
-  }
-
-  public function run() {
-
-    if(empty($this->contactId)){
-      $this->contactId = $this->getBot()->getMessage()->getExtras('contact_id');
     }
-    $this->askQuestion($this->conversationType->first_question_id);
 
-  }
+    public function run()
+    {
 
-  protected function askQuestion($questionId) {
+        if(empty($this->contactId)) {
+            $this->contactId = $this->getBot()->getMessage()->getExtras('contact_id');
+        }
+        $this->askQuestion($this->conversationType->first_question_id);
 
-    $question = \Socrates\Bao\ChatQuestion::findById($questionId);
+    }
 
-    $text = $this->tokenReplacement($question->text, $this->contactId);// TODO contact token replacement
+    protected function askQuestion($questionId)
+    {
 
-    $this->ask($text, $this->action($questionId), ['contact_id' => $this->contactId]);
-    return;
+        $question = \Socrates\Bao\ChatQuestion::findById($questionId);
 
-  }
+        $text = $this->tokenReplacement($question->text, $this->contactId);// TODO contact token replacement
 
-  protected function action($questionId) {
+        $this->ask($text, $this->action($questionId), ['contact_id' => $this->contactId]);
+        return;
 
-    return function(Answer $answer) use ($questionId) {
-      $this->end = true;
-      $actions = [
-        'group' => function($groupId){
+    }
 
-          Api::render('GroupContact', 'create', [
-            'contact_id' => $this->contactId,
-            'group_id' => $groupId
-          ]);
+    protected function action($questionId)
+    {
 
-        },
+        return function (Answer $answer) use ($questionId) {
+            $this->end = true;
+            $actions = [
+            'group' => function ($groupId) {
 
-        'field' => function($field, $value){
+                Api::render(
+                    'GroupContact', 'create', [
+                    'contact_id' => $this->contactId,
+                    'group_id' => $groupId
+                    ]
+                );
 
-          Api::render('Contact', 'create', ['id' => $this->contactId, $field => $value]);
+            },
 
-        },
+            'field' => function ($field, $value) {
 
-        'say' => function($text){
+                Api::render('Contact', 'create', ['id' => $this->contactId, $field => $value]);
 
-          $this->say($text, ['contact_id' => $this->contactId]);
+            },
 
-        },
+            'say' => function ($text) {
 
-        // 'conversation' => function($conversationTypeId){
-        //
-        //   $conversationType = \Socrates\Bao\ChatConversationType::findById($conversationTypeId);
-        //   $this->end = false;
-        //   $this->bot->startConversation(new \Socrates\Chat\Conversation($conversationType));
-        //
-        // },
+                $this->say($text, ['contact_id' => $this->contactId]);
 
-        'next' => function($questionId){
+            },
 
-          $question = \Socrates\Bao\ChatQuestion::findById($questionId);
-          $this->end = false;
-          $this->askQuestion($questionId);
+            // 'conversation' => function($conversationTypeId){
+            //
+            //   $conversationType = \Socrates\Bao\ChatConversationType::findById($conversationTypeId);
+            //   $this->end = false;
+            //   $this->bot->startConversation(new \Socrates\Chat\Conversation($conversationType));
+            //
+            // },
 
-        },
-      ];
+            'next' => function ($questionId) {
 
-      foreach($actions as $type => $closure) {
-        $this->processAction($type, $answer->getText(), $questionId, $closure);
-      }
-      if($this->end){
+                $question = \Socrates\Bao\ChatQuestion::findById($questionId);
+                $this->end = false;
+                $this->askQuestion($questionId);
 
-        Api::render('Activity', 'create', [
-          'id' => \Socrates\Chat\Utils::getOngoingConversation($this->contactId)['id'],
-          'activity_status_id' => 'Completed'
-        ]);
-      }
-    };
-  }
+            },
+            ];
 
-  protected function processAction($type, $text, $questionId, $closure) {
+            foreach($actions as $type => $closure) {
+                $this->processAction($type, $answer->getText(), $questionId, $closure);
+            }
+            if($this->end) {
 
-    $action = \Socrates\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);
+                Api::render(
+                    'Activity', 'create', [
+                    'id' => \Socrates\Chat\Utils::getOngoingConversation($this->contactId)['id'],
+                    'activity_status_id' => 'Completed'
+                    ]
+                );
+            }
+        };
+    }
 
-    while($action->fetch()){
-      $check = unserialize($action->check_object);
-      if($check->matches($text)){
+    protected function processAction($type, $text, $questionId, $closure)
+    {
 
-        // TODO add weight to 'next' actions so that they are executed in order
+        $action = \Socrates\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);
 
-        $closure($action->action_data, $check->getMatch());
-        if($type == 'next' || $type == 'conversation') {
-          return;
+        while($action->fetch()){
+            $check = unserialize($action->check_object);
+            if($check->matches($text)) {
+
+                // TODO add weight to 'next' actions so that they are executed in order
+
+                $closure($action->action_data, $check->getMatch());
+                if($type == 'next' || $type == 'conversation') {
+                    return;
+                }
+
+            }
+
         }
 
-      }
-
     }
 
-  }
+    protected function tokenReplacement($text, $contactId)
+    {
 
-  protected function tokenReplacement($text, $contactId) {
+        //TODO token replacement
 
-    //TODO token replacement
+        return $text;
 
-    return $text;
-
-  }
+    }
 
 }
