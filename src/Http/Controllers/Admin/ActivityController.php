@@ -16,7 +16,7 @@ class ActivityController extends Base
     public $title = 'Atividades';
     public $model = Activity::class;
 
-    public function index()
+    public function index(Request $request)
     {
         // $service = $this->service;
 
@@ -53,7 +53,7 @@ class ActivityController extends Base
     // /**
     //  * @var array
     //  */
-    // protected $search = [
+    // public $search = [
     //     'from',
     //     'to',
     //     'code' => [
@@ -116,7 +116,7 @@ class ActivityController extends Base
     //  *
     //  * @return Illuminate\View\View
     //  */
-    // public function index()
+    // public function index(Request $request)
     // {
     //     return $this->populateView(
     //         'admin.orders.index', [
