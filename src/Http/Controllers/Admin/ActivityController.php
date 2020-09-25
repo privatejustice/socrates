@@ -233,7 +233,7 @@ class ActivityController extends Base
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function show($id)
+    // public function show(Request $request, $id)
     // {
     //     $order = Activity::findOrFail($id);
     //     return view('admin.orders.show', compact('order'));
@@ -246,7 +246,7 @@ class ActivityController extends Base
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function edit($id)
+    // public function edit(Request $request, $id)
     // {
     //     $order = Activity::find($id);
 
@@ -283,7 +283,7 @@ class ActivityController extends Base
     //  * @param  int  $id
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function destroy($id)
+    // public function destroy(Request $request, $id)
     // {
     //     $order = Activity::findOrFail($id);
     //     $order->delete();
