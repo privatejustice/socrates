@@ -13,8 +13,8 @@ class ActivityController extends Base
     /**
      * @var string
      */
-    protected $title = 'Atividades';
-    protected $model = Activity::class;
+    public $title = 'Atividades';
+    public $model = Activity::class;
 
     public function index()
     {
@@ -41,12 +41,12 @@ class ActivityController extends Base
     // /**
     //  * @var string
     //  */
-    // protected $description = 'Listagem de Atividades.';
+    // public $description = 'Listagem de Atividades.';
 
     // /**
     //  * @var array
     //  */
-    // protected $columns = [
+    // public $columns = [
     //     'Rule' => 'getAdminTitleAttribute',
     // ];
 

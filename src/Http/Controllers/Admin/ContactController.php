@@ -13,8 +13,8 @@ class ContactController extends Base
     /**
      * @var string
      */
-    protected $title = 'Contacts';
-    protected $model = Contact::class;
+    public $title = 'Contacts';
+    public $model = Contact::class;
 
     public function index()
     {
@@ -41,12 +41,12 @@ class ContactController extends Base
     // /**
     //  * @var string
     //  */
-    // protected $description = 'Listagem de Atividades.';
+    // public $description = 'Listagem de Atividades.';
 
     // /**
     //  * @var array
     //  */
-    // protected $columns = [
+    // public $columns = [
     //     'Rule' => 'getAdminTitleAttribute',
     // ];
 
