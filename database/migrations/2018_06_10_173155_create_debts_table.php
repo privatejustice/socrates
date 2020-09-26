@@ -13,15 +13,17 @@ class CreateDebtsTable extends Migration
      */
     public function up()
     {
-        Schema::create('debts', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('group_id')->nullable();
-            $table->string('from_id');
-            $table->string('to_id');
-            $table->float('amount');
-            $table->string('currency');
-            $table->timestamp('created_at');
-        });
+        Schema::create(
+            'debts', function (Blueprint $table) {
+                $table->increments('id');
+                $table->string('group_id')->nullable();
+                $table->string('from_id');
+                $table->string('to_id');
+                $table->float('amount');
+                $table->string('currency');
+                $table->timestamp('created_at');
+            }
+        );
     }
 
     /**

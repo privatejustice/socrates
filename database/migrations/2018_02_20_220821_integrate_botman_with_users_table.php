@@ -13,14 +13,16 @@ class IntegrateBotManWithUsersTable extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            // $table->string('username')->nullable()->after('id');
-            // $table->text('token')->nullable();
-            $table->text('webhook')->nullable();
-            $table->string('surname')->nullable()->after('name');
-            $table->string('telegram_id')->nullable()->after('password');
-            $table->integer('station_id')->nullable()->after('telegram_id');
-        });
+        Schema::table(
+            'users', function (Blueprint $table) {
+                // $table->string('username')->nullable()->after('id');
+                // $table->text('token')->nullable();
+                $table->text('webhook')->nullable();
+                $table->string('surname')->nullable()->after('name');
+                $table->string('telegram_id')->nullable()->after('password');
+                $table->integer('station_id')->nullable()->after('telegram_id');
+            }
+        );
     }
 
     /**
@@ -30,11 +32,13 @@ class IntegrateBotManWithUsersTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('surname');
-            $table->dropColumn('username');
-            $table->dropColumn('telegram_id');
-            $table->dropColumn('station_id');
-        });
+        Schema::table(
+            'users', function (Blueprint $table) {
+                $table->dropColumn('surname');
+                $table->dropColumn('username');
+                $table->dropColumn('telegram_id');
+                $table->dropColumn('station_id');
+            }
+        );
     }
 }

@@ -10,7 +10,7 @@ return array(
     'title' => 'Facebook callback URL',
     'description' => 'Facebook will send webhook updates to this callback URL.',
     'help_text' => 'Facebook will send webhook updates to this callback URL. Configure your Facebook app webhook to use this URL.',
-    'default' => \Socrates\Utils_System::url('civicrm/chat/webhook/facebook', NULL, true),
+    'default' => \Socrates\Utils_System::url('civicrm/chat/webhook/facebook', null, true),
     'add' => '4.7',
     'is_domain' => 1,
     'is_contact' => 0,
