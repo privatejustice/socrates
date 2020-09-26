@@ -51,7 +51,7 @@ class CreateAliasConversation extends Conversation
         );
     }
 
-    public function askStation()
+    public function askStation(): self
     {
         $question = Question::create('Quina estació vols associar a aquest alias?')
             ->addButtons($this->stationService->asButtons());
@@ -77,7 +77,7 @@ class CreateAliasConversation extends Conversation
         return auth()->user()->aliases()->where('alias', 'like', "%{$this->alias}%")->first() !== null;
     }
 
-    private function createAlias()
+    private function createAlias(): void
     {
         $alias = new Alias();
         $alias->user_id = auth()->user()->id;

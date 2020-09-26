@@ -9,17 +9,17 @@ use BotMan\Drivers\Facebook\FacebookDriver;
 class Webhook
 {
 
-    public static function facebook()
+    public static function facebook(): void
     {
         Socrates\Chat\Listen::create('Facebook', $_SERVER['REQUEST_METHOD'] == 'GET');
     }
 
-    public static function devchat()
+    public static function devchat(): void
     {
         Socrates\Chat\Listen::create('DevChat');
     }
 
-    public static function civisms()
+    public static function civisms(): void
     {
         Socrates\Chat\Listen::create('CiviSMS');
     }

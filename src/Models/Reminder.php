@@ -24,42 +24,17 @@ class Reminder extends Model
         'parkings' => 'Aparcaments lliures'
     ];
 
-    public function user()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     *
+     * @psalm-return \Illuminate\Database\Eloquent\Relations\BelongsTo<User>
+     */
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getDaysStrAttribute()
-    {
-        $days = [];
-
-        foreach(self::DAYS as $day => $name) {
-            if ($this->$day) {
-                $days[] = strtolower($name);
-            }
-        }
-
-        $imploded = implode(', ', $days);
-
-        return substr_replace($imploded, ' i ', strrpos($imploded, ', '), 2);
-    }
-
-    public function getTimeAttribute()
-    {
-        return date('H:i', strtotime($this->attributes['time']));
-    }
-
-    public function getTypeStrAttribute()
-    {
-        return self::TYPES[$this->type];
-    }
-
-    public function getTypeStrLowerAttribute()
-    {
-        return strtolower($this->type_str);
-    }
-
-    public function setDays(Collection $days)
+    public function setDays(Collection $days): self
     {
         $this->monday = $days->has('monday');
         $this->tuesday = $days->has('tuesday');
@@ -72,7 +47,7 @@ class Reminder extends Model
         return $this;
     }
 
-    public function getDaysList()
+    public function getDaysList(): string
     {
         $message = '';
 
@@ -85,7 +60,7 @@ class Reminder extends Model
         return $message;
     }
 
-    public function asButton()
+    public function asButton(): Button
     {
         $station = app(StationService::class)->find($this->station_id);
 

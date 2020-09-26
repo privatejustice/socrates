@@ -74,7 +74,7 @@ class CreateReminderConversation extends Conversation
         );
     }
 
-    public function askStation()
+    public function askStation(): self
     {
         $question = Question::create('De quina estació voldràs la informació?')->addButtons($this->stationService->asButtons());
 
@@ -92,25 +92,7 @@ class CreateReminderConversation extends Conversation
         );
     }
 
-    public function askType()
-    {
-
-        $question = Question::create('Què vols que et recordi?')->addButtons($this->reminderService->asButtons());
-
-        return $this->ask(
-            $question, function (Answer $answer) {
-                $this->reminderType = $answer->getValue();
-
-                if (! $this->reminderService->find($this->reminderType)) {
-                    return $this->say(self::REMINDER_UNKNOWN);
-                }
-
-                return $this->askTime();
-            }
-        );
-    }
-
-    public function askTime()
+    public function askTime(): self
     {
         return $this->ask(
             'A quina hora vols que t\'ho recordi?', function (Answer $answer) {
@@ -126,7 +108,7 @@ class CreateReminderConversation extends Conversation
         );
     }
 
-    public function askDays()
+    public function askDays(): self
     {
         $question = Question::create('Quins dies vols que t\'ho recordi? Si vols dies saltejats, escriu-los en comptes de triar un botó')
             ->addButtons($this->reminderService->possibleDaysButtons());
@@ -151,7 +133,7 @@ class CreateReminderConversation extends Conversation
         );
     }
 
-    public function createReminder()
+    public function createReminder(): Reminder
     {
         $reminder = new Reminder();
         $reminder->user_id = auth()->user()->id;

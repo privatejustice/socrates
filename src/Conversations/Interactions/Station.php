@@ -39,100 +39,29 @@ class Station
      */
     public $foundBy;
 
-    public static function createFromPayload($payload)
-    {
-        $station = new Station();
-
-        $station->id = $payload['id'];
-        $station->name = $payload['name'];
-        $station->location = new Location($payload['latitude'], $payload['longitude']);
-        $station->parkings = $payload['parkings'];
-        $station->bikes = $payload['bikes'];
-
-        return $station->foundById();
-    }
-
     /**
      * @return Button
      */
-    public function asButton()
+    public function asButton(): Button
     {
         return Button::create($this->name)->value($this->id);
     }
 
-    /**
-     * Load distance into location object.
-     *
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return $this
-     */
-    public function withDistanceTo(float $latitude, float $longitude)
-    {
-        $this->distance = $this->location->getDistance($latitude, $longitude);
-
-        return $this;
-    }
-
-    public function foundById()
+    public function foundById(): self
     {
         $this->foundBy = 'id';
 
         return $this;
     }
 
-    public function foundByText()
-    {
-        $this->foundBy = 'text';
-
-        return $this;
-    }
-
-    public function foundByAlias()
-    {
-        $this->foundBy = 'alias';
-
-        return $this;
-    }
-
-    public function foundByAddress()
+    public function foundByAddress(): self
     {
         $this->foundBy = 'address';
 
         return $this;
     }
 
-    public function foundByLocation()
-    {
-        $this->foundBy = 'location';
-
-        return $this;
-    }
-
-    public function wasFoundBy($found)
-    {
-        return $this->foundBy == $found;
-    }
-
-    public function getVenueMessage()
-    {
-        $message = new OutgoingMessage();
-
-        $message->withAttachment(new BotManLocation($this->location->latitude, $this->location->longitude));
-
-        return $message;
-    }
-
-    public function getVenuePayload()
-    {
-        return [
-            'title'   => $this->name,
-            'address' => $this->getVenueAddress(),
-        ];
-    }
-
-    public function getVenueAddress()
+    public function getVenueAddress(): string
     {
         $text = "{$this->bikes} 🚲 - {$this->parkings} 🅿️";
 

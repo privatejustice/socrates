@@ -13,8 +13,8 @@ class RecordIncoming extends Middleware implements Received
     {
 
         $details = $message->getText();
-        $subject = \Socrates\Chat\Driver::getServiceName($bot->getDriver()) . ': ' . \Socrates\Chat\Utils::shorten($details, 50);
-        $contactId = $message->getExtras('contact_id');
+        \Socrates\Chat\Driver::getServiceName($bot->getDriver()) . ': ' . \Socrates\Chat\Utils::shorten($details, 50);
+        $message->getExtras('contact_id');
 
         Api::render(
             'activity', 'create', [

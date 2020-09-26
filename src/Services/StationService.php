@@ -8,6 +8,9 @@ use Socrates\Models\Alias;
 class StationService
 {
 
+    /**
+     * @var \Illuminate\Support\Collection
+     */
     private $stations;
 
     const REGEX = "/addMarker\((?<latitude>\-?\d+(?:\.\d+)?),(?<longitude>\-?\d+(?:\.\d+)?).*>(?<id>\d+)-\s?(?<name>.*)<\/div><div>(?<address>.*)<\/div><div>Bicis lliures: (?<bikes>\d+)<\/div><div>Aparcaments lliures: (?<parkings>\d+)<\/div><\/div>'\);/";
@@ -33,9 +36,11 @@ class StationService
     /**
      * Get the stations. Temporal result.
      *
-     * @return array
+     * @return string[][]
+     *
+     * @psalm-return list<array{id: string, name: string, parkings: string, bikes: string, latitude: string, longitude: string}>
      */
-    private function getStations()
+    private function getStations(): array
     {
         preg_match_all(self::REGEX, $this->query(), $matches);
 
@@ -54,6 +59,9 @@ class StationService
         );
     }
 
+    /**
+     * @return false|string
+     */
     private function query()
     {
         return file_get_contents(

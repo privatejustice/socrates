@@ -81,7 +81,7 @@ class Cache implements CacheInterface
         }
     }
 
-    public function prune()
+    public function prune(): void
     {
         $expired = new \Socrates\Bao\ChatCache;
         $expired->whereAdd('expires < NOW()');

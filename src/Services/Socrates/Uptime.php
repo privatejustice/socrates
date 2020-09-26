@@ -16,14 +16,7 @@ class Uptime extends ApiResource
         '😱' => 0,
     ];
 
-    public function __construct(array $attributes, $socrates = null)
-    {
-        parent::__construct($attributes, $socrates);
-
-        $this->datetime = Carbon::parse($this->datetime);
-    }
-
-    public function getPercentageEmoji()
+    public function getPercentageEmoji(): string
     {
         foreach (self::PERCENTAGES_EMOJIS as $emoji => $cut) {
 

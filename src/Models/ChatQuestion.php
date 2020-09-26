@@ -44,91 +44,15 @@ class ChatQuestion extends Model
     public $text;
 
     /**
-     * FK to conversation type
+     * @var string[]
      *
-     * @var int unsigned
+     * @psalm-var array{0: string, 1: string}
      */
-    public $conversation_type_id;
-
-    protected $fillable = [
+    protected array $fillable = [
     'text', 
     'conversation_type_id', 
     ];
-    /**
-     * Returns foreign keys and entity references.
-     *
-     * @return array
-     *   [Socrates\Core_Reference_Interface]
-     */
-    public static function getReferenceColumns()
-    {
-        if (!isset(Civi::$statics[__CLASS__]['links'])) {
-            Civi::$statics[__CLASS__]['links'] = static ::createReferenceColumns(__CLASS__);
-            Civi::$statics[__CLASS__]['links'][] = new \Socrates\Core_Reference_Basic(self::getTableName(), 'conversation_type_id', 'chat_conversation_types', 'id');
-            Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'links_callback', Civi::$statics[__CLASS__]['links']);
-        }
-        return Civi::$statics[__CLASS__]['links'];
-    }
 
-    /**
-     * Returns all the column names of this table
-     *
-     * @return array
-     */
-    public static function &fields()
-    {
-        if (!isset(Civi::$statics[__CLASS__]['fields'])) {
-            Civi::$statics[__CLASS__]['fields'] = [
-            'id' => [
-            'name' => 'id',
-            'type' => \Socrates\Utils_Type::T_INT,
-            'description' => 'Unique ChatQuestion ID',
-            'required' => true,
-            'table_name' => 'chat_questions',
-            'entity' => 'ChatQuestion',
-            'bao' => 'Socrates\Models\ChatQuestion',
-            'localizable' => 0,
-            ],
-            'text' => [
-            'name' => 'text',
-            'type' => \Socrates\Utils_Type::T_TEXT,
-            'title' => ts('Text'),
-            'required' => true,
-            'table_name' => 'chat_questions',
-            'entity' => 'ChatQuestion',
-            'bao' => 'Socrates\Models\ChatQuestion',
-            'localizable' => 0,
-            ],
-            'conversation_type_id' => [
-            'name' => 'conversation_type_id',
-            'type' => \Socrates\Utils_Type::T_INT,
-            'description' => 'FK to conversation type',
-            'required' => true,
-            'table_name' => 'chat_questions',
-            'entity' => 'ChatQuestion',
-            'bao' => 'Socrates\Models\ChatQuestion',
-            'localizable' => 0,
-            'FKClassName' => 'Socrates\Models\ChatConversationType',
-            ],
-            ];
-            Socrates\Core_DAO_AllCoreTables::invoke(__CLASS__, 'fields_callback', Civi::$statics[__CLASS__]['fields']);
-        }
-        return Civi::$statics[__CLASS__]['fields'];
-    }
-
-    /**
-     * Return a mapping from field-name to the corresponding key (as used in fields()).
-     *
-     * @return array
-     *   Array(string $name => string $uniqueName).
-     */
-    public static function &fieldKeys()
-    {
-        if (!isset(Civi::$statics[__CLASS__]['fieldKeys'])) {
-            Civi::$statics[__CLASS__]['fieldKeys'] = array_flip(Socrates\Utils_Array::collect('name', self::fields()));
-        }
-        return Civi::$statics[__CLASS__]['fieldKeys'];
-    }
 
     /**
      * Returns the names of this table
@@ -138,55 +62,6 @@ class ChatQuestion extends Model
     public static function getTableName()
     {
         return self::$_tableName;
-    }
-
-    /**
-     * Returns if this table needs to be logged
-     *
-     * @return bool
-     */
-    public function getLog()
-    {
-        return self::$_log;
-    }
-
-    /**
-     * Returns the list of fields that can be imported
-     *
-     * @param bool $prefix
-     *
-     * @return array
-     */
-    public static function &import($prefix = false)
-    {
-        $r = \Socrates\Core_DAO_AllCoreTables::getImports(__CLASS__, 'chat_questions', $prefix, []);
-        return $r;
-    }
-
-    /**
-     * Returns the list of fields that can be exported
-     *
-     * @param bool $prefix
-     *
-     * @return array
-     */
-    public static function &export($prefix = false)
-    {
-        $r = \Socrates\Core_DAO_AllCoreTables::getExports(__CLASS__, 'chat_questions', $prefix, []);
-        return $r;
-    }
-
-    /**
-     * Returns the list of indices
-     *
-     * @param bool $localize
-     *
-     * @return array
-     */
-    public static function indices($localize = true)
-    {
-        $indices = [];
-        return ($localize && !empty($indices)) ? Socrates\Core_DAO_AllCoreTables::multilingualize(__CLASS__, $indices) : $indices;
     }
 
 }

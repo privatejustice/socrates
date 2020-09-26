@@ -18,6 +18,9 @@ class Conversation extends ConversationBase
 
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
 
@@ -28,7 +31,7 @@ class Conversation extends ConversationBase
 
     }
 
-    protected function askQuestion($questionId)
+    protected function askQuestion($questionId): void
     {
 
         $question = \Socrates\Bao\ChatQuestion::findById($questionId);
@@ -40,13 +43,18 @@ class Conversation extends ConversationBase
 
     }
 
-    protected function action($questionId)
+    /**
+     * @return \Closure
+     *
+     * @psalm-return \Closure(Answer):mixed
+     */
+    protected function action($questionId): \Closure
     {
 
         return function (Answer $answer) use ($questionId) {
             $this->end = true;
             $actions = [
-            'group' => function ($groupId) {
+            'group' => function ($groupId): void {
 
                 Api::render(
                     'GroupContact', 'create', [
@@ -57,13 +65,13 @@ class Conversation extends ConversationBase
 
             },
 
-            'field' => function ($field, $value) {
+            'field' => function ($field, $value): void {
 
                 Api::render('Contact', 'create', ['id' => $this->contactId, $field => $value]);
 
             },
 
-            'say' => function ($text) {
+            'say' => function ($text): void {
 
                 $this->say($text, ['contact_id' => $this->contactId]);
 
@@ -77,9 +85,9 @@ class Conversation extends ConversationBase
             //
             // },
 
-            'next' => function ($questionId) {
+            'next' => function ($questionId): void {
 
-                $question = \Socrates\Bao\ChatQuestion::findById($questionId);
+                \Socrates\Bao\ChatQuestion::findById($questionId);
                 $this->end = false;
                 $this->askQuestion($questionId);
 
@@ -101,7 +109,12 @@ class Conversation extends ConversationBase
         };
     }
 
-    protected function processAction($type, $text, $questionId, $closure)
+    /**
+     * @param \Closure|\Closure $closure
+     *
+     * @return void
+     */
+    protected function processAction(string $type, string $text, $questionId, $closure)
     {
 
         $action = \Socrates\Bao\ChatAction::findByTypeAndQuestion($type, $questionId);

@@ -55,6 +55,11 @@ class SocratesNetworking
         );
     }
 
+    /**
+     * @return object[]
+     *
+     * @psalm-return array<array-key, object>
+     */
     protected function transformCollection(array $collection, string $class): array
     {
         return array_map(

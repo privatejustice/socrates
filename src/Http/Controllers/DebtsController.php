@@ -7,30 +7,7 @@ use BotMan\BotMan\BotMan;
 
 class DebtsController extends Controller
 {
-    public function index(BotMan $bot)
-    {
-        $user = auth()->user();
 
-        $debtsToPay = $user->debts_to_pay()
-            ->selectRaw('to_id, SUM(amount) as amount, currency')
-            ->groupBy('to_id', 'currency')
-            ->get()
-            ->map->toStringFromDebtor();
-
-        $debtsToReceive = $user->debts_to_receive()
-            ->selectRaw('from_id, SUM(amount) as amount, currency')
-            ->groupBy('from_id', 'currency')
-            ->get()
-            ->map->toStringFromCreditor();
-
-        $messageDebts = collect($debtsToPay)->merge($debtsToReceive)->implode(PHP_EOL);
-
-        if (! $messageDebts) {
-            $messageDebts = trans('debts.no_debts');
-        }
-
-        return $bot->reply("{$user->name}," . str_repeat(PHP_EOL, 2) . $messageDebts);
-    }
 
     public function createFromMe(BotMan $bot, $amount, $creditorUsername)
     {

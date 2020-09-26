@@ -12,8 +12,10 @@ class ExampleConversation extends Conversation
 {
     /**
      * First question
+     *
+     * @return self
      */
-    public function askReason()
+    public function askReason(): self
     {
         $question = Question::create("Huh - you woke me up. What do you need?")
             ->fallback('Unable to ask question')
@@ -41,6 +43,8 @@ class ExampleConversation extends Conversation
 
     /**
      * Start the conversation
+     *
+     * @return void
      */
     public function run()
     {

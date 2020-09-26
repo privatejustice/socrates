@@ -19,12 +19,12 @@ class Site extends \Socrates\Resources\Site
         );
     }
 
-    public function getResume()
+    public function getResume(): string
     {
         return "{$this->getStatusEmoji()} {$this->sortUrl}";
     }
 
-    public function getInformation()
+    public function getInformation(): string
     {
         return "{$this->getStatusEmoji()} {$this->sortUrl}"
             . PHP_EOL
@@ -41,7 +41,7 @@ class Site extends \Socrates\Resources\Site
             )->filter()->implode(PHP_EOL);
     }
 
-    public function getKeyboard()
+    public function getKeyboard(): Question
     {
         return (new Question(trans('socrates.sites.next_action')))
             ->addButtons(
@@ -54,7 +54,7 @@ class Site extends \Socrates\Resources\Site
             );
     }
 
-    public function isUp()
+    public function isUp(): bool
     {
         return $this->summarizedCheckResult === 'succeeded';
     }
@@ -64,7 +64,7 @@ class Site extends \Socrates\Resources\Site
         return $this->socrates->deleteSite($this->id);
     }
 
-    public function getStatusEmoji()
+    public function getStatusEmoji(): string
     {
         return $this->isUp() ? "✅" : "🔴";
     }

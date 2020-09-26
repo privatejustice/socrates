@@ -11,14 +11,22 @@ class Group extends Model
 
     const UPDATED_AT = null;
 
-    protected $guarded = [];
+    /**
+     * @var array
+     */
+    protected array $guarded = [];
 
-    public function users()
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     *
+     * @psalm-return \Illuminate\Database\Eloquent\Relations\BelongsToMany<User>
+     */
+    public function users(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(User::class);
     }
 
-    public static function updateOrCreateFromChat($chat, string $language = 'es', string $currency = 'eur')
+    public static function updateOrCreateFromChat($chat, string $language = 'es', string $currency = 'eur'): self
     {
         $group = self::updateOrCreate(
             [

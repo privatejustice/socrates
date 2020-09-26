@@ -24,21 +24,6 @@ class Location
         $this->longitude = $longitude;
     }
 
-    public function getLatitude()
-    {
-        return $this->latitude; 
-    }
-
-    public function getLongitude()
-    {
-        return $this->longitude; 
-    }
-
-    public function getLocationAttachment()
-    {
-        return new BotManLocation($this->latitude, $this->longitude);
-    }
-
     /**
      * Calculate the distance to the point in kilometers.
      *

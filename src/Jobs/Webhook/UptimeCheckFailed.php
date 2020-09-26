@@ -33,13 +33,4 @@ class UptimeCheckFailed implements ShouldQueue
         $this->user = $user;
         $this->botman = resolve('botman');
     }
-
-    public function handle()
-    {
-        $this->botman->say(
-            trans('socrates.webhook.uptime_check_failed', ['url' => $this->payload->site->url]),
-            $this->user->telegram_id,
-            TelegramDriver::class
-        );
-    }
 }

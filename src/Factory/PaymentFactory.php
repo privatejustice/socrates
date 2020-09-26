@@ -9,9 +9,17 @@ use Socrates\Models\User;
 class PaymentFactory
 {
 
-    private $payer;
+    private User $payer;
     private $amount;
+
+    /**
+     * @var User|null
+     */
     private $receiver;
+
+    /**
+     * @var Group|null
+     */
     private $group;
 
     public function __construct(User $payer, $amount)
@@ -20,20 +28,23 @@ class PaymentFactory
         $this->amount = $amount;
     }
 
-    public function to(User $receiver)
+    public function to(User $receiver): self
     {
         $this->receiver = $receiver;
 
         return $this;
     }
 
-    public function in(Group $group)
+    public function in(Group $group): self
     {
         $this->group = $group;
 
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function save()
     {
 

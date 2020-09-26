@@ -6,7 +6,7 @@ use Socrates\Chat\ExtensionUtil as E;
 class ChatAction extends \Socrates\Models\ChatAction
 {
 
-    static function findByTypeAndQuestion($type, $questionId)
+    static function findByTypeAndQuestion($type, $questionId): self
     {
 
         $actions = new self;

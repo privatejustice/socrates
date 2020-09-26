@@ -24,13 +24,6 @@ class Socrates
      */
     private $socrates;
 
-    public function __construct()
-    {
-        $this->socrates = new \Socrates\SocratesNetworking(auth()->user()->getToken(), null);
-
-        $this->client = $this->socrates->client;
-    }
-
     public function sites(): Collection
     {
         return $this->collect($this->get('sites')['data'], Site::class);
@@ -88,7 +81,7 @@ class Socrates
      * @return \Socrates\Services\Socrates\Site
      * @throws \Socrates\Exceptions\SiteNotFoundException
      */
-    public function findSite($id): Site
+    public function findSite(string $id): Site
     {
         try {
             if (is_numeric($id)) {
@@ -106,12 +99,7 @@ class Socrates
         }
     }
 
-    public function deleteSite($siteId)
-    {
-        return $this->socrates->delete("sites/{$siteId}");
-    }
-
-    public function getSiteDowntime($siteId)
+    public function getSiteDowntime(int $siteId)
     {
         return $this->collect(
             $this->get("sites/{$siteId}/downtime{$this->getDefaultStartedEndedFilter()}")['data'],
@@ -119,7 +107,7 @@ class Socrates
         );
     }
 
-    public function getSiteUptime($siteId)
+    public function getSiteUptime(int $siteId)
     {
         return $this->collect(
             $this->get("sites/{$siteId}/uptime{$this->getDefaultStartedEndedFilter()}&split=day"),
@@ -127,17 +115,17 @@ class Socrates
         );
     }
 
-    public function getBrokenLinks($siteId)
+    public function getBrokenLinks(int $siteId)
     {
         return $this->collect($this->get("broken-links/{$siteId}")['data'], BrokenLink::class);
     }
 
-    public function getMixedContent($siteId)
+    public function getMixedContent(int $siteId)
     {
         return $this->collect($this->get("mixed-content/{$siteId}")['data'], MixedContent::class);
     }
 
-    public function collect($collection, $class)
+    public function collect($collection, string $class): Collection
     {
         return collect($collection)->map(
             function ($attributes) use ($class) {
@@ -161,7 +149,7 @@ class Socrates
         return $url;
     }
 
-    private function getDefaultStartedEndedFilter()
+    private function getDefaultStartedEndedFilter(): string
     {
         return "?filter[started_at]=" . now()->subDays(30)->format('YmdHis') . "&filter[ended_at]=" . date('YmdHis');
     }

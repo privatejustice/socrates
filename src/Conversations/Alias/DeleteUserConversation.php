@@ -13,7 +13,7 @@ class DeleteUserConversation extends Conversation
     /**
      * Start the conversation.
      *
-     * @return mixed
+     * @return void
      */
     public function run()
     {

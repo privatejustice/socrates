@@ -55,67 +55,45 @@ class Station
     /**
      * @return Button
      */
-    public function asButton()
+    public function asButton(): Button
     {
         return Button::create($this->name)->value($this->id);
     }
 
-    /**
-     * Load distance into location object.
-     *
-     * @param float $latitude
-     * @param float $longitude
-     *
-     * @return $this
-     */
-    public function withDistanceTo(float $latitude, float $longitude)
-    {
-        $this->distance = $this->location->getDistance($latitude, $longitude);
-
-        return $this;
-    }
-
-    public function foundById()
+    public function foundById(): self
     {
         $this->foundBy = 'id';
 
         return $this;
     }
 
-    public function foundByText()
+    public function foundByText(): self
     {
         $this->foundBy = 'text';
 
         return $this;
     }
 
-    public function foundByAlias()
+    public function foundByAlias(): self
     {
         $this->foundBy = 'alias';
 
         return $this;
     }
 
-    public function foundByAddress()
+    public function foundByAddress(): self
     {
         $this->foundBy = 'address';
 
         return $this;
     }
 
-    public function foundByLocation()
-    {
-        $this->foundBy = 'location';
-
-        return $this;
-    }
-
-    public function wasFoundBy($found)
+    public function wasFoundBy(string $found): bool
     {
         return $this->foundBy == $found;
     }
 
-    public function getVenueMessage()
+    public function getVenueMessage(): OutgoingMessage
     {
         $message = new OutgoingMessage();
 
@@ -124,7 +102,12 @@ class Station
         return $message;
     }
 
-    public function getVenuePayload()
+    /**
+     * @return (mixed|string)[]
+     *
+     * @psalm-return array{title: string, address: mixed}
+     */
+    public function getVenuePayload(): array
     {
         return [
             'title'   => $this->name,
@@ -132,7 +115,7 @@ class Station
         ];
     }
 
-    public function getVenueAddress()
+    public function getVenueAddress(): string
     {
         $text = "{$this->bikes} 🚲 - {$this->parkings} 🅿️";
 

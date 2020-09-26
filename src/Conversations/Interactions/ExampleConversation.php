@@ -37,8 +37,10 @@ class ExampleConversation
 
     /**
      * Start the conversation
+     *
+     * @return void
      */
-    public function run()
+    public function run(): void
     {
         $this->askReason();
     }

@@ -47,7 +47,9 @@ class CiviSMSDriver extends HttpDriver
     /**
      * Get the incoming messages from the incoming payload
      *
-     * @return [type] [description]
+     * @return IncomingMessage[] [description]
+     *
+     * @psalm-return array{0: IncomingMessage}
      */
     public function getMessages()
     {
@@ -63,6 +65,8 @@ class CiviSMSDriver extends HttpDriver
 
     /**
      * Gets the user from the message
+     *
+     * @return User
      */
     public function getUser(IncomingMessage $matchingMessage)
     {
@@ -74,6 +78,8 @@ class CiviSMSDriver extends HttpDriver
     /**
      * Ensure that the driver is configured. We could check that a default SMS
      * provider is available and that chatbot_civisms_authentication_token is set
+     *
+     * @return true
      */
     public function isConfigured()
     {
@@ -85,6 +91,8 @@ class CiviSMSDriver extends HttpDriver
     /**
      * Only useful for 'interactive' conversations but needs to be defined for all
      * drivers
+     *
+     * @return Answer
      */
     public function getConversationAnswer(IncomingMessage $message)
     {
@@ -95,8 +103,12 @@ class CiviSMSDriver extends HttpDriver
 
     /**
      * Construct the outgoing message payload for CivSMS
+     *
+     * @return (mixed|string[])[]
+     *
+     * @psalm-return array{contact_id: mixed, message: array{text: string}}
      */
-    public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
+    public function buildServicePayload($message, $matchingMessage, $additionalParameters = []): array
     {
         return [
         'contact_id' => $additionalParameters['contact_id'],
@@ -106,6 +118,8 @@ class CiviSMSDriver extends HttpDriver
 
     /**
      * Send an SMS
+     *
+     * @return void
      */
     public function sendPayload($payload)
     {
@@ -116,6 +130,7 @@ class CiviSMSDriver extends HttpDriver
         $contactsResult = socrates_api('Contact', 'get', array('version'=>3, 'id' => $contactId));
         $contactDetails = $contactsResult['values'];
 
+        $contactIds = null;
         foreach($contactDetails as $contact){
             $contactIds[]=$contact['contact_id'];
         }
@@ -128,9 +143,8 @@ class CiviSMSDriver extends HttpDriver
         $activityParams['sms_text_message']=$text;
         $activityParams['activity_subject']="$text (sent via chatbot)";
 
-        $userId = 1;
 
-        $sms = \Socrates\Activity_Bao\Activity::sendSMS($contactDetails, $activityParams, $provider, $contactIds, $userId);
+        \Socrates\Activity_Bao\Activity::sendSMS($contactDetails, $activityParams, $provider, $contactIds, $userId);
     }
 
     /**

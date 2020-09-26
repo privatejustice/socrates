@@ -12,9 +12,9 @@ class Base
 {
 
     /**
-     * @var varies, subclass of this
+     * @var \Socrates\Chat\Upgrader|null
      */
-    static $instance;
+    static ?\Socrates\Chat\Upgrader $instance;
 
     /**
      * @var Socrates\Queue_TaskContext
@@ -32,7 +32,9 @@ class Base
     protected $extensionDir;
 
     /**
-     * @var array(revisionNumber) sorted numerically
+     * @var null|string[]
+     *
+     * @psalm-var list<string>|null
      */
     private $revisions;
 
@@ -102,9 +104,9 @@ class Base
      *
      * @param string $xml_file the CustomData XML file path (absolute path)
      *
-     * @return bool
+     * @return true
      */
-    protected static function executeCustomDataFileByAbsPath($xml_file)
+    protected static function executeCustomDataFileByAbsPath($xml_file): bool
     {
         $import = new \Socrates\Utils_Migrate_Import();
         $import->run($xml_file);
@@ -116,9 +118,9 @@ class Base
      *
      * @param string $relativePath the SQL file path (relative to this extension's dir)
      *
-     * @return bool
+     * @return true
      */
-    public function executeSqlFile($relativePath)
+    public function executeSqlFile($relativePath): bool
     {
         Socrates\Utils_File::sourceSQLFile(
             CIVISocrates\DSN,
@@ -128,17 +130,18 @@ class Base
     }
 
     /**
-     * @param  string $tplFile
+     * @param string $tplFile
      *   The SQL file path (relative to this extension's dir).
      *   Ex: "sql/mydata.mysql.tpl".
-     * @return bool
+     *
+     * @return true
      */
-    public function executeSqlTemplate($tplFile)
+    public function executeSqlTemplate($tplFile): bool
     {
         // Assign multilingual variable to Smarty.
-        $upgrade = new \Socrates\Upgrade_Form();
+        new \Socrates\Upgrade_Form();
 
-        $tplFile = \Socrates\Utils_File::isAbsolute($tplFile) ? $tplFile : $this->extensionDir . DIRECTORY_SEPARATOR . $tplFile;
+        \Socrates\Utils_File::isAbsolute($tplFile) ? $tplFile : $this->extensionDir . DIRECTORY_SEPARATOR . $tplFile;
         $smarty = \Socrates\Core_Smarty::singleton();
         $smarty->assign('domainID', Socrates\Core_Config::domainID());
         Socrates\Utils_File::sourceSQLFile(
@@ -153,8 +156,10 @@ class Base
      * This is just a wrapper for Socrates\Core_DAO::executeSql, but it
      * provides syntatic sugar for queueing several tasks that
      * run different queries
+     *
+     * @return true
      */
-    public function executeSql($query, $params = array())
+    public function executeSql($query, $params = array()): bool
     {
         // FIXME verify that we raise an exception on error
         Socrates\Core_DAO::executeQuery($query, $params);
@@ -206,8 +211,10 @@ class Base
 
     /**
      * Add any pending revisions to the queue.
+     *
+     * @return void
      */
-    public function enqueuePendingRevisions(Socrates\Queue_Queue $queue)
+    public function enqueuePendingRevisions(Socrates\Queue_Queue $queue): void
     {
         $this->queue = $queue;
 
@@ -243,9 +250,11 @@ class Base
     /**
      * Get a list of revisions.
      *
-     * @return array(revisionNumbers) sorted numerically
+     * @return (mixed|string)[] sorted numerically
+     *
+     * @psalm-return array<array-key, mixed|string>
      */
-    public function getRevisions()
+    public function getRevisions(): array
     {
         if (!is_array($this->revisions)) {
             $this->revisions = array();
@@ -274,14 +283,16 @@ class Base
 
     private function getCurrentRevisionDeprecated()
     {
-        $key = $this->extensionName . ':version';
         if ($revision = \Socrates\Core_Bao\Setting::getItem('Extension', $key)) {
             $this->revisionStorageIsDeprecated = true;
         }
         return $revision;
     }
 
-    public function setCurrentRevision($revision)
+    /**
+     * @return true
+     */
+    public function setCurrentRevision($revision): bool
     {
         Socrates\Core_Bao\Extension::setSchemaVersion($this->extensionName, $revision);
         // clean up legacy schema version store (CRM-19252)
@@ -289,7 +300,7 @@ class Base
         return true;
     }
 
-    private function deleteDeprecatedRevision()
+    private function deleteDeprecatedRevision(): void
     {
         if ($this->revisionStorageIsDeprecated) {
             $setting = new \Socrates\Core_Bao\Setting();
@@ -303,8 +314,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_install
+     *
+     * @return void
      */
-    public function onInstall()
+    public function onInstall(): void
     {
         $files = glob($this->extensionDir . '/sql/*_install.sql');
         if (is_array($files)) {
@@ -331,8 +344,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_postInstall
+     *
+     * @return void
      */
-    public function onPostInstall()
+    public function onPostInstall(): void
     {
         $revisions = $this->getRevisions();
         if (!empty($revisions)) {
@@ -345,8 +360,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_uninstall
+     *
+     * @return void
      */
-    public function onUninstall()
+    public function onUninstall(): void
     {
         $files = glob($this->extensionDir . '/sql/*_uninstall.mysql.tpl');
         if (is_array($files)) {
@@ -367,8 +384,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_enable
+     *
+     * @return void
      */
-    public function onEnable()
+    public function onEnable(): void
     {
         // stub for possible future use
         if (is_callable(array($this, 'enable'))) {
@@ -378,8 +397,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_disable
+     *
+     * @return void
      */
-    public function onDisable()
+    public function onDisable(): void
     {
         // stub for possible future use
         if (is_callable(array($this, 'disable'))) {

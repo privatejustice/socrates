@@ -6,25 +6,22 @@ use Api;
 class AJAX
 {
 
-    public static function getContactConversations()
+    public static function getContactConversations(): void
     {
-        $params = $_GET;
-        $requiredParams = array(
-        'cid' => 'Integer',
-        );
-        $optionalParams = array(
-        'source_contact_id' => 'String',
-        'status_id' => 'Integer',
-        );
         $params = \Socrates\Core_Page_AJAX::defaultSortAndPagerParams();
         $params += \Socrates\Core_Page_AJAX::validateParams($requiredParams, $optionalParams);
 
         // get conversation list
-        $conversations = self::getConversationList($params);
+        self::getConversationList($params);
         Socrates\Utils_JSON::output($conversations);
     }
 
-    static function getConversationList($params)
+    /**
+     * @return (array|mixed)[]
+     *
+     * @psalm-return array{data: list<mixed>, recordsTotal: mixed, recordsFiltered: mixed}
+     */
+    static function getConversationList($params): array
     {
         $params['sequential'] = 1;
         $params['contact_id'] = $params['cid'];
@@ -38,7 +35,7 @@ class AJAX
         $DT['data'] = [];
 
         $conversations = Api::render('Activity', 'get', $params);
-        $activityStatuses = array_column(Api::render('OptionValue', 'get', ['option_group_id' => 'activity_status'])['values'], 'label', 'value');
+        array_column(Api::render('OptionValue', 'get', ['option_group_id' => 'activity_status'])['values'], 'label', 'value');
         // print_r($activityStatuses);
 
         foreach ($conversations['values'] as $conversation) {
@@ -56,9 +53,8 @@ class AJAX
             $conversation['date'] = \Socrates\Utils_Date::customFormat($conversation['activity_date_time']);
             // $conversation['status'] = $activityStatuses[]
             // Format current question for display (show a shortened (to 30 chars) question text label)
-            $links = self::actionLinks();
+            self::actionLinks();
             // Get mask
-            $mask = \Socrates\Core_Action::VIEW;
             // switch ($conversation['status_id']) {
             //   case $scheduledId:
             //     // We show delete if in scheduled state
@@ -86,7 +82,12 @@ class AJAX
         return $DT;
     }
 
-    static function actionLinks()
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return array<array-key, array{name: mixed, url: string, qs: string, title: mixed, class: string}>
+     */
+    static function actionLinks(): array
     {
         $links = array(
         Socrates\Core_Action::VIEW => array(

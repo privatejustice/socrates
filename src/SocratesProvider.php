@@ -126,7 +126,9 @@ class SocratesProvider extends ServiceProvider
     /**
      * Get the services provided by the provider.
      *
-     * @return array
+     * @return BotManServiceProvider::class|CerebroProvider::class|StudioServiceProvider::class|TinkerServiceProvider::class|TramiteProvider::class[]
+     *
+     * @psalm-return array{0: CerebroProvider::class, 1: TramiteProvider::class, 2: TinkerServiceProvider::class, 3: BotManServiceProvider::class, 4: StudioServiceProvider::class}
      */
     public function provides()
     {
@@ -149,8 +151,10 @@ class SocratesProvider extends ServiceProvider
 
     /**
      * Register view composers.
+     *
+     * @return void
      */
-    protected function registerViewComposers()
+    protected function registerViewComposers(): void
     {
         // // Register alerts
         // View::composer(
@@ -161,7 +165,7 @@ class SocratesProvider extends ServiceProvider
     }
 
 
-    protected function loadConfigs()
+    protected function loadConfigs(): void
     {
         
         // Merge own configs into user configs 
@@ -174,13 +178,13 @@ class SocratesProvider extends ServiceProvider
         $this->mergeConfigFrom($this->getPublishesPath('config/botman/web.php'), 'botman.web');
     }
 
-    protected function publishMigrations()
+    protected function publishMigrations(): void
     {
         
        
     }
        
-    protected function publishAssets()
+    protected function publishAssets(): void
     {
         
         // // Publish socrates css and js to public directory
@@ -192,7 +196,7 @@ class SocratesProvider extends ServiceProvider
 
     }
 
-    protected function publishConfigs()
+    protected function publishConfigs(): void
     {
         
         // Publish config files
@@ -210,7 +214,7 @@ class SocratesProvider extends ServiceProvider
 
     }
 
-    protected function getPublishesPath($path)
+    protected function getPublishesPath(string $path): string
     {
         return __DIR__.'/../publishes/'.$path;
     }

@@ -11,19 +11,9 @@ class Botman
 {
 
     // Might want to turn into option groups at some point
-    static function getAllServices()
-    {
-        $services = [
-        'Facebook' => 'Facebook',
-        'CiviSMS' => 'CiviSMS',
-        ];
-        if(Civi::settings()->get('debug_enabled')) {
-            $services['DevChat'] = 'DevChat';
-        }
-        return $services;
-    }
 
-    static function get($service)
+
+    static function get($service): BotManBase
     {
 
         $driver = self::getDriver($service);
@@ -37,6 +27,9 @@ class Botman
 
     }
 
+    /**
+     * @return FacebookDriver::class|Socrates\Chat\Driver_CiviSMSDriver::class|Socrates\Chat\Driver_DevChatDriver::class|null
+     */
     static function getDriver($service)
     {
 
@@ -58,6 +51,11 @@ class Botman
 
     }
 
+    /**
+     * @return (array|mixed)[]|null
+     *
+     * @psalm-return array{facebook?: array{token: mixed, app_secret: mixed, verification: mixed}, endpoint?: mixed, authentication_token?: mixed}|null
+     */
     static function getConfig($service)
     {
 

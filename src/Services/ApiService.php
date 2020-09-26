@@ -19,9 +19,12 @@ use Socrates\Models\Activity;
 class ApiService
 {
 
-    protected $config;
-
-    protected $models = [
+    /**
+     * @var Activity::class|ChatAction::class|ChatCache::class|ChatConversationType::class|ChatHear::class|ChatQuestion::class|ChatUser::class|Contact::class[]
+     *
+     * @psalm-var array{ChatAction: ChatAction::class, ChatCache: ChatCache::class, ChatConversationType: ChatConversationType::class, ChatHear: ChatHear::class, ChatQuestion: ChatQuestion::class, ChatUser: ChatUser::class, Contact: Contact::class, Activity: Activity::class, activity: Activity::class}
+     */
+    protected array $models = [
         'ChatAction' => ChatAction::class,
         'ChatAction' => ChatAction::class,
         'ChatCache' => ChatCache::class,
@@ -40,16 +43,6 @@ class ApiService
         //     $this->config = \Illuminate\Support\Facades\Config::get('generators.loader.models', []);
         // }
         // // $this->getModelServicesToArray(false);
-    }
-
-    public function render($module, $action, $data)
-    {
-        if (isset($this->models[$module])) {
-            $this->models[$module]::$action($data);
-            return ;
-        }
-
-        dd($apiToken, $client, $data);
     }
 
     /**

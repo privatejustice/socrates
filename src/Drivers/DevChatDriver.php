@@ -33,6 +33,8 @@ class DevChatDriver extends HttpDriver
     /**
      * Determine if the request is for this driver (called after buildPayload so we
      * can perform tests based on anything we have set there is required)
+     *
+     * @return true
      */
     public function matchesRequest()
     {
@@ -44,7 +46,9 @@ class DevChatDriver extends HttpDriver
     /**
      * Get the incoming messages from the incoming payload
      *
-     * @return [type] [description]
+     * @return IncomingMessage[] [description]
+     *
+     * @psalm-return array{0: IncomingMessage}
      */
     public function getMessages()
     {
@@ -59,6 +63,8 @@ class DevChatDriver extends HttpDriver
 
     /**
      * Gets the user from the message
+     *
+     * @return User
      */
     public function getUser(IncomingMessage $matchingMessage)
     {
@@ -71,6 +77,8 @@ class DevChatDriver extends HttpDriver
     /**
      * Ensure that the driver is configured. We could check that
      * chatbot_devchat_endpoint has been set in this method.
+     *
+     * @return true
      */
     public function isConfigured()
     {
@@ -82,6 +90,8 @@ class DevChatDriver extends HttpDriver
     /**
      * Only useful for 'interactive' conversations but needs to be defined for all
      * drivers
+     *
+     * @return Answer
      */
     public function getConversationAnswer(IncomingMessage $message)
     {
@@ -92,8 +102,12 @@ class DevChatDriver extends HttpDriver
 
     /**
      * Construct the outgoing message payload for DevChat
+     *
+     * @return string[][]
+     *
+     * @psalm-return array{message: array{text: string}}
      */
-    public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
+    public function buildServicePayload($message, $matchingMessage, $additionalParameters = []): array
     {
 
         return ['message' => ['text' => $message->getText()]];

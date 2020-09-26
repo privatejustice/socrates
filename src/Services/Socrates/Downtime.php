@@ -18,21 +18,12 @@ class Downtime extends ApiResource
         'second' => '😱'
     ];
 
-    public function __construct(array $attributes, $socrates = null)
-    {
-        parent::__construct($attributes, $socrates);
-
-        $this->startedAt = Carbon::parse($this->startedAt);
-        $this->endedAt = Carbon::parse($this->endedAt);
-        $this->elapsed = Str::elapsed_time_greatest($this->endedAt);
-    }
-
     public function getDowntime()
     {
         return Str::elapsed_time($this->startedAt, $this->endedAt);
     }
 
-    public function getElapsedEmoji()
+    public function getElapsedEmoji(): string
     {
         foreach (self::INTERVALS_EMOJIS as $key => $emoji) {
             if (stripos($this->elapsed, $key) !== false) {

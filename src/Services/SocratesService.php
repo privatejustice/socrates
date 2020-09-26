@@ -11,10 +11,6 @@ namespace Socrates\Services;
 class SocratesService
 {
 
-    protected $config;
-
-    protected $modelServices = false;
-
     public function __construct($config = false)
     {
         // if (!$this->config = $config) {

@@ -4,7 +4,12 @@ namespace Socrates\Chat;
 use Socrates\Chat\ExtensionUtil as E;
 class Navigation
 {
-    static function getItems()
+    /**
+     * @return (float|int|mixed|string)[][]
+     *
+     * @psalm-return array{0: array{label: mixed, parent: string, name: string, url: string, permission: string, operator: string, separator: int, weight: int}, 1: array{label: mixed, parent: string, name: string, url: string, permission: string, operator: string, separator: int, weight: int}, 2: array{label: mixed, parent: string, name: string, url: string, permission: string, operator: string, separator: int, weight: float}}
+     */
+    static function getItems(): array
     {
         return [
         [

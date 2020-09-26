@@ -7,19 +7,19 @@ use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 
 class Alias extends Model
 {
-    protected $table = 'aliases';
+    protected string $table = 'aliases';
 
-    public function getInfo()
+    public function getInfo(): string
     {
         return "{$this->alias} = {$this->getStationName()}";
     }
 
-    public function getStationName()
+    public function getStationName(): ?string
     {
         return app(StationService::class)->find($this->station_id)->name;
     }
 
-    public function asButton()
+    public function asButton(): Button
     {
         return Button::create($this->getInfo())->value($this->id);
     }

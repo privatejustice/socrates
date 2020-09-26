@@ -16,11 +16,6 @@ class ShowController extends Controller
      */
     protected $dear;
 
-    public function __construct(Socrates $dear)
-    {
-        $this->dear = $dear;
-    }
-
     /**
      * Handle the incoming request.
      *

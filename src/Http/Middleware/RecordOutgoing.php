@@ -14,9 +14,9 @@ class RecordOutgoing extends Middleware implements Sending
         // dd($payload);
         // $details = $payload['message']['text'];
         $details = $payload['message']->getText();
-        $subject = \Socrates\Chat\Driver::getServiceName($bot->getDriver()) . ': ' . \Socrates\Chat\Utils::shorten($details, 50);
-        $contactId = $bot->getMessage()->getExtras('contact_id');
-        $conversationId = $bot->getMessage()->getExtras('conversation_id');
+        \Socrates\Chat\Driver::getServiceName($bot->getDriver()) . ': ' . \Socrates\Chat\Utils::shorten($details, 50);
+        $bot->getMessage()->getExtras('contact_id');
+        $bot->getMessage()->getExtras('conversation_id');
 
         Api::render(
             'activity', 'create', [

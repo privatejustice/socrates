@@ -9,7 +9,7 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class BookingConversation extends Conversation
 {
-    public function confirmBooking()
+    public function confirmBooking(): void
     {
         $user = $this->bot->userStorage()->find();
 
@@ -25,6 +25,9 @@ class BookingConversation extends Conversation
         $this->say('Great. Your booking has been confirmed. Here is your booking details. <br><br>' . $message);
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->confirmBooking();

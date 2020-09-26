@@ -15,11 +15,6 @@ class StoreController extends Controller
      */
     protected $dear;
 
-    public function __construct(Socrates $dear)
-    {
-        $this->dear = $dear;
-    }
-
     /**
      * Handle the incoming request.
      *
@@ -38,7 +33,7 @@ class StoreController extends Controller
         }
 
         try {
-            $site = $this->dear->createSite($url);
+            $this->dear->createSite($url);
 
             $bot->reply(trans('socrates.sites.created'));
 

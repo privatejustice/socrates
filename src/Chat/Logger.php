@@ -5,7 +5,7 @@ namespace Socrates\Chat;
 class Logger
 {
 
-    static function debug($message)
+    static function debug($message): void
     {
 
         if(!is_string($message)) {
@@ -14,7 +14,7 @@ class Logger
 
         $backtrace = debug_backtrace();
         if (!empty($backtrace[0]) && is_array($backtrace[0])) {
-            $fileinfo = $backtrace[0]['file'] . ":" . $backtrace[0]['line'];
+            $backtrace[0]['file'] . ":" . $backtrace[0]['line'];
         }
         // foreach(array_merge([$fileinfo], explode("\n", $message)) as $line){
         foreach(explode("\n", $message) as $line){

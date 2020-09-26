@@ -7,6 +7,9 @@ use BotMan\BotMan\Messages\Incoming\Answer;
 
 class StartConversation extends Conversation
 {
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->bot->reply(trans('socrates.greetings'));
@@ -18,7 +21,7 @@ class StartConversation extends Conversation
         }
     }
 
-    public function askToken()
+    public function askToken(): void
     {
         $this->ask(
             trans('socrates.token.question'), function (Answer $answer) {
@@ -33,7 +36,7 @@ class StartConversation extends Conversation
         );
     }
 
-    public function askWebhook()
+    public function askWebhook(): void
     {
         $this->ask(
             trans('socrates.webhook.question'), function (Answer $answer) {

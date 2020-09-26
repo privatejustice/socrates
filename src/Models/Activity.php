@@ -7,9 +7,14 @@ use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 
 class Activity extends Model
 {
-    protected $table = 'chat_activities';
+    protected string $table = 'chat_activities';
 
-    protected $fillable = [
+    /**
+     * @var string[]
+     *
+     * @psalm-var array{0: string, 1: string, 2: string, 3: string, 4: string, 5: string, 6: string}
+     */
+    protected array $fillable = [
     'target_contact_id', 
     'activity_type_id', 
     'activity_status_id', 

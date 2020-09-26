@@ -34,21 +34,7 @@ class BrokenLinksFound implements ShouldQueue
         $this->botman = resolve('botman');
     }
 
-    public function handle()
-    {
-        $this->botman->say(
-            trans('socrates.webhook.broken_links_found', ['url' => $this->payload->site->url]),
-            $this->user->telegram_id,
-            TelegramDriver::class,
-            ['disable_web_page_preview' => true]
-        );
-
-        foreach ($this->payload->run->result_payload->broken_links as $brokenLink) {
-            $this->reportBrokenLink($brokenLink);
-        }
-    }
-
-    private function reportBrokenLink($link)
+    private function reportBrokenLink($link): void
     {
         $this->botman->say(
             trans(
