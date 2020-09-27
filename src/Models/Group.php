@@ -14,7 +14,7 @@ class Group extends Model
     /**
      * @var array
      */
-    protected array $guarded = [];
+    protected $guarded = [];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
