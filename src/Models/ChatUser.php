@@ -64,7 +64,7 @@ class ChatUser extends Model
      *
      * @psalm-var array{0: string, 1: string, 2: string}
      */
-    protected array $fillable = [
+    protected $fillable = [
     'user_id', 
     'service', 
     'contact_id', 

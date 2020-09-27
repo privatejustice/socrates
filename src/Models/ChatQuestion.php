@@ -48,7 +48,7 @@ class ChatQuestion extends Model
      *
      * @psalm-var array{0: string, 1: string}
      */
-    protected array $fillable = [
+    protected $fillable = [
     'text', 
     'conversation_type_id', 
     ];

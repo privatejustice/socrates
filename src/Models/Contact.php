@@ -7,14 +7,14 @@ use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 
 class Contact extends Model
 {
-    protected string $table = 'chat_contacts';
+    protected $table = 'chat_contacts';
 
     /**
      * @var string[]
      *
      * @psalm-var array{0: string, 1: string}
      */
-    protected array $fillable = [
+    protected $fillable = [
      'user_id', 
      'service', 
     ];

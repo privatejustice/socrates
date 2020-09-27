@@ -7,7 +7,7 @@ use BotMan\BotMan\Messages\Outgoing\Actions\Button;
 
 class Alias extends Model
 {
-    protected string $table = 'aliases';
+    protected $table = 'aliases';
 
     public function getInfo(): string
     {

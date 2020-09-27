@@ -53,7 +53,7 @@ class ChatConversationType extends Model
      *
      * @psalm-var array{0: string, 1: string, 2: string}
      */
-    protected array $fillable = [
+    protected $fillable = [
     'name', 
     'timeout', 
     'first_question_id', 
