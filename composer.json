@@ -37,9 +37,9 @@
         "botman/botman": "^2.6",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "botman/driver-web": "^1.5",
-        "sierratecnologia/crypto":          "dev-master",
-        "sierratecnologia/operador": "dev-master",
-        "sierratecnologia/telefonica":      "dev-master",
+        "sierratecnologia/crypto":          "^0.4.0",
+        "sierratecnologia/operador": "^0.4.0",
+        "sierratecnologia/telefonica":      "^0.4.0",
         "botman/driver-twitter": "^1.0",
         "botman/driver-telegram": "^1.5",
         "botman/driver-facebook": "^1.10",
@@ -65,7 +65,6 @@
         "post-update-cmd": [],
         "post-create-project-cmd": []
     },
-    "repositories": [{"type": "path","url":"../**","options":{"symlink": true}}],
     "minimum-stability": "dev",
     "prefer-stable": true
 }
