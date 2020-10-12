@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Socrates\Models\Contact;
 use Yajra\Datatables\Datatables;
 use Facilitador\Exceptions\Exception;
-use Facilitador\Http\Controllers\Admin\Base;
+use Pedreiro\Http\Controllers\Admin\Base;
 
 class ContactController extends Base
 {
