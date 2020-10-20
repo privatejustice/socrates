@@ -102,7 +102,7 @@ class SocratesProvider extends ServiceProvider
         $this->loadViewsFrom($viewsPath, 'socrates');
         $this->publishes(
             [
-                $viewsPath => base_path('resources/views/vendor/socrates'),
+                $viewsPath => base_path('resources'.DIRECTORY_SEPARATOR.'views'.DIRECTORY_SEPARATOR.'vendor'.DIRECTORY_SEPARATOR.'socrates'),
             ], 'views'
         );
 
