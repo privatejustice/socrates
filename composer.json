@@ -29,8 +29,8 @@
     ],
     "require": {
         "php": "^7.4",
-        "privatejustice/tramite": "dev-master",
-        "privatejustice/cerebro": "dev-master",
+        "privatejustice/tramite": "^0.4.0",
+        "privatejustice/cerebro": "^0.4.0",
         "vanderlee/php-sentence":       ">=1.0",
         "patrickschur/language-detection": "^4.0",
         "fzaninotto/faker":             "*",
