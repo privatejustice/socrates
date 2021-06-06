@@ -28,10 +28,10 @@
         }
     ],
     "require": {
-        "php": "^7.4",
+        "php": "^7.2|^8.0",
         "privatejustice/tramite": "^0.4.0",
         "privatejustice/cerebro": "^0.4.0",
-        "vanderlee/php-sentence": ">=1.0",
+        "vanderlee/php-sentence":       ">=1.0",
         "patrickschur/language-detection": "^4.0",
         "fzaninotto/faker": "*",
         "botman/botman": "^2.6",
