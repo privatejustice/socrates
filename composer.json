@@ -33,7 +33,7 @@
         "privatejustice/cerebro": "dev-master",
         "vanderlee/php-sentence":       ">=1.0",
         "patrickschur/language-detection": "^4.0",
-        "fzaninotto/faker":             "*",
+        "fakerphp/faker": "^1.5",
         "botman/botman": "^2.6",
         "guzzlehttp/guzzle": "^6.0 || ^7.0",
         "botman/driver-web": "^1.5",
