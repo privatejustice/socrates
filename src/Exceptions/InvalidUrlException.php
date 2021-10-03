@@ -9,10 +9,11 @@ class InvalidUrlException extends Exception
     /**
      * Render the exception as an HTTP response.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     *
+     * @return void
      */
-    public function render($request)
+    public function render($request): void
     {
 
     }

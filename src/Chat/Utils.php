@@ -12,14 +12,19 @@ use Api;
 class Utils
 {
 
-    static function shorten($string, $length = 50)
+    /**
+     * @param int $length
+     *
+     * @return string
+     */
+    static function shorten(string $string, int $length = 50): string
     {
 
         return strlen($string) > $length ? substr($string, 0, $length)."..." : $string;
 
     }
 
-    static function exit($code = 0)
+    static function exit($code = 0): void
     {
 
         if ($code === 0) {
@@ -57,7 +62,7 @@ class Utils
         );
     }
 
-    static function generateToken($length = 24)
+    static function generateToken($length = 24): string
     {
         return bin2hex(openssl_random_pseudo_bytes($length));
     }

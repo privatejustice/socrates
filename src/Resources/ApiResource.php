@@ -30,7 +30,7 @@ class ApiResource
         $this->fill();
     }
 
-    protected function fill()
+    protected function fill(): void
     {
         foreach ($this->attributes as $key => $value) {
             $key = $this->camelCase($key);

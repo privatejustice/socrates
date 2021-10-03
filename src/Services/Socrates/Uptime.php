@@ -23,7 +23,7 @@ class Uptime extends ApiResource
         $this->datetime = Carbon::parse($this->datetime);
     }
 
-    public function getPercentageEmoji()
+    public function getPercentageEmoji(): string
     {
         foreach (self::PERCENTAGES_EMOJIS as $emoji => $cut) {
 

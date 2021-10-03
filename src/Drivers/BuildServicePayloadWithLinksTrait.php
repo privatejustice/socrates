@@ -34,14 +34,14 @@ trait BuildServicePayloadWithLinksTrait
 
     }
 
-    private function haveCustomLinks($message)
+    private function haveCustomLinks($message): bool
     {
         return method_exists($message, 'getActions')
             && $message instanceof OutgoingMessage
             && count($message->getActions());
     }
 
-    private function convertLinks(array $actions)
+    private function convertLinks(array $actions): array
     {
         return Collection::make($actions)->map(
             function ($action) {

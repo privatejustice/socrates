@@ -44,7 +44,7 @@ class Identify implements Received, Sending
 
     }
 
-    function identify($message, $driver, $user)
+    function identify(IncomingMessage $message, \BotMan\BotMan\Interfaces\DriverInterface $driver, \BotMan\BotMan\Interfaces\UserInterface $user): void
     {
 
         $service = \Socrates\Chat\Driver::getServiceName($driver);
@@ -73,7 +73,7 @@ class Identify implements Received, Sending
 
     }
 
-    function createContact($user, $service)
+    function createContact(\BotMan\BotMan\Interfaces\UserInterface $user, string $service)
     {
         $contact = Api::render(
             'Contact', 'create', [
@@ -99,7 +99,7 @@ class Identify implements Received, Sending
         return $contact['id'];
     }
 
-    function createUser($service, $userId, $contactId)
+    function createUser(string $service, string $userId, string $contactId): void
     {
         $result = Api::render(
             'ChatUser', 'create', [
@@ -110,7 +110,7 @@ class Identify implements Received, Sending
         );
     }
 
-    function addExtraFacebookInfo($user, $contactId)
+    function addExtraFacebookInfo($user, $contactId): void
     {
 
         $info = $user->getInfo();

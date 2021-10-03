@@ -24,12 +24,12 @@ class Reminder extends Model
         'parkings' => 'Aparcaments lliures'
     ];
 
-    public function user()
+    public function user(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getDaysStrAttribute()
+    public function getDaysStrAttribute(): string
     {
         $days = [];
 
@@ -44,22 +44,28 @@ class Reminder extends Model
         return substr_replace($imploded, ' i ', strrpos($imploded, ', '), 2);
     }
 
-    public function getTimeAttribute()
+    public function getTimeAttribute(): string
     {
         return date('H:i', strtotime($this->attributes['time']));
     }
 
-    public function getTypeStrAttribute()
+    public function getTypeStrAttribute(): string
     {
         return self::TYPES[$this->type];
     }
 
-    public function getTypeStrLowerAttribute()
+    /**
+     * @return string
+     */
+    public function getTypeStrLowerAttribute(): string
     {
         return strtolower($this->type_str);
     }
 
-    public function setDays(Collection $days)
+    /**
+     * @return static
+     */
+    public function setDays(Collection $days): self
     {
         $this->monday = $days->has('monday');
         $this->tuesday = $days->has('tuesday');
@@ -72,7 +78,7 @@ class Reminder extends Model
         return $this;
     }
 
-    public function getDaysList()
+    public function getDaysList(): string
     {
         $message = '';
 
@@ -85,7 +91,10 @@ class Reminder extends Model
         return $message;
     }
 
-    public function asButton()
+    /**
+     * @return Button
+     */
+    public function asButton(): self
     {
         $station = app(StationService::class)->find($this->station_id);
 

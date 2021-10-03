@@ -92,8 +92,12 @@ class DevChatDriver extends HttpDriver
 
     /**
      * Construct the outgoing message payload for DevChat
+     *
+     * @return string[][]
+     *
+     * @psalm-return array{message: array{text: string}}
      */
-    public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
+    public function buildServicePayload($message, $matchingMessage, $additionalParameters = []): array
     {
 
         return ['message' => ['text' => $message->getText()]];

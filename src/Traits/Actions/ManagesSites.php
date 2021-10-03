@@ -35,7 +35,7 @@ trait ManagesSites
         return new Site($siteAttributes, $this);
     }
 
-    public function deleteSite(int $siteId)
+    public function deleteSite(int $siteId): void
     {
         $this->delete("sites/$siteId");
     }

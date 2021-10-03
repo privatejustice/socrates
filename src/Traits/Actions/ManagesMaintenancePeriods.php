@@ -38,8 +38,10 @@ trait ManagesMaintenancePeriods
 
     /**
      * @param int $siteId
+     *
+     * @return void
      */
-    public function stopSiteMaintenance(int $siteId)
+    public function stopSiteMaintenance(int $siteId): void
     {
         $this->post("sites/{$siteId}/stop-maintenance");
     }
@@ -66,8 +68,10 @@ trait ManagesMaintenancePeriods
 
     /**
      * @param int $maintenancePeriodId
+     *
+     * @return void
      */
-    public function deleteSiteMaintenance(int $maintenancePeriodId)
+    public function deleteSiteMaintenance(int $maintenancePeriodId): void
     {
         $this->delete("maintenance-periods/{$maintenancePeriodId}");
     }

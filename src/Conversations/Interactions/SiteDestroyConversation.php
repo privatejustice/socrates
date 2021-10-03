@@ -28,12 +28,15 @@ class SiteDestroyConversation extends Conversation
         $this->site = $site;
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->askFirstConfirmation();
     }
 
-    public function askFirstConfirmation()
+    public function askFirstConfirmation(): void
     {
         $this->ask(
             $this->getQuestion(trans('boravel.sites.delete_confirm_1')), function (Answer $answer) {
@@ -66,7 +69,7 @@ class SiteDestroyConversation extends Conversation
             );
     }
 
-    public function askSecondConfirmation()
+    public function askSecondConfirmation(): void
     {
         $this->ask(
             $this->getQuestion(trans('boravel.sites.delete_confirm_2')), function (Answer $answer) {
@@ -88,7 +91,7 @@ class SiteDestroyConversation extends Conversation
         );
     }
 
-    public function answerToBoolean(string $answer)
+    public function answerToBoolean(string $answer): bool
     {
         $positiveMessages = ['true', 'yes', 'of course', 'yeah', 'affirmative', 'i confirm'];
 

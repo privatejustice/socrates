@@ -42,6 +42,9 @@ class ApiService
         // // $this->getModelServicesToArray(false);
     }
 
+    /**
+     * @return void
+     */
     public function render($module, $action, $data)
     {
         if (isset($this->models[$module])) {

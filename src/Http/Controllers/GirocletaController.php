@@ -100,8 +100,10 @@ class GirocletaController extends Controller
      *
      * @param \BotMan\BotMan\BotMan                        $bot
      * @param \BotMan\BotMan\Messages\Attachments\Location $location
+     *
+     * @return void
      */
-    public function nearStations(BotMan $bot, Location $location)
+    public function nearStations(BotMan $bot, Location $location): void
     {
         $nearStations = $this->stationService->getNearStations($location->getLatitude(), $location->getLongitude());
 

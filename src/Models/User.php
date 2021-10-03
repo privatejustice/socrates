@@ -26,12 +26,12 @@ class User extends Authenticatable
         'password', 'remember_token',
     ];
 
-    public function reminders()
+    public function reminders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Reminder::class);
     }
 
-    public function aliases()
+    public function aliases(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Alias::class);
     }
@@ -48,22 +48,22 @@ class User extends Authenticatable
         return parent::delete();
     }
 
-    public function groups()
+    public function groups(): \Illuminate\Database\Eloquent\Relations\BelongsToMany
     {
         return $this->belongsToMany(Group::class);
     }
 
-    public function debts_to_pay()
+    public function debts_to_pay(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Debt::class, 'from_id');
     }
 
-    public function debts_to_receive()
+    public function debts_to_receive(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Debt::class, 'to_id');
     }
 
-    public function addToGroup($group)
+    public function addToGroup($group): void
     {
         $this->groups()->sync([$group->id], false);
     }
@@ -101,7 +101,7 @@ class User extends Authenticatable
         return $user;
     }
 
-    public function pays($amount)
+    public function pays($amount): PaymentFactory
     {
         return new PaymentFactory($this, $amount);
     }

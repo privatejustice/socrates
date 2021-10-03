@@ -51,7 +51,10 @@ class DeleteAliasConversation extends Conversation
         );
     }
 
-    public function askConfirmation()
+    /**
+     * @return static
+     */
+    public function askConfirmation(): self
     {
 
         $question = Question::create('⚠️ Estàs segur que vols esborrar aquest alias? Aquesta acció no es pot desfer ⚠️')

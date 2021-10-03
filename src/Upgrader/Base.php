@@ -153,8 +153,10 @@ class Base
      * This is just a wrapper for Socrates\Core_DAO::executeSql, but it
      * provides syntatic sugar for queueing several tasks that
      * run different queries
+     *
+     * @return true
      */
-    public function executeSql($query, $params = array())
+    public function executeSql($query, $params = array()): bool
     {
         // FIXME verify that we raise an exception on error
         Socrates\Core_DAO::executeQuery($query, $params);
@@ -206,8 +208,10 @@ class Base
 
     /**
      * Add any pending revisions to the queue.
+     *
+     * @return void
      */
-    public function enqueuePendingRevisions(Socrates\Queue_Queue $queue)
+    public function enqueuePendingRevisions(Socrates\Queue_Queue $queue): void
     {
         $this->queue = $queue;
 
@@ -243,9 +247,11 @@ class Base
     /**
      * Get a list of revisions.
      *
-     * @return array(revisionNumbers) sorted numerically
+     * @return (mixed|string)[] sorted numerically
+     *
+     * @psalm-return array<mixed|string>
      */
-    public function getRevisions()
+    public function getRevisions(): array
     {
         if (!is_array($this->revisions)) {
             $this->revisions = array();
@@ -281,7 +287,10 @@ class Base
         return $revision;
     }
 
-    public function setCurrentRevision($revision)
+    /**
+     * @return true
+     */
+    public function setCurrentRevision($revision): bool
     {
         Socrates\Core_Bao\Extension::setSchemaVersion($this->extensionName, $revision);
         // clean up legacy schema version store (CRM-19252)
@@ -289,7 +298,7 @@ class Base
         return true;
     }
 
-    private function deleteDeprecatedRevision()
+    private function deleteDeprecatedRevision(): void
     {
         if ($this->revisionStorageIsDeprecated) {
             $setting = new \Socrates\Core_Bao\Setting();
@@ -303,8 +312,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_install
+     *
+     * @return void
      */
-    public function onInstall()
+    public function onInstall(): void
     {
         $files = glob($this->extensionDir . '/sql/*_install.sql');
         if (is_array($files)) {
@@ -331,8 +342,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_postInstall
+     *
+     * @return void
      */
-    public function onPostInstall()
+    public function onPostInstall(): void
     {
         $revisions = $this->getRevisions();
         if (!empty($revisions)) {
@@ -345,8 +358,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_uninstall
+     *
+     * @return void
      */
-    public function onUninstall()
+    public function onUninstall(): void
     {
         $files = glob($this->extensionDir . '/sql/*_uninstall.mysql.tpl');
         if (is_array($files)) {
@@ -367,8 +382,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_enable
+     *
+     * @return void
      */
-    public function onEnable()
+    public function onEnable(): void
     {
         // stub for possible future use
         if (is_callable(array($this, 'enable'))) {
@@ -378,8 +395,10 @@ class Base
 
     /**
      * @see https://wiki.socrates.org/confluence/display/CRMDOC/hook_civicrm_disable
+     *
+     * @return void
      */
-    public function onDisable()
+    public function onDisable(): void
     {
         // stub for possible future use
         if (is_callable(array($this, 'disable'))) {
@@ -387,6 +406,11 @@ class Base
         }
     }
 
+    /**
+     * @return bool[]|null
+     *
+     * @psalm-return array{0: bool}|null
+     */
     public function onUpgrade($op, Socrates\Queue_Queue $queue = null)
     {
         switch ($op) {

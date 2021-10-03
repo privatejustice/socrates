@@ -10,7 +10,10 @@ class OutgoingMessage extends BotManOutgoingMessage
 
     protected $actions = [];
 
-    public function addLink($text, $url)
+    /**
+     * @return static
+     */
+    public function addLink($text, $url): self
     {
         $this->actions[] = [
             'text' => $text,

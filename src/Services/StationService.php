@@ -54,6 +54,9 @@ class StationService
         );
     }
 
+    /**
+     * @return false|string
+     */
     private function query()
     {
         return file_get_contents(

@@ -47,8 +47,10 @@ class AliasesController extends Controller
      * Start a conversation to register new reminder.
      *
      * @param \BotMan\BotMan\BotMan $bot
+     *
+     * @return void
      */
-    public function create(BotMan $bot)
+    public function create(BotMan $bot): void
     {
         $bot->startConversation(new CreateAliasConversation());
     }
@@ -57,8 +59,10 @@ class AliasesController extends Controller
      * Start a conversation to delete a reminder.
      *
      * @param \BotMan\BotMan\BotMan $bot
+     *
+     * @return void
      */
-    public function destroy(BotMan $bot)
+    public function destroy(BotMan $bot): void
     {
         $bot->startConversation(new DeleteAliasConversation());
     }

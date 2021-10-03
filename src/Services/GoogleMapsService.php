@@ -8,7 +8,7 @@ use GuzzleHttp\Client;
 class GoogleMapsService
 {
 
-    public function getAddressLocation(string $query)
+    public function getAddressLocation(string $query): ?Location
     {
         $token = config('services.google_maps.token');
         $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$query}&key={$token}";

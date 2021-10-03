@@ -6,7 +6,7 @@ use Api;
 class AJAX
 {
 
-    public static function getContactConversations()
+    public static function getContactConversations(): void
     {
         $params = $_GET;
         $requiredParams = array(
@@ -24,7 +24,7 @@ class AJAX
         Socrates\Utils_JSON::output($conversations);
     }
 
-    static function getConversationList($params)
+    static function getConversationList($params): array
     {
         $params['sequential'] = 1;
         $params['contact_id'] = $params['cid'];
@@ -86,7 +86,12 @@ class AJAX
         return $DT;
     }
 
-    static function actionLinks()
+    /**
+     * @return (mixed|string)[][]
+     *
+     * @psalm-return array<array{name: mixed, url: 'socrates/chat/conversation/view', qs: 'id=%%id%%', title: mixed, class: 'crm-popup'}>
+     */
+    static function actionLinks(): array
     {
         $links = array(
         Socrates\Core_Action::VIEW => array(

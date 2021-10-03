@@ -84,8 +84,10 @@ class ChatUser extends Model
 
     /**
      * Get the contact that owns the phone.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function contact()
+    public function contact(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Contact::class, 'contact_id');
     }
