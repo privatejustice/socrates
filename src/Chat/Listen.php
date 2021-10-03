@@ -10,7 +10,7 @@ use Api;
 class Listen
 {
 
-    static function create($driver, $verifyMode = false)
+    static function create($driver, $verifyMode = false): void
     {
 
         $botman = \Socrates\Chat\Botman::get($driver);

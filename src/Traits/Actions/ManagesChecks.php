@@ -27,7 +27,7 @@ trait ManagesChecks
         return new Check($checkAttributes, $this);
     }
 
-    public function snooze(int $checkId, int $minutes)
+    public function snooze(int $checkId, int $minutes): \Socrates\Resources\Check
     {
         $checkAttributes = $this->post(
             "checks/{$checkId}/snooze", [

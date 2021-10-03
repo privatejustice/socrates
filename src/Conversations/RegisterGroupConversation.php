@@ -26,13 +26,18 @@ class RegisterGroupConversation extends Conversation
 
     /**
      * Start the conversation
+     *
+     * @return void
      */
     public function run()
     {
         $this->askLanguage();
     }
 
-    public function askLanguage()
+    /**
+     * @return static
+     */
+    public function askLanguage(): self
     {
         $this->language = $this->bot->getUser()->getInfo()['language_code'] ?? app()->getLocale();
 
@@ -53,7 +58,10 @@ class RegisterGroupConversation extends Conversation
         );
     }
 
-    public function askCurrency()
+    /**
+     * @return static
+     */
+    public function askCurrency(): self
     {
         app()->setLocale($this->language);
 
@@ -78,7 +86,10 @@ class RegisterGroupConversation extends Conversation
         );
     }
 
-    protected function getQuestionLanguage()
+    /**
+     * @return Question
+     */
+    protected function getQuestionLanguage(): self
     {
         return Question::create(trans('groups.ask_language'))
             ->addButtons(
@@ -90,13 +101,21 @@ class RegisterGroupConversation extends Conversation
             );
     }
 
-    protected function getQuestionCurrency()
+    /**
+     * @return Question
+     */
+    protected function getQuestionCurrency(): self
     {
         return Question::create(trans('groups.ask_currency'))
             ->addButtons($this->getCurrenciesAsButtons());
     }
 
-    protected function getCurrenciesAsButtons()
+    /**
+     * @return Button[]
+     *
+     * @psalm-return list<Button>
+     */
+    protected function getCurrenciesAsButtons(): array
     {
         return array_map(
             function ($symbol, $currency) {

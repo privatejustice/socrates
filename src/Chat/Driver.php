@@ -19,7 +19,7 @@ class Driver
     'Web'                          => 'Web',
     ];
 
-    static function getServiceName($driver)
+    static function getServiceName(\BotMan\BotMan\Interfaces\DriverInterface $driver): string
     {
 
 

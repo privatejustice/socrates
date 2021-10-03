@@ -14,20 +14,22 @@ class Contact extends Model
      'service', 
     ];
 
-    public function users()
+    public function users(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(ChatUser::class, 'contact_id', 'id');
     }
 
     /**
      * ', [
-        'id' => $bot->getMessage()->getExtras('contact_id'),
-        'source_contact_id' => $bot->getMessage()->getExtras('contact_id'),
-        'service' => \Socrates\Chat\Driver::getServiceName($bot->getDriver()),
-        'conversation_type_id' => \Socrates\Bao\ChatConversationType::findById($hear->chat_conversation_type_id)->id
-      ]); 
+     *        'id' => $bot->getMessage()->getExtras('contact_id'),
+     *        'source_contact_id' => $bot->getMessage()->getExtras('contact_id'),
+     *        'service' => \Socrates\Chat\Driver::getServiceName($bot->getDriver()),
+     *        'conversation_type_id' => \Socrates\Bao\ChatConversationType::findById($hear->chat_conversation_type_id)->id
+     *      ]);
+     *
+     * @return void
      */
-    public static function start_conversation()
+    public static function start_conversation(): void
     {
 
     }

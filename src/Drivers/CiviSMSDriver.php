@@ -95,8 +95,12 @@ class CiviSMSDriver extends HttpDriver
 
     /**
      * Construct the outgoing message payload for CivSMS
+     *
+     * @return (mixed|string[])[]
+     *
+     * @psalm-return array{contact_id: mixed, message: array{text: string}}
      */
-    public function buildServicePayload($message, $matchingMessage, $additionalParameters = [])
+    public function buildServicePayload($message, $matchingMessage, $additionalParameters = []): array
     {
         return [
         'contact_id' => $additionalParameters['contact_id'],
@@ -106,6 +110,8 @@ class CiviSMSDriver extends HttpDriver
 
     /**
      * Send an SMS
+     *
+     * @return void
      */
     public function sendPayload($payload)
     {

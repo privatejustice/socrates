@@ -4,7 +4,12 @@ namespace Socrates\Chat;
 use Socrates\Chat\ExtensionUtil as E;
 class Navigation
 {
-    static function getItems()
+    /**
+     * @return (float|int|mixed|string)[][]
+     *
+     * @psalm-return array{0: array{label: mixed, parent: '', name: 'chatbot', url: '', permission: 'access chatbot', operator: 'OR', separator: 0, weight: 60}, 1: array{label: mixed, parent: 'chatbot', name: 'chatbot_dashboard', url: 'socrates/chat/conversationType', permission: 'access chatbot', operator: 'OR', separator: 0, weight: 2}, 2: array{label: mixed, parent: 'Administer/System Settings', name: 'chatbot_settings', url: 'socrates/admin/chat', permission: 'administer Socrates', operator: 'OR', separator: 0, weight: float}}
+     */
+    static function getItems(): array
     {
         return [
         [

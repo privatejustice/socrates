@@ -28,12 +28,17 @@ class ReminderService
         'h a',
     ];
 
-    public function all()
+    /**
+     * @return string[]
+     *
+     * @psalm-return array{bikes: 'Bicis lliures', parkings: 'Aparcaments lliures'}
+     */
+    public function all(): array
     {
         return Reminder::TYPES;
     }
 
-    public function asButtons()
+    public function asButtons(): array
     {
         return collect($this->all())->map(
             function ($text, $reminder) {
@@ -42,7 +47,12 @@ class ReminderService
         )->values()->toArray();
     }
 
-    public function find($reminder)
+    /**
+     * @return null|string
+     *
+     * @psalm-return 'Aparcaments lliures'|'Bicis lliures'|null
+     */
+    public function find(string $reminder)
     {
         if (! array_key_exists($reminder, $this->all())) {
             return null;
@@ -51,7 +61,7 @@ class ReminderService
         return $this->all()[$reminder];
     }
 
-    public function possibleDaysButtons()
+    public function possibleDaysButtons(): array
     {
         return collect(self::DAYS_OPTIONS)->map(
             function ($text, $value) {
@@ -60,7 +70,7 @@ class ReminderService
         )->toArray();
     }
 
-    public function parseHoursFromInput($input)
+    public function parseHoursFromInput(string $input): ?string
     {
         $input = strtolower($input);
 
@@ -74,7 +84,10 @@ class ReminderService
         return null;
     }
 
-    public function parseDaysFromInput($input)
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    public function parseDaysFromInput(string $input): self
     {
         $days = collect(Reminder::DAYS);
 

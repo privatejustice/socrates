@@ -34,8 +34,10 @@ class Check extends ApiResource
 
     /**
      * Enable the check.
+     *
+     * @return void
      */
-    public function enable()
+    public function enable(): void
     {
         $updatedCheck = $this->socrates->enableCheck($this->id);
 
@@ -44,8 +46,10 @@ class Check extends ApiResource
 
     /**
      * Disable the check.
+     *
+     * @return void
      */
-    public function disable()
+    public function disable(): void
     {
         $updatedCheck = $this->socrates->disableCheck($this->id);
 

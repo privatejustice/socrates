@@ -53,12 +53,12 @@ class Site extends ApiResource
         $this->socrates->deleteSite($this->id);
     }
 
-    public function startMaintenance(int $stopMaintenanceAfterSeconds = 60 * 60)
+    public function startMaintenance(int $stopMaintenanceAfterSeconds = 60 * 60): void
     {
         $this->socrates->startSiteMaintenance($this->id, $stopMaintenanceAfterSeconds);
     }
 
-    public function stopMaintenance()
+    public function stopMaintenance(): void
     {
         $this->socrates->stopSiteMaintenance($this->id);
     }

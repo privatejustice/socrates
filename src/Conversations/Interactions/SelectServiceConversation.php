@@ -9,7 +9,7 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class SelectServiceConversation extends Conversation
 {
-    public function askService()
+    public function askService(): void
     {
         $question = Question::create('What kind of Service you are looking for?')
             ->callbackId('select_service')
@@ -34,6 +34,9 @@ class SelectServiceConversation extends Conversation
         );
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->askService();

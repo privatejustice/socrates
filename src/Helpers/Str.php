@@ -17,14 +17,20 @@ class Str
         1 => 'second',
     ];
 
-    public static function validate_url($url)
+    public static function validate_url(string $url): bool
     {
         $regex = '/(https?:\/\/www\.|https?:\/\/)[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?/';
 
         return preg_match($regex, $url) === 1;
     }
 
-    public static function replace_last($search, $replace, $subject)
+    /**
+     * @param string $search
+     * @param string $replace
+     *
+     * @return string
+     */
+    public static function replace_last(string $search, string $replace, string $subject): string
     {
         $pos = strrpos($subject, $search);
 
@@ -36,7 +42,7 @@ class Str
 
     }
 
-    public static function plural(string $word, int $count)
+    public static function plural(string $word, int $count): string
     {
         if ($count > 1) {
             $word .= 's';
@@ -45,7 +51,10 @@ class Str
         return $word;
     }
 
-    public static function elapsed_time_greatest($date)
+    /**
+     * @return null|string
+     */
+    public static function elapsed_time_greatest(Carbon $date)
     {
         foreach (self::PERIOD_INTERVALS as $interval) {
             $elapsedTime = $date->{'diffIn' . ucfirst($interval).'s'}();
@@ -56,7 +65,7 @@ class Str
         }
     }
 
-    public static function elapsed_time(Carbon $begin, Carbon $end)
+    public static function elapsed_time(Carbon $begin, Carbon $end): string
     {
         $diff = $end->getTimestamp() - $begin->getTimestamp();
 

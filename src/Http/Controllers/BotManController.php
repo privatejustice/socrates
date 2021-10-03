@@ -10,8 +10,10 @@ class BotManController extends Controller
 {
     /**
      * Place your BotMan logic here.
+     *
+     * @return void
      */
-    public function handle()
+    public function handle(): void
     {
         $botman = app('botman');
 
@@ -30,8 +32,10 @@ class BotManController extends Controller
      * Loaded through routes/botman.php
      *
      * @param BotMan $bot
+     *
+     * @return void
      */
-    public function startConversation(BotMan $bot)
+    public function startConversation(BotMan $bot): void
     {
         $bot->startConversation(new ExampleConversation());
     }

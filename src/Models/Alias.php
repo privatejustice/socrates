@@ -9,7 +9,7 @@ class Alias extends Model
 {
     protected $table = 'aliases';
 
-    public function getInfo()
+    public function getInfo(): string
     {
         return "{$this->alias} = {$this->getStationName()}";
     }
@@ -19,7 +19,10 @@ class Alias extends Model
         return app(StationService::class)->find($this->station_id)->name;
     }
 
-    public function asButton()
+    /**
+     * @return Button
+     */
+    public function asButton(): self
     {
         return Button::create($this->getInfo())->value($this->id);
     }

@@ -32,7 +32,7 @@ class Downtime extends ApiResource
         return Str::elapsed_time($this->startedAt, $this->endedAt);
     }
 
-    public function getElapsedEmoji()
+    public function getElapsedEmoji(): string
     {
         foreach (self::INTERVALS_EMOJIS as $key => $emoji) {
             if (stripos($this->elapsed, $key) !== false) {

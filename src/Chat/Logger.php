@@ -5,7 +5,7 @@ namespace Socrates\Chat;
 class Logger
 {
 
-    static function debug($message)
+    static function debug($message): void
     {
 
         if(!is_string($message)) {

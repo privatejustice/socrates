@@ -10,7 +10,7 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class OnboardingConversation extends Conversation
 {
-    public function askName()
+    public function askName(): void
     {
         $this->ask(
             'What is your name?', function (Answer $answer) {
@@ -26,7 +26,7 @@ class OnboardingConversation extends Conversation
         );
     }
 
-    public function askEmail()
+    public function askEmail(): void
     {
         $this->ask(
             'What is your email?', function (Answer $answer) {
@@ -52,7 +52,7 @@ class OnboardingConversation extends Conversation
         );
     }
 
-    public function askMobile()
+    public function askMobile(): void
     {
         $this->ask(
             'Great. What is your mobile?', function (Answer $answer) {
@@ -67,6 +67,9 @@ class OnboardingConversation extends Conversation
         );
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->askName();

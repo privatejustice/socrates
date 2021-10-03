@@ -10,7 +10,7 @@ use BotMan\BotMan\Messages\Conversations\Conversation;
 
 class DateTimeConversation extends Conversation
 {
-    public function askDate()
+    public function askDate(): void
     {
         $availableDates = [
             Carbon::today()->addDays(1),
@@ -42,7 +42,7 @@ class DateTimeConversation extends Conversation
         );
     }
 
-    public function askTime()
+    public function askTime(): void
     {
         $question = Question::create('Select a time slot')
             ->callbackId('select_time')
@@ -67,6 +67,9 @@ class DateTimeConversation extends Conversation
         );
     }
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->askDate();

@@ -51,7 +51,10 @@ class DeleteReminderConversation extends Conversation
         );
     }
 
-    public function askConfirmation()
+    /**
+     * @return static
+     */
+    public function askConfirmation(): self
     {
 
         $question = Question::create('⚠️ Estàs segur que vols esborrar aquest recordatori? Aquesta acció no es pot desfer ⚠️')
