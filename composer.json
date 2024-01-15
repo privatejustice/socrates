@@ -35,7 +35,7 @@
         "patrickschur/language-detection": "^4.0",
         "fakerphp/faker": "^1.5",
         "botman/botman": "^2.6",
-        "guzzlehttp/guzzle": "^6.0 || ^7.0",
+        "guzzlehttp/guzzle": "^6.0|^7.0|^8.0",
         "botman/driver-web": "^1.5",
         "sierratecnologia/crypto": "^0.4.0",
         "sierratecnologia/operador": "^0.4.0",
